@@ -159,9 +159,13 @@
     <Content Include="scripts\lib\selectivizr-min.js" />
     <Content Include="scripts\lib\spin.min.js" />
     <Content Include="scripts\lib\underscore-min.js" />
+    <Content Include="scripts\main.js" />
     <Content Include="scripts\models\StringsModel.js" />
     <Content Include="scripts\models\UserModel.js" />
+    <Content Include="scripts\plugins.js" />
     <Content Include="scripts\routers\Main.js" />
+    <Content Include="scripts\sha1.js" />
+    <Content Include="scripts\utils.js" />
     <Content Include="scripts\views\CalculatorsView.js" />
     <Content Include="scripts\views\HeaderView.js" />
     <Content Include="scripts\views\HomeView.js" />
