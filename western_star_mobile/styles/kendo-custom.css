@@ -1,0 +1,170 @@
+.km-ios .km-view .km-navbar {
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0, rgba(133,133,133,.2)),color-stop(.5, rgba(0,0,0,.4)),color-stop(.5, rgba(0,0,0,.5)),color-stop(1, rgba(0,0,0,.8)));
+    background-image: -moz-linear-gradient(50% 0,50% 100%,rgba(133,133,133,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-image: -ms-linear-gradient(50% 0,50% 100%,rgba(133,133,133,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-repeat: repeat;
+    background-position: 0 0;
+    background-color: rgb(76, 76, 76);
+}
+.km-ios .km-view .km-content .km-listgroupinset .km-group-title {
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-repeat: repeat;
+    background-position: 0% 0%;
+    background-color: rgba(0, 0, 0, 0);
+}
+.km-ios .km-view .km-content {
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-repeat: repeat;
+    background-position: 0% 0%;
+    background-color: rgba(0, 0, 0, 0);
+}
+.km-ios .km-view .km-navbar .km-button {
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0, rgba(79,79,79,.2)),color-stop(.5, rgba(0,0,0,.4)),color-stop(.5, rgba(0,0,0,.5)),color-stop(1, rgba(0,0,0,.8)));
+    background-image: -moz-linear-gradient(50% 0,50% 100%,rgba(79,79,79,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-image: -ms-linear-gradient(50% 0,50% 100%,rgba(79,79,79,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-repeat: repeat;
+    background-position: 0 0;
+    background-color: rgb(62, 62, 62);
+}
+.km-ios .km-view .km-content .km-listgroupinset .km-group-title .km-text {
+    color: rgb(255, 255, 255);
+}
+.km-ios .km-view .km-navbar .km-button .km-text {
+    color: rgb(255, 255, 255);
+}
+.km-ios .km-view .km-navbar .km-view-title > * {
+    color: rgb(255, 255, 255);
+}
+.km-android .km-view .km-navbar {
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0, rgba(133,133,133,.2)),color-stop(.5, rgba(0,0,0,.4)),color-stop(.5, rgba(0,0,0,.5)),color-stop(1, rgba(0,0,0,.8)));
+    background-image: -moz-linear-gradient(50% 0,50% 100%,rgba(133,133,133,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-image: -ms-linear-gradient(50% 0,50% 100%,rgba(133,133,133,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-repeat: repeat;
+    background-position: 0 0;
+    background-color: rgb(76, 76, 76);
+}
+.km-android .km-view .km-content .km-listgroupinset .km-group-title {
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-repeat: repeat;
+    background-position: 0% 0%;
+    background-color: rgba(0, 0, 0, 0);
+}
+.km-android .km-view .km-content {
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-repeat: repeat;
+    background-position: 0% 0%;
+    background-color: rgba(0, 0, 0, 0);
+}
+.km-android .km-view .km-navbar .km-button {
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0, rgba(79,79,79,.2)),color-stop(.5, rgba(0,0,0,.4)),color-stop(.5, rgba(0,0,0,.5)),color-stop(1, rgba(0,0,0,.8)));
+    background-image: -moz-linear-gradient(50% 0,50% 100%,rgba(79,79,79,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-image: -ms-linear-gradient(50% 0,50% 100%,rgba(79,79,79,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-repeat: repeat;
+    background-position: 0 0;
+    background-color: rgb(92, 92, 92);
+}
+.km-android .km-view .km-content .km-listgroupinset .km-group-title .km-text {
+    color: rgb(255, 255, 255);
+}
+.km-android .km-view .km-navbar .km-button .km-text {
+    color: rgb(255, 255, 255);
+}
+.km-android .km-view .km-navbar .km-view-title > * {
+    color: rgb(255, 255, 255);
+}
+.km-blackberry .km-view .km-navbar {
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0, rgba(133,133,133,.2)),color-stop(.5, rgba(0,0,0,.4)),color-stop(.5, rgba(0,0,0,.5)),color-stop(1, rgba(0,0,0,.8)));
+    background-image: -moz-linear-gradient(50% 0,50% 100%,rgba(133,133,133,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-image: -ms-linear-gradient(50% 0,50% 100%,rgba(133,133,133,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-repeat: repeat;
+    background-position: 0 0;
+    background-color: rgb(76, 76, 76);
+}
+.km-blackberry .km-view .km-content .km-listgroupinset .km-group-title {
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0, rgba(0,0,0,.3)),color-stop(1, rgba(0,0,0,.1)));
+    background-image: -moz-linear-gradient(50% 0,50% 100%,rgba(0,0,0,.3),rgba(0,0,0,.1));
+    background-image: -ms-linear-gradient(50% 0,50% 100%,rgba(0,0,0,.3),rgba(0,0,0,.1));
+    background-repeat: repeat,repeat;
+    background-position: 0 0,0% 0%;
+    background-color: rgba(0, 0, 0, 0);
+}
+.km-blackberry .km-view .km-content {
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-repeat: repeat;
+    background-position: 0% 0%;
+    background-color: rgba(0, 0, 0, 0);
+}
+.km-blackberry .km-view .km-navbar .km-button {
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0, rgba(79,79,79,.2)),color-stop(.5, rgba(0,0,0,.4)),color-stop(.5, rgba(0,0,0,.5)),color-stop(1, rgba(0,0,0,.8)));
+    background-image: -moz-linear-gradient(50% 0,50% 100%,rgba(79,79,79,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-image: -ms-linear-gradient(50% 0,50% 100%,rgba(79,79,79,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-repeat: repeat;
+    background-position: 0 0;
+    background-color: rgb(92, 92, 92);
+}
+.km-blackberry .km-view .km-content .km-listgroupinset .km-group-title .km-text {
+    color: rgb(255, 255, 255);
+}
+.km-blackberry .km-view .km-navbar .km-button .km-text {
+    color: rgb(255, 255, 255);
+}
+.km-blackberry .km-view .km-navbar .km-view-title > * {
+    color: rgb(255, 255, 255);
+}
+.km-wp .km-view .km-navbar {
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0, rgba(133,133,133,.2)),color-stop(.5, rgba(0,0,0,.4)),color-stop(.5, rgba(0,0,0,.5)),color-stop(1, rgba(0,0,0,.8)));
+    background-image: -moz-linear-gradient(50% 0,50% 100%,rgba(133,133,133,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-image: -ms-linear-gradient(50% 0,50% 100%,rgba(133,133,133,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-repeat: repeat;
+    background-position: 0 0;
+    background-color: rgb(76, 76, 76);
+}
+.km-wp .km-view .km-content .km-listgroupinset .km-group-title {
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0, rgba(0,0,0,.3)),color-stop(1, rgba(0,0,0,.1)));
+    background-image: -moz-linear-gradient(50% 0,50% 100%,rgba(0,0,0,.3),rgba(0,0,0,.1));
+    background-image: -ms-linear-gradient(50% 0,50% 100%,rgba(0,0,0,.3),rgba(0,0,0,.1));
+    background-repeat: repeat,repeat;
+    background-position: 0 0,0% 0%;
+    background-color: rgb(51, 153, 255);
+}
+.km-wp .km-view .km-content {
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-repeat: repeat;
+    background-position: 0% 0%;
+    background-color: rgba(0, 0, 0, 0);
+}
+.km-wp .km-view .km-navbar .km-button {
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0, rgba(79,79,79,.2)),color-stop(.5, rgba(0,0,0,.4)),color-stop(.5, rgba(0,0,0,.5)),color-stop(1, rgba(0,0,0,.8)));
+    background-image: -moz-linear-gradient(50% 0,50% 100%,rgba(79,79,79,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-image: -ms-linear-gradient(50% 0,50% 100%,rgba(79,79,79,.2),rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.8));
+    background-repeat: repeat;
+    background-position: 0 0;
+    background-color: rgb(92, 92, 92);
+}
+.km-wp .km-view .km-content .km-listgroupinset .km-group-title .km-text {
+    color: rgb(255, 255, 255);
+}
+.km-wp .km-view .km-navbar .km-button .km-text {
+    color: rgb(255, 255, 255);
+}
+.km-wp .km-view .km-navbar .km-view-title > * {
+    color: rgb(255, 255, 255);
+}
+.km-tablet .km-ios *:not(.km-tabstrip):not(.km-buttongroup)>.km-button { background-color: #000000}
+
+.km-root .km-android .km-view {
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+}
