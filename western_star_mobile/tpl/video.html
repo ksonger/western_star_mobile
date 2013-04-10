@@ -1,0 +1,19 @@
+<video
+	<% _(video.attributes).each(function(val, key) { %> <%= key %>="<%= val %>" <% }); %>>
+	<%if(video.mp4 != undefined) {%>
+	<source type="video/mp4" src="<%= video.mp4 %>" /><% }; %>
+	<%if(video.webm != undefined) {%>
+	<source type="video/webm" src="<%= video.webm %>" /><% }; %>
+	<%if(video.ogv != undefined) {%>
+	<source type="video/ogg" src="<%= video.ogv %>" /><% }; %>
+	<%if(video.subtitles != undefined && video.subtitles != "none") {%>
+	<track kind="subtitles" src="<%= video.subtitles %>" srclang="en" /><% }; %>
+	<%if(video.chapters != undefined && video.chapters != "none") {%>
+	<track kind="chapters" src="<%= video.chapters %>" srclang="en" /><% }; %>
+	<%if(conf.flashplayer != undefined && video.mp4 != undefined) {%>
+	<object width="<%= video.attributes.width %>" height="<%= video.attributes.height %>" type="application/x-shockwave-flash" data="<%= conf.flashplayer %>">
+		<param name="movie" value="<%= conf.flashplayer %>" />
+		<param name="flashvars" value="controls=true&file=<%= video.mp4 %>" />
+	</object>
+	<% }; %>
+</video>

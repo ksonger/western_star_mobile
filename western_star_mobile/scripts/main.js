@@ -12,7 +12,8 @@ function onDeviceReady() {
 		'calculators',
 		'interiors',
         'tabstrip',
-        'header'
+        'header',
+        'video'
 	], function () {
 		app = new AppRouter();
 		Backbone.history.start();

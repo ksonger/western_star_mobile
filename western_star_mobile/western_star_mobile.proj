@@ -39,6 +39,7 @@
     <Folder Include="images\lang_menu" />
     <Folder Include="images\library" />
     <Folder Include="images\tabstrip" />
+    <Folder Include="assets" />
     <Folder Include="tpl" />
     <Folder Include="scripts\collections" />
     <Folder Include="scripts\lib" />
@@ -75,6 +76,7 @@
     <Resource Include="App_Resources\Android\drawable-nodpi\splashscreen.9.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\assets.json" />
     <Content Include="data\strings.json" />
     <Content Include="data\users.json" />
     <Content Include="images\home\home_button_middle.png" />
@@ -182,6 +184,7 @@
     <Content Include="scripts\views\MainView.js" />
     <Content Include="scripts\views\StateView.js" />
     <Content Include="scripts\views\TabstripView.js" />
+    <Content Include="scripts\views\VideoView.js" />
     <Content Include="scripts\views\WSView.js" />
     <Content Include="styles\fonts\ARIALUNI.TTF" />
     <Content Include="styles\kendo-custom.css" />
@@ -202,6 +205,7 @@
     <Content Include="tpl\library.html" />
     <Content Include="tpl\login.html" />
     <Content Include="tpl\tabstrip.html" />
+    <Content Include="tpl\video.html" />
     <Content Include="tpl\ws.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Telerik\ICE\Tools\Mobile\MobileTools.targets" />
