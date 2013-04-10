@@ -84,6 +84,9 @@
     <Content Include="images\home\home_icon_2.png" />
     <Content Include="images\home\home_icon_3.png" />
     <Content Include="images\home\home_icon_4.png" />
+    <Content Include="images\lang_button_left.png" />
+    <Content Include="images\lang_button_middle.png" />
+    <Content Include="images\lang_button_right.png" />
     <Content Include="images\lang_menu\lang_check.png" />
     <Content Include="images\lang_menu\lang_menu_bottomleft.png" />
     <Content Include="images\lang_menu\lang_menu_bottommiddle.png" />
@@ -103,6 +106,8 @@
     <Content Include="images\login\login_btn_left.png" />
     <Content Include="images\login\login_btn_right.png" />
     <Content Include="images\login\login_middle.png" />
+    <Content Include="images\main_background.jpg" />
+    <Content Include="images\main_background_portrait.jpg" />
     <Content Include="images\tabstrip\calculators_icon_tabstrip.png" />
     <Content Include="images\tabstrip\home_icon_tabstrip.png" />
     <Content Include="images\tabstrip\icon_calculators_off.png" />
@@ -120,6 +125,8 @@
     <Content Include="images\tabstrip\tabstrip.png" />
     <Content Include="images\tabstrip\tabstrip_active.png" />
     <Content Include="images\tabstrip\ws_icon_tabstrip.png" />
+    <Content Include="images\utility_bar_middle.png" />
+    <Content Include="images\ws_logo.png" />
     <Content Include="index.html" />
     <Content Include="kendo\js\jquery.min.js" />
     <Content Include="kendo\js\kendo.mobile.min.js" />
