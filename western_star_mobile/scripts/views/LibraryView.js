@@ -11,6 +11,9 @@ window.LibraryView = StateView.extend({
         this.$el.find("#library_title").css({"top":((this.$el.find("#top_div").height() - this.$el.find("#library_title").height())/2) + "px"});
         this.$el.find("#search_div").css({"margin-top":((this.$el.find("#top_div").height() - this.$el.find("#search_div").height())/2) + "px"});
 	},
+    selectAsset:function(id)    {
+        
+    },
 	render:function() {
 		this.template = _.template(tpl.get("library"));
 		this.$el.html(this.template());

@@ -32,6 +32,7 @@
     <Folder Include="App_Resources\Android\drawable-nodpi">
       <Platform>Android</Platform>
     </Folder>
+    <Folder Include="assets\video" />
     <Folder Include="data" />
     <Folder Include="images" />
     <Folder Include="images\login" />
@@ -135,7 +136,10 @@
     <Content Include="kendo\styles\images\back.png" />
     <Content Include="kendo\styles\images\KendoUI.ttf" />
     <Content Include="kendo\styles\images\KendoUI.woff" />
+    <Content Include="kendo\styles\kendo.common.min.css" />
+    <Content Include="kendo\styles\kendo.default.min.css" />
     <Content Include="kendo\styles\kendo.mobile.all.min.css" />
+    <Content Include="scripts\collections\AssetsCollection.js" />
     <Content Include="scripts\collections\StringsCollection.js" />
     <Content Include="scripts\collections\UsersCollection.js" />
     <Content Include="scripts\lib\backbone-min.js" />
@@ -169,6 +173,7 @@
     <Content Include="scripts\lib\spin.min.js" />
     <Content Include="scripts\lib\underscore-min.js" />
     <Content Include="scripts\main.js" />
+    <Content Include="scripts\models\AssetsModel.js" />
     <Content Include="scripts\models\StringsModel.js" />
     <Content Include="scripts\models\UserModel.js" />
     <Content Include="scripts\plugins.js" />

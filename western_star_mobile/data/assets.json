@@ -1,5 +1,5 @@
 {
 "assets":[
-    {"id":"1", "type":"video", "local":"true", "src":"assets/video/1935-08_WS_Vocational.mp4"}
+    {"id":"1", "type":"video", "storage":"local", "src":"assets/video/WS_parts_building_truck_animation.mp4", "title":"Western Star Parts Building Animation", "description":"An animated sequence of truck parts assembling themselves.", "thumbnail":"assets/images/asset_0001.png"}
 ]
 }

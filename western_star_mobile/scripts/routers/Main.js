@@ -106,8 +106,10 @@ var AppRouter = Backbone.Router.extend({
 	createTables:function(tx) {
         tx.executeSql('DROP TABLE IF EXISTS strings');
         tx.executeSql('DROP TABLE IF EXISTS users');
+        tx.executeSql('DROP TABLE IF EXISTS assets');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS strings(id INTEGER NOT NULL PRIMARY KEY, name TEXT NOT NULL, en TEXT NOT NULL, fr TEXT NOT NULL, dt TEXT NOT NULL, es TEXT NOT NULL, ko TEXT NOT NULL);');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS users(id INTEGER NOT NULL PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL);');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS assets(id INTEGER NOT NULL PRIMARY KEY, type TEXT NOT NULL, storage TEXT NOT NULL, src TEXT NOT NULL, title TEXT NOT NULL, description TEXT NOT NULL, thumbnail TEXT NOT NULL);');
 		app.db.transaction(app.getUsers, app.onDBError, app.onDBSuccess);
 	},
 	getUsers:function(tx) {
@@ -169,11 +171,55 @@ var AppRouter = Backbone.Router.extend({
 			}
 		});
 	},
+    getAssets:function(tx) {
+		$.ajax({
+			url: "data/assets.json",
+			async:false,
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			beforeSend: function(xhr) {
+				xhr.overrideMimeType('text/plain; charset=utf-8');
+			},
+			success: function(data) {
+				json_data = JSON.parse(data);
+
+				$.each(json_data.assets, function(oind, obj) {
+					var keys = [];
+					var vals = [];
+					$.each(obj, function(uind, usr) {
+						keys.push(uind);
+						vals.push(usr);
+					});
+                    
+					tx.executeSql("INSERT INTO assets(" + keys + ") VALUES (?, ?, ?, ?)", vals);
+				});	
+				app.db.transaction(app.selectAssets, app.onDBError, app.onDBSuccess);
+			},
+			error: function() {
+				if (console && console.log) {
+					console.log('Error loading assets.');
+				}
+			}
+		});
+	},
 	selectUsers:function(tx) {
 		tx.executeSql("SELECT * FROM users;", [], app.userDataSelectHandler, app.errorHandler);
 	},
 	selectStrings:function(tx) {
 		tx.executeSql("SELECT * FROM strings;", [], app.stringDataSelectHandler, app.errorHandler);
+	},
+    selectAssets:function(tx) {
+		tx.executeSql("SELECT * FROM assets;", [], app.assetDataSelectHandler, app.errorHandler);
+	},
+    assetDataSelectHandler:function(transaction, results) {
+		var asset_models = [];
+		for (var i = 0; i < results.rows.length; i++) {
+			var row = results.rows.item(i);
+			var asset_model = new AssetsModel(row);
+			asset_models.push(asset_model);
+		}
+		app.assetsCollection = new AssetsCollection(asset_models, {model:AssetsModel});
+		app.mainView = new MainView({model:app.stringsCollection});
+		app.mainView.render();
 	},
 	stringDataSelectHandler:function(transaction, results) {
 		var str_models = [];
@@ -183,8 +229,9 @@ var AppRouter = Backbone.Router.extend({
 			str_models.push(str_model);
 		}
 		app.stringsCollection = new StringsCollection(str_models, {model:StringsModel});
-		app.mainView = new MainView({model:app.stringsCollection});
-		app.mainView.render();
+        app.db.transaction(app.getAssets, app.onDBError, app.onDBSuccess);
+		//app.mainView = new MainView({model:app.stringsCollection});
+		//app.mainView.render();
 	},
 	userDataSelectHandler:function(transaction, results) {
 		var usr_models = [];
