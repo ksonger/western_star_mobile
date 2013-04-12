@@ -13,6 +13,12 @@
     <AndroidHardwareAcceleration>false</AndroidHardwareAcceleration>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="api\Slim" />
+    <Folder Include="api\Slim\Exception" />
+    <Folder Include="api\Slim\Middleware" />
+    <Folder Include="api\Slim\Http" />
+    <Folder Include="api\Slim\Session" />
+    <Folder Include="api\Slim\Session\Handler" />
     <Folder Include="App_Resources" />
     <Folder Include="App_Resources\iOS">
       <Platform>iOS</Platform>
@@ -41,6 +47,7 @@
     <Folder Include="images\library" />
     <Folder Include="images\tabstrip" />
     <Folder Include="assets" />
+    <Folder Include="api" />
     <Folder Include="tpl" />
     <Folder Include="scripts\collections" />
     <Folder Include="scripts\lib" />
@@ -77,9 +84,39 @@
     <Resource Include="App_Resources\Android\drawable-nodpi\splashscreen.9.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="api\.htaccess" />
+    <Content Include="api\index.php" />
+    <Content Include="api\Slim\Environment.php" />
+    <Content Include="api\Slim\Exception\Pass.php" />
+    <Content Include="api\Slim\Exception\RequestSlash.php" />
+    <Content Include="api\Slim\Exception\Stop.php" />
+    <Content Include="api\Slim\Http\Cookie.php" />
+    <Content Include="api\Slim\Http\CookieJar.php" />
+    <Content Include="api\Slim\Http\Headers.php" />
+    <Content Include="api\Slim\Http\Request.php" />
+    <Content Include="api\Slim\Http\Response.php" />
+    <Content Include="api\Slim\Http\Uri.php" />
+    <Content Include="api\Slim\Http\Util.php" />
+    <Content Include="api\Slim\Log.php" />
+    <Content Include="api\Slim\Logger.php" />
+    <Content Include="api\Slim\LogWriter.php" />
+    <Content Include="api\Slim\Middleware.php" />
+    <Content Include="api\Slim\Middleware\ContentTypes.php" />
+    <Content Include="api\Slim\Middleware\Flash.php" />
+    <Content Include="api\Slim\Middleware\MethodOverride.php" />
+    <Content Include="api\Slim\Middleware\PrettyExceptions.php" />
+    <Content Include="api\Slim\Middleware\SessionCookie.php" />
+    <Content Include="api\Slim\Route.php" />
+    <Content Include="api\Slim\Router.php" />
+    <Content Include="api\Slim\Session\Flash.php" />
+    <Content Include="api\Slim\Session\Handler.php" />
+    <Content Include="api\Slim\Session\Handler\Cookies.php" />
+    <Content Include="api\Slim\Slim.php" />
+    <Content Include="api\Slim\View.php" />
     <Content Include="data\assets.json" />
     <Content Include="data\strings.json" />
     <Content Include="data\users.json" />
+    <Content Include="data\western_star.sql" />
     <Content Include="images\home\home_button_middle.png" />
     <Content Include="images\home\home_collage.jpg" />
     <Content Include="images\home\home_collage_portrait.jpg" />
@@ -174,6 +211,7 @@
     <Content Include="scripts\lib\underscore-min.js" />
     <Content Include="scripts\main.js" />
     <Content Include="scripts\models\AssetsModel.js" />
+    <Content Include="scripts\models\IOModel.js" />
     <Content Include="scripts\models\StringsModel.js" />
     <Content Include="scripts\models\UserModel.js" />
     <Content Include="scripts\plugins.js" />
