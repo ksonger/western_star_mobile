@@ -15,7 +15,8 @@ var AppRouter = Backbone.Router.extend({
 	},
 	stringsCollection:null,
 	usersCollection:null,
-    ioModel:null,
+	assetsCollection:null,
+	ioModel:null,
 	mainView:null,
 	int:null,
 	currentLayout:"landscape",
@@ -28,6 +29,8 @@ var AppRouter = Backbone.Router.extend({
 	currentState:null,
 	rInt:null,
 	online:true,
+    
+    
 	index:function () {
 		app.begin();
 	},
@@ -35,7 +38,7 @@ var AppRouter = Backbone.Router.extend({
 		if (state != app.currentState) {
 			if (app.currentState != null) {
 				app.currentState.onExit();
-				TweenLite.to(app.currentState.$el, .4, {css:{autoAlpha:0}});
+				TweenMax.to(app.currentState.$el, .4, {css:{autoAlpha:0}});
 			}
 			app.currentState = state;
 			app.currentState.onEnter();
@@ -43,21 +46,20 @@ var AppRouter = Backbone.Router.extend({
 			if (app.currentState != app.mainView.loginView) {  
 				//$(".km-navbar").show();
 				if (app.currentState != app.mainView.homeView) {
-					TweenLite.to($("#tabstrip"), .01, {css:{autoAlpha:1}});
-					TweenLite.to($("#header_bar"), .01, {css:{autoAlpha:1}});
+					TweenMax.to($("#tabstrip"), .01, {css:{autoAlpha:1}});
+					TweenMax.to($("#header_bar"), .01, {css:{autoAlpha:1}});
 				}
 				else {
-					TweenLite.to($("#tabstrip"), .01, {css:{autoAlpha:0}});
-					TweenLite.to($("#header_bar"), .01, {css:{autoAlpha:0}});
+					TweenMax.to($("#tabstrip"), .01, {css:{autoAlpha:0}});
+					TweenMax.to($("#header_bar"), .01, {css:{autoAlpha:0}});
 				}
 			}
 			else {
-				TweenLite.to($("#tabstrip"), .01, {css:{autoAlpha:0}});
-				TweenLite.to($("#header_bar"), .01, {css:{autoAlpha:0}});
+				TweenMax.to($("#tabstrip"), .01, {css:{autoAlpha:0}});
+				TweenMax.to($("#header_bar"), .01, {css:{autoAlpha:0}});
 			}
 		}
 	},
-
 	begin:function (callback) {
 		this.online = window.navigator.onLine;
         
@@ -78,12 +80,13 @@ var AppRouter = Backbone.Router.extend({
 		}
 		app.initDatabase();
 	},
-	initDatabase:function(callback) {
+       
+	initDatabase:function(callback) {  
+		this.stringsCollection = new StringsCollection();
+		this.usersCollection = new UsersCollection();
+		this.assetsCollection = new AssetsCollection();
+        this.online = true;
 		if (this.online) {
-			this.stringsCollection = new StringsCollection();
-			this.usersCollection = new UsersCollection();
-			this.assetsCollection = new AssetsCollection();
-            
 			app.stringsCollection.fetch({
 				success:function () {
 					app.usersCollection.fetch({
@@ -91,9 +94,8 @@ var AppRouter = Backbone.Router.extend({
 							app.assetsCollection.fetch({
 								success:function () {
 									// write to local store
-                                    app.ioModel = new IOModel();
-                                    app.ioModel.createLocalStore();
-                                    
+									app.ioModel = new IOModel();
+									app.ioModel.createLocalStore();
 								}, error:function(e) {
 									console.log(e);
 								}
@@ -107,15 +109,22 @@ var AppRouter = Backbone.Router.extend({
 				}
 			});
 		}
+		else {
+			app.ioModel = new IOModel();
+			app.ioModel.createLocalStore();
+		}
 	},
-    onDataReady:function()    {
-        app.mainView = new MainView({model:app.stringsCollection});
+    
+	onDataReady:function() {
+		app.mainView = new MainView({model:app.stringsCollection});
 		app.mainView.render();
-    }
+	}
 });
 
 var wh = $(window).height();
 var ww = $(window).width();
+
+var db_host = "http://kensonger.com";
 
 $(window).resize(function() {
 });

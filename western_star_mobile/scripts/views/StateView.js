@@ -4,6 +4,7 @@ var StateView = function (options) {
 
 _.extend(StateView.prototype, Backbone.View.prototype, {
 	firstLoad:true,
+    appended:false,
 	currentLayout:"landscape",
 	responding:false,
 	onEnter:function() {
@@ -20,7 +21,10 @@ _.extend(StateView.prototype, Backbone.View.prototype, {
 		this.firstLoad = false;
 		this.render();
         this.$el.addClass("state");
-		this.$el.appendTo(app.mainView.$el);
+		if(!this.appended)    {
+            this.appended = true;
+            this.$el.appendTo(app.mainView.$el);
+        }
 		TweenLite.to(this.$el, .01, {css:{autoAlpha:0}});
         this.$el.children().click(function(evt)    {
             if(app.mainView.headerView.lang_open)    {

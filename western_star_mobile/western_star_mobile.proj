@@ -8,9 +8,13 @@
     <IsRunnable>true</IsRunnable>
     <TemplateAppName>Cordova240</TemplateAppName>
     <AndroidPermissions>android.permission.CAMERA;android.permission.VIBRATE;android.permission.ACCESS_COARSE_LOCATION;android.permission.ACCESS_FINE_LOCATION;android.permission.ACCESS_LOCATION_EXTRA_COMMANDS;android.permission.READ_PHONE_STATE;android.permission.INTERNET;android.permission.RECEIVE_SMS;android.permission.RECORD_AUDIO;android.permission.MODIFY_AUDIO_SETTINGS;android.permission.READ_CONTACTS;android.permission.WRITE_CONTACTS;android.permission.WRITE_EXTERNAL_STORAGE;android.permission.ACCESS_NETWORK_STATE;android.permission.ACCOUNT_MANAGER;android.permission.GET_ACCOUNTS;android.permission.MANAGE_ACCOUNTS;android.permission.BROADCAST_STICKY</AndroidPermissions>
-    <DeviceOrientations>Portrait;Landscape</DeviceOrientations>
+    <DeviceOrientations>Landscape</DeviceOrientations>
     <iOSStatusBarStyle>Default</iOSStatusBarStyle>
-    <AndroidHardwareAcceleration>false</AndroidHardwareAcceleration>
+    <AndroidHardwareAcceleration>true</AndroidHardwareAcceleration>
+    <BundleVersion>1.0</BundleVersion>
+    <iOSDisplayName />
+    <iOSDeviceFamily>2</iOSDeviceFamily>
+    <AndroidVersionCode>1</AndroidVersionCode>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="api\Slim" />
@@ -46,8 +50,8 @@
     <Folder Include="images\lang_menu" />
     <Folder Include="images\library" />
     <Folder Include="images\tabstrip" />
-    <Folder Include="assets" />
     <Folder Include="api" />
+    <Folder Include="assets" />
     <Folder Include="tpl" />
     <Folder Include="scripts\collections" />
     <Folder Include="scripts\lib" />
@@ -113,6 +117,7 @@
     <Content Include="api\Slim\Session\Handler\Cookies.php" />
     <Content Include="api\Slim\Slim.php" />
     <Content Include="api\Slim\View.php" />
+    <Content Include="assets\video\wst_vocational_v5.mp4" />
     <Content Include="data\assets.json" />
     <Content Include="data\strings.json" />
     <Content Include="data\users.json" />
@@ -250,6 +255,22 @@
     <Content Include="tpl\tabstrip.html" />
     <Content Include="tpl\video.html" />
     <Content Include="tpl\ws.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <CordovaPlugin Include="com.phonegap.plugins.sqlite">
+      <Version>0.0.2</Version>
+      <Name>SQLite</Name>
+    </CordovaPlugin>
+  </ItemGroup>
+  <ItemGroup>
+    <CordovaPluginContent Include="com.phonegap.plugins.sqlite\Android\SQLitePlugin.js">
+      <Platform>Android</Platform>
+      <TargetName>SQLitePlugin.js</TargetName>
+    </CordovaPluginContent>
+    <CordovaPluginContent Include="com.phonegap.plugins.sqlite\iOS\SQLitePlugin.js">
+      <Platform>iOS</Platform>
+      <TargetName>SQLitePlugin.js</TargetName>
+    </CordovaPluginContent>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Telerik\ICE\Tools\Mobile\MobileTools.targets" />
 </Project>

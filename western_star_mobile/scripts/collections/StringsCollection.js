@@ -1,4 +1,4 @@
 window.StringsCollection = Backbone.Collection.extend({
     model:StringsModel,
-    url:"http://localhost/ws_api/strings"
+    url:db_host + "/ws_api/strings"
 });

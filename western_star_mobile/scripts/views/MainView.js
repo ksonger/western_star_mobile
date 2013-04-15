@@ -1,7 +1,7 @@
 window.MainView = Backbone.View.extend({
 
 	initialize:function () {
-		this.render();
+		
 	},
 	initialized:false,
 	loginView:null,
@@ -11,6 +11,7 @@ window.MainView = Backbone.View.extend({
 	calculatorsView:null,
     tabstripView:null,
     headerView:null,
+    videoView:null,
 	wsView:null,
 	isTouchDevice: 0,
 	isIE10Touch: 0,
@@ -54,6 +55,7 @@ window.MainView = Backbone.View.extend({
 	},
 
 	showMain:function () {
+        
 		if (!this.initialized) {
 			app.mainView = this;
 			this.initLogin();
@@ -64,6 +66,7 @@ window.MainView = Backbone.View.extend({
 			this.initCalculators();
             this.initTabstrip();
             this.initHeader();
+            this.initVideo();
 			this.initialized = true;
             self.setInterval("app.mainView.onWindowResize()", 100);
 		}
@@ -72,8 +75,9 @@ window.MainView = Backbone.View.extend({
 	initLogin:function () {
 		this.loginView = new LoginView();
 		this.states.push(this.loginView);
+        TweenMax.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4});
 		app.setState(this.loginView);
-        TweenLite.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4});
+        
 	},
 
 	initHome:function () {
@@ -103,6 +107,9 @@ window.MainView = Backbone.View.extend({
     },
     initHeader:function()    {
         this.headerView = new HeaderView();
+    },
+    initVideo:function()    {
+        this.videoView = new VideoView();
     },
     
     onLanguageSelect:function(lang)    {

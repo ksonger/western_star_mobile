@@ -1,4 +1,4 @@
 window.AssetsCollection = Backbone.Collection.extend({
     model:AssetsModel,
-    url:"http://localhost/ws_api/assets"
+    url:db_host + "/ws_api/assets"
 });
