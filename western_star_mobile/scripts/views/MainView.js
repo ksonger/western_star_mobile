@@ -13,8 +13,6 @@ window.MainView = Backbone.View.extend({
     headerView:null,
     videoView:null,
 	wsView:null,
-	isTouchDevice: 0,
-	isIE10Touch: 0,
 	states:[],
     k_app:null,
     lang_list:null,
@@ -28,16 +26,9 @@ window.MainView = Backbone.View.extend({
                app.setState(mv.states[index+1]); 
             });
         });
-        
-
-		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
-			this.isTouchDevice = 1;
-		}
-		if (navigator.platform.toLowerCase().indexOf("win") !== -1 && navigator.userAgent.toLowerCase().indexOf("touch") !== -1) {
-			this.isIE10Touch = 1;
-		}
+        	
 		// if this is a touch-enabled device, set zoom levels
-		if (this.isTouchDevice) {
+		if (app.isTouchDevice) {
 			var viewportmeta = document.querySelector('meta[name="viewport"]');
 			if (viewportmeta) {
 				viewportmeta.content = 'width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0';
@@ -130,21 +121,20 @@ window.MainView = Backbone.View.extend({
 		});
 	},
 	onWindowResize:function () {
-        var windowWidth = $(window).width();
-        if (windowWidth < 1024) {
+        if (app.windowWidth < 1024) {
             app.currentLayout = "portrait";
         } else {
             app.currentLayout = "landscape";
         }
 		try {
-            $("#main").width($(window).width());
-            $("#main").css({"height":$(window).height() + "px"})
+            $("#main").width(app.windowWidth);
+            $("#main").height(app.windowHeight);
             if($("#tabstrip").css("opacity") != "0")    {
-                $("#tabstrip").css({"top":$(window).height() - $("#tabstrip").height()-$("#home_header").height()+"px"});
+                $("#tabstrip").css({"top":app.windowHeight - $("#tabstrip").height()-$("#home_header").height()+"px"});
             }
             if($("#header_bar").css("opacity") != "0")    {
-                $("#lang_button").css({"left":$(window).width() - $("#lang_button").width()-15+"px", "top":(($("#header_bar").height() - $("#lang_button").height())/2)+"px"});
-                $("#header_title").css({"width":$(window).width()+"px"});
+                $("#lang_button").css({"left":app.windowWidth - $("#lang_button").width()-15+"px", "top":(($("#header_bar").height() - $("#lang_button").height())/2)+"px"});
+                $("#header_title").css({"width":app.windowWidth+"px"});
             }
 			app.currentState.respond();
             app.mainView.headerView.respond();

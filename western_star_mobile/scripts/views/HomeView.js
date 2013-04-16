@@ -5,25 +5,20 @@ window.HomeView = StateView.extend({
 		}
 	},
 	respond:function() {
-		this.$el.find("#home").css({"height":$(window).height() + "px", "width":$(window).width() + "px"});
-        this.$el.find("#background_image").css({"width":$(window).width()+"px", "height":$(window).height()+"px"});
-        this.$el.find("#collage").css({"height":$(window).height()+"px"});
-        if(this.$el.find("#collage_image").width() > $(window).width()*.49)    {
-            console.log("true");
-            this.$el.find("#collage_image").css({"width":$(window).width()*.49+"px", "height":$(window).height()+"px"});
+        
+        this.$el.find("#home, #background_image, collage").height(app.windowHeight);
+        this.$el.find("#home, #background_image").width(app.windowWidth);
+        
+        if(this.$el.find("#collage_image").width() > app.windowWidth*.49)    {
+            this.$el.find("#collage_image").width(app.windowWidth*.49);
+            this.$el.find("#collage_image").height(app.windowHeight);
         }
+        this.$el.find("#home_nav").offset({"top":app.windowHeight - this.$el.find("#home_nav").height(), "left":this.$el.find("#collage_image").width()});
+        this.$el.find("#home_nav").width(app.windowWidth - this.$el.find("#collage_image").width());
 
-        this.$el.find("#home_nav").css({
-            "top":$(window).height() - this.$el.find("#home_nav").height()+"px", 
-            "left":this.$el.find("#collage_image").width()+"px",
-            "width":$(window).width() - this.$el.find("#collage_image").width()+"px"
-        });
-        var ypos = (($(window).height() - this.$el.find("#home_nav").height()) - this.$el.find("#home_copy").height() - 30)/1.8;
-        this.$el.find("#home_copy").css({
-            "top":ypos + "px", 
-            "left":this.$el.find("#collage_image").width() + 30 + "px"
-        });
-        this.$el.find("#home_logo").css({"top":"30px", "left":$(window).width() - this.$el.find("#home_logo").width() - 30 +"px"});   
+        var ypos = ((app.windowHeight - this.$el.find("#home_nav").height()) - this.$el.find("#home_copy").height() - 30)/1.8;
+        this.$el.find("#home_copy").offset({"top":ypos, "left":this.$el.find("#collage_image").width() + 30});
+        this.$el.find("#home_logo").offset({"top":30, "left":app.windowWidth - this.$el.find("#home_logo").width() - 30});   
 	},
 	render:function() {
 		this.template = _.template(tpl.get("home"));
@@ -50,6 +45,7 @@ window.HomeView = StateView.extend({
                 }
             });
         });
-        
+        this.respond();
 	}
 });
+

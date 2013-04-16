@@ -7,6 +7,7 @@ _.extend(StateView.prototype, Backbone.View.prototype, {
     appended:false,
 	currentLayout:"landscape",
 	responding:false,
+
 	onEnter:function() {
         app.mainView.setStrings();
 		TweenLite.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4});   

@@ -7,18 +7,18 @@ window.LoginView = StateView.extend({
 	},
 	respond:function() {
         
-		this.$el.find("#login_legal").css({
+		/*this.$el.find("#login_legal").css({
 			"top":$(window).height() - this.$el.find("#login_legal").height() - 30 + "px",
 			"left":$(window).width() - this.$el.find("#login_legal").width() - ($(window).width() * .05) + "px"
-		});
-        
+		});*/
+        this.$el.find("#login_legal").offset({"top":this.windowHeight - this.$el.find("#login_legal").height() - 30, "left":this.windowWidth - this.$el.find("#login_legal").width() - (this.windowWidth * .05)});
 		this.$el.find("#login_logo").css({
 			"top":$(window).height() - this.$el.find("#login_logo").height() - 30 + "px", 
 			"left":"30px"
 		});
         
 		this.$el.find("#login").css({
-			"height":$(window).height() + "px", "width":$(window).width() + "px"
+			"height":this.windowHeight + "px", "width":this.windowWidth + "px"
 		});
 		this.$el.find("#background_image").css({
 			"width":$(window).width() + "px", "height":$(window).height() + "px"
@@ -103,8 +103,8 @@ window.LoginView = StateView.extend({
 			catch (e) {
 			}
 		});
-		this.respond(this.currentLayout);
-		app.mainView.onWindowResize();   
+		this.respond();
+		app.mainView.onWindowResize(); 
 	},
 	onSwipe:function(evt) {
 		console.log("swipe");

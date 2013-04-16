@@ -150,6 +150,9 @@ button:focus {
 
 body {
   background-color: #000;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   font-family: Arial, Verdana, Helvetica, sans-serif; }
 
 #loading {
@@ -160,9 +163,8 @@ body {
 /* KENDO */
 #main {
   position: absolute;
-  height: 768px;
-  width: 1024px;
-  background-color: #000; }
+  background-color: #000;
+  overflow: hidden; }
   #main .state {
     position: absolute;
     width: 100%;

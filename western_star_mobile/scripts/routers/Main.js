@@ -12,23 +12,32 @@ var app;
 var AppRouter = Backbone.Router.extend({
 
 	initialize:function () {
+		this.createjs = createjs || {};
 	},
 	stringsCollection:null,
 	usersCollection:null,
 	assetsCollection:null,
+	imagesCollection:null,
 	ioModel:null,
 	mainView:null,
 	int:null,
 	currentLayout:"landscape",
 	lang:"en",
 	online:false,
-	routes:{
-		"":"index"
-	},
+	isIE10Touch:false,
+	isTouchDevice:false,
+	windowWidth:null,
+	windowHeight:null,
+    loader:null,
 	states:[],
 	currentState:null,
 	rInt:null,
 	online:true,
+	imageManifest:[],
+    errors:0,
+    routes:{
+		"":"index"
+	},
     
     
 	index:function () {
@@ -80,12 +89,52 @@ var AppRouter = Backbone.Router.extend({
 		}
 		app.initDatabase();
 	},
+    
+	cjsLoad:function(manifest) {
+        console.log(typeof manifest);
+		//TODO show a loader
+		app.loader = new createjs.PreloadJS(false);
+		app.loader.onFileLoad = function(o) {
+			if (o.type == "image") {
+				app.imageManifest[o.id] = o.result;
+			}
+		};
+		app.loader.onProgress = function(e) {
+			var perc = app.loader.progress * 100;
+		};
+		app.loader.onComplete = function() {
+			if (app.errors == 0) {
+				console.log("success");
+			}
+			else {
+				if (console && console.log) {
+					console.log("errors loading the manifest assets")
+				}
+			}
+		};
+		app.loader.onFileProgress = function(e) {
+		};
+		app.loader.onError = function(e) {
+			if (console && console.log) {
+				console.log(e);
+				console.log(this);
+			}
+			app.errors++;
+		};
+		if (manifest.length > 0) {
+			app.loader.loadManifest(manifest);
+		}
+		else {
+			console.log("manifest length is zero.");
+		}
+	},
        
 	initDatabase:function(callback) {  
 		this.stringsCollection = new StringsCollection();
 		this.usersCollection = new UsersCollection();
 		this.assetsCollection = new AssetsCollection();
-        this.online = true;
+		this.imagesCollection = new ImagesCollection();
+		this.online = true;
 		if (this.online) {
 			app.stringsCollection.fetch({
 				success:function () {
@@ -93,9 +142,15 @@ var AppRouter = Backbone.Router.extend({
 						success:function () {
 							app.assetsCollection.fetch({
 								success:function () {
-									// write to local store
-									app.ioModel = new IOModel();
-									app.ioModel.createLocalStore();
+									app.imagesCollection.fetch({
+										success:function (result) {
+											// write to local store
+											app.ioModel = new IOModel();
+											app.ioModel.createLocalStore();
+										}, error:function(e) {
+											console.log(e);
+										}
+									});
 								}, error:function(e) {
 									console.log(e);
 								}
@@ -116,13 +171,35 @@ var AppRouter = Backbone.Router.extend({
 	},
     
 	onDataReady:function() {
+		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+			app.isTouchDevice = true;
+		}
+		if (navigator.platform.toLowerCase().indexOf("win") !== -1 && navigator.userAgent.toLowerCase().indexOf("touch") !== -1) {
+			app.isIE10Touch = true;
+		}
+		// GET AVAILABLE DIMENSIONS
+		if (this.isTouchDevice) {
+			app.windowWidth = window.innerWidth;
+			app.windowHeight = window.innerHeight;
+		}
+		else {
+			app.windowWidth = $(window).width();
+			app.windowHeight = $(window).height();
+		}
+		if (typeof window.HTMLAudioElement === "undefined") {
+			window.HTMLAudioElement = function () {
+			};
+		}
+        var imgArr = [];
+		$.each(this.imagesCollection.models, function(index, model)    {
+            var iObj = {"id":model.get("id"),"src":model.get("src")}
+            imgArr.push(iObj);
+        });
+        this.cjsLoad(imgArr);
 		app.mainView = new MainView({model:app.stringsCollection});
-		app.mainView.render();
+		app.mainView.render();      
 	}
 });
-
-var wh = $(window).height();
-var ww = $(window).width();
 
 var db_host = "http://kensonger.com";
 

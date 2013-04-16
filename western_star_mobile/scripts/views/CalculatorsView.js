@@ -6,8 +6,8 @@ window.CalculatorsView = StateView.extend({
 		}
 	},
 	respond:function() {
-        this.$el.find("#calculators").css({"height":$(window).height() + "px", "width":$(window).width() + "px"});
-        this.$el.find("#background_image").css({"width":$(window).width()+"px", "height":$(window).height()+"px"});
+        this.$el.find("#calculators").css({"height":app.windowHeight + "px", "width":app.windowWidth + "px"});
+        this.$el.find("#background_image").css({"width":app.windowWidth+"px", "height":app.windowHeight+"px"});
 	},
 	render:function() {
 		this.template = _.template(tpl.get("calculators"));

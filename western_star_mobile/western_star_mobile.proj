@@ -52,6 +52,7 @@
     <Folder Include="images\tabstrip" />
     <Folder Include="api" />
     <Folder Include="assets" />
+    <Folder Include="scripts\lib\createjs" />
     <Folder Include="tpl" />
     <Folder Include="scripts\collections" />
     <Folder Include="scripts\lib" />
@@ -124,7 +125,9 @@
     <Content Include="data\western_star.sql" />
     <Content Include="images\home\home_button_middle.png" />
     <Content Include="images\home\home_collage.jpg" />
+    <Content Include="images\home\home_collage.png" />
     <Content Include="images\home\home_collage_portrait.jpg" />
+    <Content Include="images\home\home_collage_portrait.png" />
     <Content Include="images\home\home_icon_1.png" />
     <Content Include="images\home\home_icon_2.png" />
     <Content Include="images\home\home_icon_3.png" />
@@ -143,6 +146,7 @@
     <Content Include="images\lang_menu\lang_menu_topmiddle.png" />
     <Content Include="images\lang_menu\lang_menu_topright.png" />
     <Content Include="images\library\library_background.jpg" />
+    <Content Include="images\library\library_background.png" />
     <Content Include="images\library\search_box.png" />
     <Content Include="images\login\login_background.png" />
     <Content Include="images\login\login_box_left.png" />
@@ -151,10 +155,8 @@
     <Content Include="images\login\login_btn_left.png" />
     <Content Include="images\login\login_btn_right.png" />
     <Content Include="images\login\login_middle.png" />
-    <Content Include="images\main_background.jpg" />
-    <Content Include="images\main_background_portrait.jpg" />
-    <Content Include="images\tabstrip\calculators_icon_tabstrip.png" />
-    <Content Include="images\tabstrip\home_icon_tabstrip.png" />
+    <Content Include="images\main_background.png" />
+    <Content Include="images\main_background_portrait.png" />
     <Content Include="images\tabstrip\icon_calculators_off.png" />
     <Content Include="images\tabstrip\icon_calculators_on.png" />
     <Content Include="images\tabstrip\icon_home_off.png" />
@@ -165,8 +167,6 @@
     <Content Include="images\tabstrip\icon_library_on.png" />
     <Content Include="images\tabstrip\icon_wst_off.png" />
     <Content Include="images\tabstrip\icon_wst_on.png" />
-    <Content Include="images\tabstrip\interiors_icon_tabstrip.png" />
-    <Content Include="images\tabstrip\library_icon_tabstrip.png" />
     <Content Include="images\tabstrip\tabstrip.png" />
     <Content Include="images\tabstrip\tabstrip_active.png" />
     <Content Include="images\tabstrip\ws_icon_tabstrip.png" />
@@ -182,9 +182,12 @@
     <Content Include="kendo\styles\kendo.default.min.css" />
     <Content Include="kendo\styles\kendo.mobile.all.min.css" />
     <Content Include="scripts\collections\AssetsCollection.js" />
+    <Content Include="scripts\collections\ImagesCollection.js" />
     <Content Include="scripts\collections\StringsCollection.js" />
     <Content Include="scripts\collections\UsersCollection.js" />
     <Content Include="scripts\lib\backbone-min.js" />
+    <Content Include="scripts\lib\createjs\easeljs-0.5.0.min.js" />
+    <Content Include="scripts\lib\createjs\preloadjs-0.2.0.min.js" />
     <Content Include="scripts\lib\easeljs-0.5.0.min.js" />
     <Content Include="scripts\lib\greensock\easing\EasePack.min.js" />
     <Content Include="scripts\lib\greensock\plugins\BezierPlugin.min.js" />
@@ -216,6 +219,7 @@
     <Content Include="scripts\lib\underscore-min.js" />
     <Content Include="scripts\main.js" />
     <Content Include="scripts\models\AssetsModel.js" />
+    <Content Include="scripts\models\ImagesModel.js" />
     <Content Include="scripts\models\IOModel.js" />
     <Content Include="scripts\models\StringsModel.js" />
     <Content Include="scripts\models\UserModel.js" />

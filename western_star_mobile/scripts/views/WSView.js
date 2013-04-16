@@ -6,12 +6,13 @@ window.WSView = StateView.extend({
 		}
 	},
 	respond:function() {
-        this.$el.find("#ws").css({"height":$(window).height() + "px", "width":$(window).width() + "px"});
-        this.$el.find("#background_image").css({"width":$(window).width()+"px", "height":$(window).height()+"px"});
+        this.$el.find("#ws, #background_image").height(app.windowHeight);
+        this.$el.find("#ws, #background_image").width(app.windowWidth);
 	},
 	render:function() {
 		this.template = _.template(tpl.get("ws"));
 		this.$el.html(this.template());
 		this.$el.addClass("state"); 
+        
 	}
 });

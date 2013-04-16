@@ -33,23 +33,28 @@ window.IOModel = Backbone.Model.extend({
 	},
 	onFail:function(error) {
 		console.log(error.code);
-	},
-    
-    
+	}, 
     
 	/**** these methods take the remote database results and store them in the local SQLLite database ****/
 	createLocalStore:function() {
-        
 		try {
 			if (!window.openDatabase) {
 				alert('Databases are not supported in app browser.');
 			}
 			else {
-				var shortName = 'WESTERN_STAR';
+                var shortName = 'WESTERN_STAR';
 				var version = '1.0';
 				var displayName = 'Western Star Database';
-				var maxSize = 1024*1024; //  bytes
-				this.db = window.openDatabase(shortName, version, displayName, maxSize);
+				var maxSize = 1024 * 1024; //  bytes
+                
+				if (window.sqlitePlugin !== undefined) {
+					this.db = window.sqlitePlugin.openDatabase(shortName);
+				}
+				else {
+					// For debugin in simulator fallback to native SQL Lite
+					console.log("Use built in SQL Lite");
+					this.db = window.openDatabase(shortName, version, displayName, maxSize);
+				}	
 				if (app.online) {
 					this.db.transaction(this.createTables, this.onDBError, this.onDBSuccess);
 				}
@@ -84,7 +89,6 @@ window.IOModel = Backbone.Model.extend({
 	},
     
 	getUsers:function(tx) {
-		console.log('get users');
 		$.each(app.usersCollection.models, function(oind, obj) {
 			var keys = [];
 			var vals = [];
@@ -97,7 +101,6 @@ window.IOModel = Backbone.Model.extend({
 		});	
 	},
 	getStrings:function(tx) {
-		console.log('get strings');
 		$.each(app.stringsCollection.models, function(oind, obj) {
 			var keys = [];
 			var vals = [];
@@ -110,7 +113,6 @@ window.IOModel = Backbone.Model.extend({
 		});
 	},
 	getAssets:function(tx) {
-		console.log('get assets');
 		$.each(app.assetsCollection.models, function(oind, obj) {
 			var keys = [];
 			var vals = [];
