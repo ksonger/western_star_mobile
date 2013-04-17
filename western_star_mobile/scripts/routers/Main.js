@@ -135,6 +135,7 @@ var AppRouter = Backbone.Router.extend({
 		this.assetsCollection = new AssetsCollection();
 		this.imagesCollection = new ImagesCollection();
 		this.online = true;
+        
 		if (this.online) {
 			app.stringsCollection.fetch({
 				success:function () {
@@ -143,7 +144,7 @@ var AppRouter = Backbone.Router.extend({
 							app.assetsCollection.fetch({
 								success:function () {
 									app.imagesCollection.fetch({
-										success:function (result) {
+										success:function () {
 											// write to local store
 											app.ioModel = new IOModel();
 											app.ioModel.createLocalStore();
@@ -198,7 +199,7 @@ var AppRouter = Backbone.Router.extend({
         this.cjsLoad(imgArr);
         //console.log(app.imagesCollection.findWhere({"id":"login_background"}));
 		app.mainView = new MainView({model:app.stringsCollection});
-		app.mainView.render();      
+		app.mainView.render(); 
 	}
 });
 

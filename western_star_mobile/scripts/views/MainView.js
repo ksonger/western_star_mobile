@@ -16,6 +16,9 @@ window.MainView = Backbone.View.extend({
 	states:[],
 	k_app:null,
 	lang_list:null,
+    
+    
+    
 	render:function () {
 		this.$el = $("#main");	
 		// if this is a touch-enabled device, set zoom levels

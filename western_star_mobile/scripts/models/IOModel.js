@@ -5,35 +5,173 @@ window.IOModel = Backbone.Model.extend({
 	stringsReady:false,
 	assetsReady:false,
     
-	/**** this will be used to download assets and write to disk, hopefully? ****/
+	
 	downloadFile:function() {
-		window.requestFileSystem(
-			LocalFileSystem.PERSISTENT, 0, 
-			function onFileSystemSuccess(fileSystem) {
-				fileSystem.root.getFile(
-					"dummy.html", {create: true, exclusive: false}, 
-					function gotFileEntry(fileEntry) {
-						var sPath = fileEntry.fullPath.replace("dummy.html", "");
-						var fileTransfer = new FileTransfer();
-						fileEntry.remove();
-
-						fileTransfer.download(
-							"http://www.w3.org/2011/web-apps-ws/papers/Nitobi.pdf",
-							sPath + "theFile.pdf",
-							function(theFile) {
-								console.log("download complete: " + theFile.toURI());
-								showLink(theFile.toURI());
-							},
-							function(error) {
-								console.log("download error source " + error.source);
-								console.log("download error target " + error.target);
-								console.log("upload error code: " + error.code);
-							}
-							);
-					}, 
-					fail);
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, this.fileSystemSuccess, this.fileSystemFail);
+	},
+	fileSystemSuccess:function(fileSystem) {
+		fileSystem.root.getFile("dummy.html", {create: true, exclusive: false}, app.ioModel.fileEntrySuccess, app.ioModel.fileEntryFail);
+	},
+	fileSystemFail:function(err) {
+		alert("filesystem: " + err);
+	},
+	fileEntrySuccess:function(fileEntry) {
+		var sPath = fileEntry.fullPath.replace("dummy.html", "");
+		var fileTransfer = new FileTransfer();
+		fileEntry.remove();
+		fileTransfer.download(
+			"http://www.w3.org/2011/web-apps-ws/papers/Nitobi.pdf",
+			sPath + "Nitobi.pdf",
+			function(theFile) {
+				alert("download complete: " + theFile.toURI());
+				showLink(theFile.toURI());
 			},
-			fail);
+			function(error) {
+				alert("download error source " + error.source);
+				alert("download error target " + error.target);
+				alert("upload error code: " + error.code);
+			}
+			);
+	},
+	fileEntryFail:function(err) {
+		alert("fileentry: " + err);
+	},
+    
+    
+	//Writing operations
+    
+	createFile: function(fileSystem, fileName, text, onSuccess, onError) { 
+		var mdl = this;
+		var options = {
+			create: true, 
+			exclusive: false
+		};
+
+		fileSystem.root.getFile(fileName, options,
+								function(fileEntry) {
+									mdl.createFileWriter.call(mdl, fileEntry, text, onSuccess, onError);
+								},
+								function (error) {
+									error.message = "Failed creating file.";
+									onError.call(mdl, error);
+								});
+	},
+    
+	createFileWriter: function(fileEntry, text, onSuccess, onError) {
+		var mdl = this;
+		fileEntry.createWriter(function(fileWriter) {
+			var len = fileWriter.length;
+			fileWriter.seek(len);
+			fileWriter.write(text + '\n');
+			var message = "Wrote: " + text;
+			onSuccess.call(mdl, message);
+		},
+							   function(error) {
+								   error.message = "Unable to create file writer.";
+								   onError.call(mdl, error);
+							   });
+	},
+    
+	writeToFile: function(fileName, text, onSuccess, onError) {
+		var mdl = this;
+		var grantedBytes = 0;
+
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, grantedBytes,
+								 function(fileSystem) {
+									 mdl.createFile.call(mdl, fileSystem, fileName, text, onSuccess, onError);
+								 },
+								 function(error) {
+									 error.message = "Request file system failed.";
+									 onError.call(mdl, error);
+								 });
+	},
+    
+	//Reading operations
+	readFromFile : function(fileName, onSuccess, onError) {
+		var mdl = this;
+        
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
+								 function(fileSystem) {
+									 mdl.getFileEntry.call(mdl, fileSystem, fileName, onSuccess, onError);
+								 },
+								 function(error) {
+									 error.message = "Unable to request file system.";
+									 onError.call(mdl, error);
+								 });
+	},
+    
+	getFileEntry: function(fileSystem, fileName, onSuccess, onError) {
+		var mdl = this;
+		// Get existing file, don't create a new one.
+		fileSystem.root.getFile(fileName, null,
+								function(fileEntry) {
+									mdl.getFile.call(mdl, fileEntry, onSuccess, onError);
+								}, 
+								function(error) {
+									error.message = "Unable to get file entry for reading.";
+									onError.call(mdl, error);
+								});
+	},
+
+	getFile: function(fileEntry, onSuccess, onError) { 
+		var mdl = this; 
+		fileEntry.file(
+			function(file) { 
+				mdl.getFileReader.call(mdl, file, onSuccess);
+			},
+			function(error) {
+				error.message = "Unable to get file for reading.";
+				onError.call(mdl, error);
+			});
+	},
+
+	getFileReader: function(file, onSuccess) {
+		var mdl = this;
+		var reader = new FileReader();
+		reader.onloadend = function(evt) { 
+			var textToWrite = evt.target.result;
+			onSuccess.call(mdl, textToWrite);
+		};
+        
+		reader.readAsText(file);
+	},
+   
+	//Deleting
+    
+	deleteFile: function(fileName, onSuccess, onError) {
+		var mdl = this;
+       
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
+								 function(fileSystem) {
+									 mdl.getFileEntryForDelete.call(mdl, fileSystem, fileName, onSuccess, onError);
+								 }, function(error) {
+									 error.message = "Unable to retrieve file system.";
+									 onError.call(mdl, error);
+								 });
+	}, 
+    
+	getFileEntryForDelete: function(fileSystem, fileName, onSuccess, onError) { 
+		var mdl = this;
+		fileSystem.root.getFile(fileName, 
+								null, 
+								function (fileEntry) {
+									mdl.removeFile.call(mdl, fileEntry, onSuccess, onError);
+								},
+								function(error) {
+									error.message = "Unable to find the file.";
+									onError.call(mdl, error)
+								});
+	},
+    
+	removeFile : function(fileEntry, onSuccess, onError) {
+		var mdl = this;
+		fileEntry.remove(function (entry) {
+			var message = "File removed.";
+			onSuccess.call(mdl, message);
+		}, function (error) {
+			error.message = "Unable to remove the file.";
+			onError.call(mdl, error)
+		});
 	},
     
 	/**** these methods take the remote database results and store them in the local SQLLite database ****/
