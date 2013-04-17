@@ -1,25 +1,29 @@
-<div id="library" data-role="view">
+<div id="library">
 	<div id="bg_div">
-		<img id="background_image" src="../images/library/library_background.png" />
+		<img id="background_image" src="./images/library/library_background.png" />
 	</div>
 	<div id="library_main">
 		<div id="top_div">
 			<div id="logo_div">
-                <div id="library_logo"></div>
-            </div>
-               <div id="title_div">
-                <span id="library_title"></span>
-            </div>
-            <div id="search_div">
-                
-            </div>
+				<div id="library_logo"></div>
+			</div>
+			<div id="title_div">
+				<span id="library_title"></span>
+			</div>
+			<div id="search_div"></div>
 		</div>
-        <div id="main_div">
+		<div id="main_div">
+			<div class="library_asset">
+				this is a video asset test
+				<input type="hidden" id="asset_id" value="2" />
+				<input type="hidden" id="asset_type" value="video" />
+			</div>
+            
             <div class="library_asset">
-                this is a video assets test
-                <input type="hidden" id="asset_id" value="2" />
-                <input type="hidden" id="asset_type" value="video" />
-            </div>
-        </div>
+				<img id="thumbnail" src="./assets/images/thumbnails/asset_0001.jpg" />
+				<input type="hidden" id="asset_id" value="11" />
+				<input type="hidden" id="asset_type" value="image" />
+			</div>
+		</div>
 	</div>
 </div>

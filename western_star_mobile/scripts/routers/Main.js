@@ -34,6 +34,7 @@ var AppRouter = Backbone.Router.extend({
 	rInt:null,
 	online:true,
 	imageManifest:[],
+    assets_server:"",
     errors:0,
     routes:{
 		"":"index"
@@ -53,7 +54,6 @@ var AppRouter = Backbone.Router.extend({
 			app.currentState.onEnter();
 
 			if (app.currentState != app.mainView.loginView) {  
-				//$(".km-navbar").show();
 				if (app.currentState != app.mainView.homeView) {
 					TweenMax.to($("#tabstrip"), .01, {css:{autoAlpha:1}});
 					TweenMax.to($("#header_bar"), .01, {css:{autoAlpha:1}});
@@ -71,14 +71,15 @@ var AppRouter = Backbone.Router.extend({
 	},
 	begin:function (callback) {
 		this.online = window.navigator.onLine;
-        
+        var windowWidth;
+	    var windowHeight;
 		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
-			var windowWidth = window.innerWidth;
-			var windowHeight = window.innerHeight;
+			windowWidth = window.innerWidth;
+			windowHeight = window.innerHeight;
 		}
 		else {
-			var windowWidth = $(window).width();
-			var windowHeight = $(window).height();
+			windowWidth = $(window).width();
+			windowHeight = $(window).height();
 		}
 
 		if (windowWidth <= 1024) {
@@ -91,7 +92,6 @@ var AppRouter = Backbone.Router.extend({
 	},
     
 	cjsLoad:function(manifest) {
-        console.log(typeof manifest);
 		//TODO show a loader
 		app.loader = new createjs.PreloadJS(false);
 		app.loader.onFileLoad = function(o) {
@@ -104,7 +104,7 @@ var AppRouter = Backbone.Router.extend({
 		};
 		app.loader.onComplete = function() {
 			if (app.errors == 0) {
-				console.log("success");
+				//console.log("success");
 			}
 			else {
 				if (console && console.log) {
@@ -179,12 +179,12 @@ var AppRouter = Backbone.Router.extend({
 		}
 		// GET AVAILABLE DIMENSIONS
 		if (this.isTouchDevice) {
-			app.windowWidth = window.innerWidth;
-			app.windowHeight = window.innerHeight;
+			app.windowWidth = window.innerWidth - 8;
+			app.windowHeight = window.innerHeight - 8;
 		}
 		else {
-			app.windowWidth = $(window).width();
-			app.windowHeight = $(window).height();
+			app.windowWidth = $(window).width() - 8;
+			app.windowHeight = $(window).height() - 8;
 		}
 		if (typeof window.HTMLAudioElement === "undefined") {
 			window.HTMLAudioElement = function () {
@@ -196,12 +196,12 @@ var AppRouter = Backbone.Router.extend({
             imgArr.push(iObj);
         });
         this.cjsLoad(imgArr);
+        //console.log(app.imagesCollection.findWhere({"id":"login_background"}));
 		app.mainView = new MainView({model:app.stringsCollection});
 		app.mainView.render();      
 	}
 });
 
-var db_host = "http://kensonger.com";
 
 $(window).resize(function() {
 });

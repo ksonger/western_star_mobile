@@ -8,32 +8,17 @@ tpl = {
 	// concatenated in a single file.
 	loadTemplates:function (names, callback) {
 		var that = this;
-
-		var loadTemplate = function (index) {
-			var name = names[index];
-			$.ajax({
-				url: 'tpl/' + name + '.html',
-
-				beforeSend: function(xhr) {
-					xhr.overrideMimeType('text/plain; charset=x-user-defined');
-				},
-				success: function(data) {
-					that.templates[name] = data;
-					index++;
-					if (index < names.length) {
-						loadTemplate(index);
-					}
-					else {
-						callback();
-					}
-				},
-				error: function() {
-					if (console && console.log) {
-						console.log('Error loading template.');
-					}
-				}
-			});
-		}
+        var loadTemplate = function (index) {
+            var name = names[index];
+            var data = $.ajax({type: 'GET', url: 'tpl/' + name + '.html', async: false}).responseText;
+            that.templates[name] = data;
+            index++;
+            if (index < names.length) {
+                loadTemplate(index);
+            } else {
+                callback();
+            }
+        }
 
 		loadTemplate(0);
 	},

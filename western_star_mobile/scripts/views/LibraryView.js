@@ -1,7 +1,7 @@
 window.LibraryView = StateView.extend({
 	lang_list:null,
 	initialize:function (options) {
-		if (this.firstLoad) {
+		if (this.firstLoad) {   
 			this.onFirstLoad();
 		}
 	},
@@ -21,17 +21,28 @@ window.LibraryView = StateView.extend({
                 }
             });
         }
+        if(type == "image")    {
+            $.each(app.assetsCollection.models, function(index, model)    {
+                if(model.get("id") == id)    {
+                    app.mainView.imageView.showImage(model);
+                }
+            });
+        }
 	},
 	render:function() {
-		this.template = _.template(tpl.get("library"));
-		this.$el.html(this.template());
-		this.$el.addClass("state");
+        try{
+            this.template = _.template(tpl.get("library"));
+            this.$el.html(this.template());
+        }    catch(err)    {
+            alert(err);
+        }
+		
+		
         var lib = this;
 		$.each(this.$el.find(".library_asset"), function(index, asset) {
 			$(asset).click(function(evt) {
                 lib.selectAsset($(asset).find("#asset_type").val(), $(asset).find("#asset_id").val());
 			});
-		});
-        
+		});    
 	}
 });

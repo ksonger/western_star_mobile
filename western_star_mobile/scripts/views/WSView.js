@@ -10,7 +10,11 @@ window.WSView = StateView.extend({
         this.$el.find("#ws, #background_image").width(app.windowWidth);
 	},
 	render:function() {
-		this.template = _.template(tpl.get("ws"));
+		try{
+            this.template = _.template(tpl.get("ws"));
+        }    catch(err)    {
+            alert(err);
+        }
 		this.$el.html(this.template());
 		this.$el.addClass("state"); 
         

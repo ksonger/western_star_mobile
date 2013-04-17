@@ -4,7 +4,7 @@ window.HeaderView = Backbone.View.extend({
         this.render();
 	},
 	respond:function() {
-        this.$el.find("#lang_menu_table").css({"left":$(window).width() - $("#lang_menu_table").width() - 15 + "px"});
+        this.$el.find("#lang_menu_table").css({"left":app.windowWidth - $("#lang_menu_table").width() - 15 + "px"});
 	},
 	render:function() {
 		this.template = _.template(tpl.get("header"));

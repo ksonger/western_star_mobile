@@ -18,7 +18,7 @@ _.extend(StateView.prototype, Backbone.View.prototype, {
 
 	},
 	onFirstLoad:function() {
-		this.currentLayout = app.currentLayout;
+
 		this.firstLoad = false;
 		this.render();
         this.$el.addClass("state");

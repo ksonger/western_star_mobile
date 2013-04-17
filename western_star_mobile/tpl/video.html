@@ -1,12 +1,8 @@
-<video width="640" height="360" controls>
-	<%if(video.attributes.mp4 != undefined) {%>
-	<source type="video/mp4" src="<%= video.attributes.mp4 %>" /><% }; %>
-	<%if(video.attributes.webm != undefined) {%>
-	<source type="video/webm" src="<%= video.attributes.webm %>" /><% }; %>
-	<%if(video.attributes.ogv != undefined) {%>
-	<source type="video/ogg" src="<%= video.attributes.ogv %>" /><% }; %>
-	<%if(video.attributes.subtitles != undefined && video.attributes.subtitles != "none") {%>
-	<track kind="subtitles" src="<%= video.attributes.subtitles %>" srclang="en" /><% }; %>
-	<%if(video.attributes.chapters != undefined && video.attributes.chapters != "none") {%>
-	<track kind="chapters" src="<%= video.attributes.chapters %>" srclang="en" /><% }; %>
-</video>
+<div id="shadowbox">
+	<div id="video_div">
+		<video controls="controls">
+			<source src="<%= server %><%= video.attributes.src %>" type="video/mp4" />
+		</video>
+	</div>
+</div>
+

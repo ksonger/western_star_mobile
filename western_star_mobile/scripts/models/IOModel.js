@@ -6,34 +6,35 @@ window.IOModel = Backbone.Model.extend({
 	assetsReady:false,
     
 	/**** this will be used to download assets and write to disk, hopefully? ****/
-	writeLocalData:function() {
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, this.onFS, this.onFail);
+	downloadFile:function() {
+		window.requestFileSystem(
+			LocalFileSystem.PERSISTENT, 0, 
+			function onFileSystemSuccess(fileSystem) {
+				fileSystem.root.getFile(
+					"dummy.html", {create: true, exclusive: false}, 
+					function gotFileEntry(fileEntry) {
+						var sPath = fileEntry.fullPath.replace("dummy.html", "");
+						var fileTransfer = new FileTransfer();
+						fileEntry.remove();
+
+						fileTransfer.download(
+							"http://www.w3.org/2011/web-apps-ws/papers/Nitobi.pdf",
+							sPath + "theFile.pdf",
+							function(theFile) {
+								console.log("download complete: " + theFile.toURI());
+								showLink(theFile.toURI());
+							},
+							function(error) {
+								console.log("download error source " + error.source);
+								console.log("download error target " + error.target);
+								console.log("upload error code: " + error.code);
+							}
+							);
+					}, 
+					fail);
+			},
+			fail);
 	},
-	onFS:function(fileSystem) {
-		console.log("onFS");
-		fileSystem.root.getFile("readme.txt", {create: true, exclusive: false}, this.onFileEntry, this.onFail);
-	},
-	onFileEntry:function(fileEntry) {
-		fileEntry.createWriter(this.onFileWriter, this.onFail);
-	},
-	onFileWriter:function(writer) {
-		writer.onwriteend = function(evt) {
-			console.log("contents of file now 'some sample text'");
-			writer.truncate(11);  
-			writer.onwriteend = function(evt) {
-				console.log("contents of file now 'some sample'");
-				writer.seek(4);
-				writer.write(" different text");
-				writer.onwriteend = function(evt) {
-					console.log("contents of file now 'some different text'");
-				}
-			};
-		};
-		writer.write("some sample text");
-	},
-	onFail:function(error) {
-		console.log(error.code);
-	}, 
     
 	/**** these methods take the remote database results and store them in the local SQLLite database ****/
 	createLocalStore:function() {
@@ -42,7 +43,7 @@ window.IOModel = Backbone.Model.extend({
 				alert('Databases are not supported in app browser.');
 			}
 			else {
-                var shortName = 'WESTERN_STAR';
+				var shortName = 'WESTERN_STAR';
 				var version = '1.0';
 				var displayName = 'Western Star Database';
 				var maxSize = 1024 * 1024; //  bytes
@@ -52,7 +53,6 @@ window.IOModel = Backbone.Model.extend({
 				}
 				else {
 					// For debugin in simulator fallback to native SQL Lite
-					console.log("Use built in SQL Lite");
 					this.db = window.openDatabase(shortName, version, displayName, maxSize);
 				}	
 				if (app.online) {
@@ -82,7 +82,7 @@ window.IOModel = Backbone.Model.extend({
 		tx.executeSql('DROP TABLE IF EXISTS assets');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS strings(id INTEGER NOT NULL PRIMARY KEY, name TEXT, en TEXT, fr TEXT, dt TEXT, es TEXT, ko TEXT);');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS users(id INTEGER NOT NULL PRIMARY KEY, username TEXT, password TEXT, region TEXT);');
-		tx.executeSql('CREATE TABLE IF NOT EXISTS assets(id INTEGER NOT NULL PRIMARY KEY, type TEXT, storage TEXT, mp4 TEXT, title TEXT, description TEXT, thumbnail TEXT, category TEXT, subcategory TEXT, metadata TEXT);');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS assets(id INTEGER NOT NULL PRIMARY KEY, type TEXT, storage TEXT, src TEXT, title TEXT, description TEXT, thumbnail TEXT, category TEXT, subcategory TEXT, metadata TEXT);');
 		app.ioModel.db.transaction(app.ioModel.getUsers, app.ioModel.onUsersError, app.ioModel.onUsersSuccess);
 		app.ioModel.db.transaction(app.ioModel.getStrings, app.ioModel.onStringsError, app.ioModel.onStringsSuccess);
 		app.ioModel.db.transaction(app.ioModel.getAssets, app.ioModel.onAssetsError, app.ioModel.onAssetsSuccess);
@@ -198,7 +198,7 @@ window.IOModel = Backbone.Model.extend({
 	},
     
 	onAssetsError:function(e) {
-		console.log("assets error: " + e.code);
+		console.log("assets error: " + e.message);
 	},
 	onAssetsSuccess:function(e) {
 		app.ioModel.assetsReady = true;

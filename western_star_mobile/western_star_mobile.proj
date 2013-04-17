@@ -42,6 +42,9 @@
     <Folder Include="App_Resources\Android\drawable-nodpi">
       <Platform>Android</Platform>
     </Folder>
+    <Folder Include="assets\images" />
+    <Folder Include="assets\images\thumbnails" />
+    <Folder Include="assets\pdf" />
     <Folder Include="assets\video" />
     <Folder Include="data" />
     <Folder Include="images" />
@@ -118,6 +121,23 @@
     <Content Include="api\Slim\Session\Handler\Cookies.php" />
     <Content Include="api\Slim\Slim.php" />
     <Content Include="api\Slim\View.php" />
+    <Content Include="assets\images\thumbnails\asset_0001.jpg" />
+    <Content Include="assets\images\thumbnails\asset_0002.jpg" />
+    <Content Include="assets\images\thumbnails\asset_0003.jpg" />
+    <Content Include="assets\images\thumbnails\asset_0004.jpg" />
+    <Content Include="assets\images\thumbnails\asset_0005.jpg" />
+    <Content Include="assets\images\thumbnails\asset_0006.jpg" />
+    <Content Include="assets\images\thumbnails\asset_0007.jpg" />
+    <Content Include="assets\images\thumbnails\asset_0008.jpg" />
+    <Content Include="assets\images\thumbnails\asset_0009.jpg" />
+    <Content Include="assets\images\thumbnails\asset_0010.jpg" />
+    <Content Include="assets\images\WS_Brn_Badge_02r.jpg" />
+    <Content Include="assets\images\WS_Brn_Grill_Closeup_01r.jpg" />
+    <Content Include="assets\images\WS_Brn_Logging_06r.jpg" />
+    <Content Include="assets\images\WS_Brn_Tools_02r.jpg" />
+    <Content Include="assets\pdf\4418_WS_Highway.pdf" />
+    <Content Include="assets\pdf\4951_WS_HeavyHaul_Final.pdf" />
+    <Content Include="assets\pdf\4951_WS_loggingFINAL.pdf" />
     <Content Include="assets\video\wst_vocational_v5.mp4" />
     <Content Include="data\assets.json" />
     <Content Include="data\strings.json" />
@@ -214,7 +234,6 @@
     <Content Include="scripts\lib\jquery.ui.touch-punch.min.js" />
     <Content Include="scripts\lib\modernizr.min.js" />
     <Content Include="scripts\lib\preloadjs-0.2.0.min.js" />
-    <Content Include="scripts\lib\selectivizr-min.js" />
     <Content Include="scripts\lib\spin.min.js" />
     <Content Include="scripts\lib\underscore-min.js" />
     <Content Include="scripts\main.js" />
@@ -230,6 +249,7 @@
     <Content Include="scripts\views\CalculatorsView.js" />
     <Content Include="scripts\views\HeaderView.js" />
     <Content Include="scripts\views\HomeView.js" />
+    <Content Include="scripts\views\ImageView.js" />
     <Content Include="scripts\views\InteriorsView.js" />
     <Content Include="scripts\views\LibraryView.js" />
     <Content Include="scripts\views\LoginView.js" />
@@ -238,7 +258,6 @@
     <Content Include="scripts\views\TabstripView.js" />
     <Content Include="scripts\views\VideoView.js" />
     <Content Include="scripts\views\WSView.js" />
-    <Content Include="styles\fonts\ARIALUNI.TTF" />
     <Content Include="styles\kendo-custom.css" />
     <Content Include="styles\main.css" />
     <Content Include="cordova.ios.js">
@@ -253,6 +272,7 @@
     <Content Include="tpl\calculators.html" />
     <Content Include="tpl\header.html" />
     <Content Include="tpl\home.html" />
+    <Content Include="tpl\image.html" />
     <Content Include="tpl\interiors.html" />
     <Content Include="tpl\library.html" />
     <Content Include="tpl\login.html" />

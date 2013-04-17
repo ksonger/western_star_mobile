@@ -7,13 +7,12 @@ window.LoginView = StateView.extend({
 	},
 	respond:function() {
         
-		/*this.$el.find("#login_legal").css({
-			"top":$(window).height() - this.$el.find("#login_legal").height() - 30 + "px",
-			"left":$(window).width() - this.$el.find("#login_legal").width() - ($(window).width() * .05) + "px"
-		});*/
-        this.$el.find("#login_legal").offset({"top":this.windowHeight - this.$el.find("#login_legal").height() - 30, "left":this.windowWidth - this.$el.find("#login_legal").width() - (this.windowWidth * .05)});
-		this.$el.find("#login_logo").css({
-			"top":$(window).height() - this.$el.find("#login_logo").height() - 30 + "px", 
+		this.$el.find("#login_legal").css({
+			"top":app.windowHeight - this.$el.find("#login_legal").height() - 30 + "px",
+			"left":app.windowWidth - this.$el.find("#login_legal").width() - (app.windowWidth * .05) + "px"
+		});
+        this.$el.find("#login_logo").css({
+			"top":app.windowHeight - this.$el.find("#login_logo").height() - 30 + "px", 
 			"left":"30px"
 		});
         
@@ -30,7 +29,6 @@ window.LoginView = StateView.extend({
 	render:function() {
 		this.template = _.template(tpl.get("login"));
 		this.$el.html(this.template());
-		this.setStrings();
 		var page = this;
 		this.$el.find("#login_username").focus(function() {
 			var txt = this;
@@ -79,7 +77,7 @@ window.LoginView = StateView.extend({
         
 		this.$el.find("#login_english, #login_french, #login_german, #login_spanish, #login_korean").click(function(e) {
 			app.lang = $(this).attr("class");
-			page.setStrings();
+			app.mainView.setStrings();
 		});
         
 		this.$el.keypress(function(e) {
@@ -135,35 +133,5 @@ window.LoginView = StateView.extend({
 	},
 	resetCheck:function() {
 		app.mainView.loginView.checkingLogin = false;
-	},
-	setStrings:function() {
-		var page = this;
-		$.each(app.stringsCollection.models, function(index, model) {
-			if (model.get("name")) {
-				if (page.$el.find("#" + model.get("name")).is("div") || page.$el.find("#" + model.get("name")).is("span")) {
-					page.$el.find("#" + model.get("name")).html(model.get(app.lang))
-				}
-				if (page.$el.find("#" + model.get("name")).is("input")) {
-					page.$el.find("#" + model.get("name")).val(model.get(app.lang))
-				}
-			}
-		});
-		page.$el.find(".active").removeClass("active");
-		if (app.lang == "en") {
-			page.$el.find("#login_english").addClass("active");
-		}
-		if (app.lang == "fr") {
-			page.$el.find("#login_french").addClass("active");
-		}
-		if (app.lang == "dt") {
-			page.$el.find("#login_german").addClass("active");
-		}
-		if (app.lang == "es") {
-			page.$el.find("#login_spanish").addClass("active");
-		}
-		if (app.lang == "ko") {
-			page.$el.find("#login_korean").addClass("active");
-		}
-		page.respond(this.currentLayout);
 	}
 });

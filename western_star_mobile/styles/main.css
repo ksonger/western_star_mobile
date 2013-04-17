@@ -10,7 +10,10 @@ textarea {
 
 body {
   font-size: 1em;
-  line-height: 1.4; }
+  line-height: 1.4;
+  margin: 0px;
+  overflow: hidden;
+  position: absolute; }
 
 ::-moz-selection {
   background: #b3d4fc;
@@ -144,15 +147,22 @@ button:focus {
   .cfm:after {
     clear: both; }
 
-@font-face {
-  font-family: 'Arial Unicode MS';
-  src: url("fonts/ARIALUNI.TTF"); }
+/*
+$arial_uni: 'Arial Unicode MS';
 
+@font-face{
+  font-family:'Arial Unicode MS';
+  src: url("fonts/ARIALUNI.TTF");
+}
+*/
 body {
   background-color: #000;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  padding: 0px;
+  spacing: 0px;
+  margin: 0px;
   font-family: Arial, Verdana, Helvetica, sans-serif; }
 
 #loading {
@@ -164,19 +174,31 @@ body {
 #main {
   position: absolute;
   background-color: #000;
-  overflow: hidden; }
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+  spacing: 0px; }
   #main .state {
     position: absolute;
     width: 100%;
-    height: 100%; }
+    height: 100%;
+    margin: 0px;
+    spacing: 0px;
+    padding: 0px; }
   #main #header_bar {
     z-index: 13000;
     position: absolute;
     width: 100%;
-    height: 43px; }
+    height: 43px;
+    padding: 0px;
+    spacing: 0px;
+    margin: 0px; }
     #main #header_bar .header_bar {
       height: 43px;
       width: 100%;
+      padding: 0px;
+      margin: 0px;
+      spacing: 0px;
       background: url(../images/utility_bar_middle.png) repeat-x; }
       #main #header_bar .header_bar #lang_button {
         position: absolute;
@@ -302,6 +324,9 @@ body {
             background: url(../images/lang_menu/lang_menu_bottomright.png) no-repeat; }
   #main #login {
     position: absolute;
+    padding: 0px;
+    spacing: 0px;
+    margin: 0px;
     width: 100%;
     height: 100%; }
     #main #login img {
@@ -389,7 +414,6 @@ body {
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        font-family: "Arial Unicode MS";
         cursor: pointer;
         font-size: 14px;
         color: #FFFFFF;
@@ -412,8 +436,9 @@ body {
       width: 42%;
       position: absolute; }
   #main #home {
-    width: 1024px;
-    height: 768px;
+    padding: 0px;
+    spacing: 0px;
+    margin: 0px;
     position: absolute; }
     #main #home img {
       position: absolute;
@@ -421,7 +446,10 @@ body {
     #main #home #collage {
       position: absolute;
       height: 100%;
-      z-index: 20; }
+      z-index: 20;
+      padding: 0px;
+      spacing: 0px;
+      margin: 0px; }
       #main #home #collage img {
         max-height: 100%;
         border: 0px;
@@ -441,7 +469,7 @@ body {
         color: #FFFFFF;
         font-size: 30px;
         font-weight: bold;
-        line-hieght: 35px; }
+        line-height: 35px; }
       #main #home #home_copy #home_body {
         color: #FFFFFF;
         font-size: 21px;
@@ -510,58 +538,71 @@ body {
           margin-left: 10px;
           float: left;
           background: url(../images/home/home_icon_4.png) no-repeat; }
-  #main #library #bg_div {
-    position: absolute;
-    z-index: 5;
-    width: 100%;
-    height: 100%; }
-    #main #library #bg_div img {
-      width: 1024px;
-      max-width: 100%; }
-  #main #library #library_main {
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    position: absolute; }
-    #main #library #library_main #top_div {
+  #main #library {
+    padding: 0px;
+    spacing: 0px;
+    margin: 0px; }
+    #main #library #bg_div {
       position: absolute;
-      height: 12%;
-      min-height: 80px;
+      z-index: 5;
       width: 100%;
-      top: 43px;
-      border-bottom: 1px solid #4d4b4b; }
-      #main #library #library_main #top_div #logo_div {
-        width: 25%;
-        max-width: 280px;
-        min-width: 220px;
-        float: left;
-        text-align: center;
-        align: center; }
-        #main #library #library_main #top_div #logo_div #library_logo {
-          text-align: center;
-          align: center;
-          background: url(../images/ws_logo.png) no-repeat;
-          height: 71px;
-          width: 110px;
-          border: none;
-          position: relative; }
-      #main #library #library_main #top_div #title_div {
-        width: 50%;
-        height: 100%;
+      height: 100%;
+      padding: 0px;
+      spacing: 0px;
+      margin: 0px; }
+      #main #library #bg_div img {
+        width: 100%;
+        max-width: 100%; }
+    #main #library #library_main {
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      padding: 0px;
+      spacing: 0px;
+      margin: 0px;
+      position: absolute; }
+      #main #library #library_main #top_div {
+        position: absolute;
+        height: 12%;
         min-height: 80px;
-        float: left; }
-        #main #library #library_main #top_div #title_div #library_title {
-          position: relative;
-          font-size: 24px;
-          font-weight: bold;
-          color: #FFFFFF; }
-      #main #library #library_main #top_div #search_div {
-        min-width: 220px;
-        height: 29px;
-        float: right;
-        background: url(../images/library/search_box.png) no-repeat; }
-  #main #library #main_div {
-    position: absolute; }
+        width: 100%;
+        top: 43px;
+        padding: 0px;
+        spacing: 0px;
+        margin: 0px;
+        border-bottom: 1px solid #4d4b4b; }
+        #main #library #library_main #top_div #logo_div {
+          width: 25%;
+          max-width: 280px;
+          min-width: 220px;
+          float: left;
+          text-align: center;
+          align: center; }
+          #main #library #library_main #top_div #logo_div #library_logo {
+            text-align: center;
+            align: center;
+            background: url(../images/ws_logo.png) no-repeat;
+            height: 71px;
+            width: 110px;
+            border: none;
+            position: relative; }
+        #main #library #library_main #top_div #title_div {
+          width: 50%;
+          height: 100%;
+          min-height: 80px;
+          float: left; }
+          #main #library #library_main #top_div #title_div #library_title {
+            position: relative;
+            font-size: 24px;
+            font-weight: bold;
+            color: #FFFFFF; }
+        #main #library #library_main #top_div #search_div {
+          min-width: 220px;
+          height: 29px;
+          float: right;
+          background: url(../images/library/search_box.png) no-repeat; }
+    #main #library #main_div {
+      position: absolute; }
   #main #videos {
     z-index: 13000;
     color: #FFFFFF; }
@@ -571,6 +612,7 @@ body {
   #main #tabstrip {
     padding: 0px;
     margin: 0px;
+    spacing: 0px;
     width: 100%;
     align: center; }
     #main #tabstrip.footer {
@@ -582,7 +624,7 @@ body {
       user-select: none;
       background: url(../images/tabstrip/tabstrip.png) repeat-x;
       position: absolute;
-      width: 101%;
+      width: 100%;
       height: 62px;
       z-index: 10000;
       padding: 0px;
@@ -596,13 +638,31 @@ body {
       user-select: none;
       padding: 0px;
       margin: 0px;
+      spacing: 0px;
       cursor: pointer;
       float: left;
       width: 20%;
       color: #FFFFFF;
-      font-size: 11px;
+      font-size: 12px;
       text-align: center;
       align: center;
       background: rgba(255, 255, 255, 0); }
       #main #tabstrip .tab.active {
         background: rgba(255, 255, 255, 0.1); }
+  #main #videos {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 9000; }
+    #main #videos #shadowbox {
+      background: rgba(0, 0, 0, 0.7); }
+      #main #videos #shadowbox #video_div {
+        position: absolute;
+        width: 640px;
+        height: 360px;
+        margin: 0px;
+        padding: 0px;
+        border: 1px solid #cccccc; }
+        #main #videos #shadowbox #video_div video {
+          width: inherit;
+          height: inherit; }

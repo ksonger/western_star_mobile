@@ -1,7 +1,6 @@
 window.MainView = Backbone.View.extend({
 
 	initialize:function () {
-		
 	},
 	initialized:false,
 	loginView:null,
@@ -9,24 +8,16 @@ window.MainView = Backbone.View.extend({
 	interiorsView:null,
 	libraryView:null,
 	calculatorsView:null,
-    tabstripView:null,
-    headerView:null,
-    videoView:null,
+	tabstripView:null,
+	headerView:null,
+	videoView:null,
+    imageView:null,
 	wsView:null,
 	states:[],
-    k_app:null,
-    lang_list:null,
+	k_app:null,
+	lang_list:null,
 	render:function () {
-		this.$el = $("#main");
-        TweenLite.to(this.$el, .01, {css:{autoAlpha:0}});
-        var mv = this;
-        var tabs = ["#home","#ws","#library","#interiors","#calculators"];
-        $.each($(".km-tabstrip").find("a"), function(index, tab)    {
-            $(tab).click(function()    {
-               app.setState(mv.states[index+1]); 
-            });
-        });
-        	
+		this.$el = $("#main");	
 		// if this is a touch-enabled device, set zoom levels
 		if (app.isTouchDevice) {
 			var viewportmeta = document.querySelector('meta[name="viewport"]');
@@ -41,41 +32,42 @@ window.MainView = Backbone.View.extend({
 		$(window).resize(function () {
 			mainView.onWindowResize();
 		});
-		this.showMain();
+        
+		TweenLite.to(this.$el, .01, {css:{autoAlpha:0}});
+		self.setTimeout("app.mainView.showMain()", 500);
+		self.setInterval("app.mainView.onWindowResize()", 200);
 		return this;
 	},
 
 	showMain:function () {
-        
 		if (!this.initialized) {
 			app.mainView = this;
 			this.initLogin();
-			this.initHome();
-            this.initWS();
-            this.initDocLibrary();
+			this.initHome(); 
+			this.initLibrary();
+			this.initWS();
 			this.initInteriors();
 			this.initCalculators();
-            this.initTabstrip();
-            this.initHeader();
-            this.initVideo();
+			this.initTabstrip();
+			this.initHeader();
+			this.initVideo();
+            this.initImage();
 			this.initialized = true;
-            self.setInterval("app.mainView.onWindowResize()", 100);
 		}
 	},
 
 	initLogin:function () {
 		this.loginView = new LoginView();
 		this.states.push(this.loginView);
-        TweenMax.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4});
+		TweenMax.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4});
 		app.setState(this.loginView);
-        
 	},
 
 	initHome:function () {
 		this.homeView = new HomeView();
 		this.states.push(this.homeView);
 	},
-    initWS:function () {
+	initWS:function () {
 		this.wsView = new WSView();
 		this.states.push(this.wsView);
 	},
@@ -84,7 +76,7 @@ window.MainView = Backbone.View.extend({
 		this.states.push(this.interiorsView);
 	},
 
-	initDocLibrary:function () {
+	initLibrary:function () {
 		this.libraryView = new LibraryView();
 		this.states.push(this.libraryView);
 	},
@@ -93,20 +85,22 @@ window.MainView = Backbone.View.extend({
 		this.calculatorsView = new CalculatorsView();
 		this.states.push(this.calculatorsView);
 	}, 
-    initTabstrip:function()    {
-        this.tabstripView = new TabstripView();
-    },
-    initHeader:function()    {
-        this.headerView = new HeaderView();
-    },
-    initVideo:function()    {
-        this.videoView = new VideoView();
-    },
-    
-    onLanguageSelect:function(lang)    {
-        app.lang = lang;
-        this.setStrings();
-    },
+	initTabstrip:function() {
+		this.tabstripView = new TabstripView();
+	},
+	initHeader:function() {
+		this.headerView = new HeaderView();
+	},
+	initVideo:function() {
+		this.videoView = new VideoView();
+	},
+    initImage:function() {
+		this.imageView = new ImageView();
+	},
+	onLanguageSelect:function(lang) {
+		app.lang = lang;
+		this.setStrings();
+	},
 	setStrings:function() {
 		var page = this;
 		$.each(app.stringsCollection.models, function(index, model) {
@@ -121,23 +115,27 @@ window.MainView = Backbone.View.extend({
 		});
 	},
 	onWindowResize:function () {
-        if (app.windowWidth < 1024) {
-            app.currentLayout = "portrait";
-        } else {
-            app.currentLayout = "landscape";
-        }
+		if (app.windowWidth < 1024) {
+			app.currentLayout = "portrait";
+		}
+		else {
+			app.currentLayout = "landscape";
+		}
 		try {
-            $("#main").width(app.windowWidth);
-            $("#main").height(app.windowHeight);
-            if($("#tabstrip").css("opacity") != "0")    {
-                $("#tabstrip").css({"top":app.windowHeight - $("#tabstrip").height()-$("#home_header").height()+"px"});
-            }
-            if($("#header_bar").css("opacity") != "0")    {
-                $("#lang_button").css({"left":app.windowWidth - $("#lang_button").width()-15+"px", "top":(($("#header_bar").height() - $("#lang_button").height())/2)+"px"});
-                $("#header_title").css({"width":app.windowWidth+"px"});
-            }
+			$("#main").width(app.windowWidth);
+			$("#main").height(app.windowHeight);
+			if ($("#tabstrip").css("opacity") != "0") {
+				$("#tabstrip").css({"top":app.windowHeight - $("#tabstrip").height() - $("#home_header").height() + "px"});
+			}
+			if ($("#header_bar").css("opacity") != "0") {
+				$("#lang_button").css({"left":app.windowWidth - $("#lang_button").width() - 15 + "px", "top":(($("#header_bar").height() - $("#lang_button").height()) / 2) + "px"});
+				$("#header_title").css({"width":app.windowWidth + "px"});
+			}
+			if ($("#videos").css("opacity") != "0") {
+                app.mainView.videoView.respond();
+			}
 			app.currentState.respond();
-            app.mainView.headerView.respond();
+			app.mainView.headerView.respond();
 		}
 		catch (e) {
 		}

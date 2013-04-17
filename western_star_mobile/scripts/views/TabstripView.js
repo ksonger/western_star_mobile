@@ -12,6 +12,9 @@ window.TabstripView = Backbone.View.extend({
 		var strip = this;
 		$.each(this.$el.find(".tab"), function(index, tab) {
 			$(tab).click(function(evt) {
+                if($("#videos").css("opacity") != 0)    {
+                    app.mainView.videoView.hideVideo();
+                }
 				if (index == 0) {
 					app.setState(app.mainView.homeView);
 				}

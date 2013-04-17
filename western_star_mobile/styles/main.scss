@@ -13,6 +13,9 @@ textarea {
 body {
   font-size: 1em;
   line-height: 1.4;
+    margin:0px;
+    overflow:hidden;
+    position:absolute;
 }
 
 ::-moz-selection {
@@ -197,19 +200,23 @@ button:focus {
   }
 }
 
-
+/*
 $arial_uni: 'Arial Unicode MS';
 
 @font-face{
   font-family:'Arial Unicode MS';
   src: url("fonts/ARIALUNI.TTF");
 }
+*/
 
 body {
   background-color: #000;
 width:100%;
 height:100%;
 overflow:hidden;
+padding:0px;
+spacing:0px;
+margin:0px;
   font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 
@@ -226,19 +233,31 @@ overflow:hidden;
     position:absolute;
     background-color: #000;
     overflow:hidden;
+    margin:0px;
+    padding:0px;
+    spacing:0px;
     .state    {
         position:absolute;
         width:100%;
         height:100%;
+        margin:0px;
+        spacing:0px;
+        padding:0px;
     }
     #header_bar    {
         z-index:13000;
         position:absolute;
         width:100%;
         height:43px;
+        padding:0px;
+        spacing:0px;
+        margin:0px;
         .header_bar    {
             height:43px;
             width:100%;
+            padding:0px;
+            margin:0px;
+            spacing:0px;
             background: url(../images/utility_bar_middle.png) repeat-x;
             #lang_button    {
                 position:absolute;
@@ -384,6 +403,9 @@ overflow:hidden;
     }
     #login    {
         position:absolute;
+        padding:0px;
+        spacing:0px;
+        margin:0px;
         img    {
            position:absolute;
            border:0px;
@@ -479,7 +501,6 @@ overflow:hidden;
             }
             #login_languages    {
                 @include unselectable;
-                font-family: $arial_uni;
                 cursor:pointer;
                 font-size:14px;
                 color: #FFFFFF;
@@ -511,17 +532,21 @@ overflow:hidden;
     }
 
     #home    {
+        padding:0px;
+        spacing:0px;
+        margin:0px;
         img    {
             position:absolute;
            border:0px;
         }
-        width:1024px;
-        height:768px;
         position:absolute;
         #collage    {
             position:absolute;
             height:100%;
             z-index:20;
+            padding:0px;
+            spacing:0px;
+            margin:0px;
             img    {
                 max-height:100%;
                 border:0px;
@@ -544,7 +569,7 @@ overflow:hidden;
                 color:#FFFFFF;
                 font-size:30px;
                 font-weight:bold;
-                line-hieght:35px;
+                line-height:35px;
             }
             #home_body    {
                 color:#FFFFFF;
@@ -619,13 +644,19 @@ overflow:hidden;
         }
     }
     #library    {
+        padding:0px;
+        spacing:0px;
+        margin:0px;
         #bg_div    {
             position:absolute;
             z-index:5;
             width:100%;
             height:100%;
+            padding:0px;
+            spacing:0px;
+            margin:0px;
             img    {
-                width:1024px;
+                width:100%;
                 max-width:100%;
             }
         }
@@ -633,6 +664,9 @@ overflow:hidden;
             width:100%;
             height:100%;
             z-index:10;
+            padding:0px;
+            spacing:0px;
+            margin:0px;
             position:absolute;
             #top_div    {
                 position:absolute;
@@ -640,6 +674,9 @@ overflow:hidden;
                 min-height:80px;
                 width:100%;
                 top:43px;
+                padding:0px;
+                spacing:0px;
+                margin:0px;
                 border-bottom:1px solid #4d4b4b;
                 #logo_div    {
                     width:25%;
@@ -695,13 +732,14 @@ overflow:hidden;
     #tabstrip    {
         padding:0px;
         margin:0px;
+        spacing:0px;
         width:100%;
         align:center;
         &.footer    {
             @include unselectable;
             background: url(../images/tabstrip/tabstrip.png) repeat-x;
             position:absolute;
-            width:101%;
+            width:100%;
             height:62px;
             z-index:10000;
             padding:0px;
@@ -713,11 +751,12 @@ overflow:hidden;
             @include unselectable;
             padding:0px;
             margin:0px;
+            spacing:0px;
             cursor:pointer;
             float:left;
             width:20%;
             color:#FFFFFF;
-            font-size:11px;
+            font-size:12px;
             text-align:center;
             align:center;
             background: rgba(255, 255, 255, 0);
@@ -725,6 +764,50 @@ overflow:hidden;
                  background: rgba(255, 255, 255, .1);   
             }
         }
+    }
+
+    #videos    {
+        width:100%;
+        height:100%;
+        position:absolute;
+        z-index:9000;
+        #shadowbox_video    {
+            background: rgba(0, 0, 0, .7); 
+            #video_div    {
+                position:absolute;
+                width:640px;
+                height:360px;
+                margin:0px;
+                padding:0px;
+                border: 1px solid #CCCCCC;
+                video    {
+                    width:inherit;
+                    height:inherit;
+                }  
+            }         
+        }     
+    }
+
+    #images    {
+        width:100%;
+        height:100%;
+        position:absolute;
+        z-index:9000;
+        #shadowbox_image    {
+            background: rgba(0, 0, 0, .7); 
+            #image_div    {
+                position:absolute;
+                width:850px;
+                height:565px;
+                overflow:hidden;
+                margin:0px;
+                padding:0px;
+                border: 1px solid #CCCCCC;
+                img    {
+                    width:850px;
+                }  
+            }         
+        }     
     }
 }
 

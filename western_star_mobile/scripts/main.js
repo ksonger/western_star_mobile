@@ -1,22 +1,24 @@
-// JavaScript Document
+var db_host = "http://kensonger.com";
 
-// Wait for PhoneGap to load
+
 document.addEventListener("deviceready", onDeviceReady, false);
 // PhoneGap is ready
 function onDeviceReady() {
 	tpl.loadTemplates([
 		'login',
 		'home',
+        'library',
         'ws',
-		'library',
 		'calculators',
 		'interiors',
         'tabstrip',
         'header',
-        'video'
+        'video',
+        'image'
 	], function () {
 		app = new AppRouter();
 		Backbone.history.start();
 	});
 	navigator.splashscreen.hide();
+    
 }
