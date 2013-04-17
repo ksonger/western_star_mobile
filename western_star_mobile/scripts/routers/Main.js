@@ -134,7 +134,6 @@ var AppRouter = Backbone.Router.extend({
 		this.usersCollection = new UsersCollection();
 		this.assetsCollection = new AssetsCollection();
 		this.imagesCollection = new ImagesCollection();
-		this.online = true;
         
 		if (this.online) {
 			app.stringsCollection.fetch({
