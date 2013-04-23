@@ -720,6 +720,201 @@ margin:0px;
         }
     }
 
+    #calculators    {
+        padding:0px;
+        spacing:0px;
+        margin:0px;
+        #bg_div    {
+            position:absolute;
+            z-index:5;
+            width:100%;
+            height:100%;
+            padding:0px;
+            spacing:0px;
+            margin:0px;
+            img    {
+                width:100%;
+                max-width:100%;
+            }
+        }
+        #calculators_main    {
+            width:100%;
+            height:100%;
+            z-index:10;
+            padding:0px;
+            spacing:0px;
+            margin:0px;
+            position:absolute;
+            #top_div    {
+                position:absolute;
+                height:12%;
+                min-height:80px;
+                width:100%;
+                top:43px;
+                padding:0px;
+                spacing:0px;
+                margin:0px;
+                border-bottom:1px solid #4d4b4b;
+                #logo_div    {
+                    float:left;
+                    margin-left:15px;
+                    min-width:180px;
+                    #calculators_logo    {
+                        text-align:center;
+                        align:center;
+                        background: url(../images/ws_logo.png) no-repeat;
+                        height:71px;
+                        width:110px;
+                        border:none;
+                        position:relative;
+                    }
+                }
+                #title_div    {
+                    width:50%;
+                    height:100%;
+                    min-height:80px;
+                    float:left;
+                    #calculators_title    {
+                        @include unselectable;
+                        position:relative;
+                        font-size:24px;
+                        font-weight:bold;
+                        color:#FFFFFF;
+                    }
+                }
+            }
+        }
+        #main_div    {
+            position:absolute;
+            width:100%;
+            #left_nav    {
+                float:left;
+                display:inline-block;
+                width:33%;
+                min-width:340px;
+                background: #333333;
+                height:100%;
+                z-index:10000;
+                -moz-box-shadow: 3px 3px 20px #000;
+                -webkit-box-shadow: 3px 3px 20px #000;
+                box-shadow: 3px 3px 20px #000;
+                #nav_header    {
+                    border-bottom: 1px solid #999999;
+                    width:33%;
+                    min-width:340px;
+                    #calculators_select    {
+                        @include unselectable;
+                        font-weight:bold;
+                        font-size:18px;
+                        color: #999999;
+                        margin-left:15px;
+                        position:relative;
+                        line-height:50px;
+                    }
+                }
+                #nav_item    {
+                    border-bottom: 1px solid #999999;
+                    width:33%;
+                    min-width:340px;
+                    cursor:pointer;
+                    float:left;
+                    background:#333333;
+                    &.active    {
+                        background:#999999;
+                    }
+                    #calculators_payment    {
+                        @include unselectable;
+                        font-weight:bold;
+                        font-size:18px;
+                        color: #999999;
+                        margin-left:15px;
+                        position:relative;
+                        line-height:50px;
+                        &.active    {
+                            color:#333333;
+                        }
+                    }
+                    #calculators_power    {
+                        @include unselectable;
+                        font-weight:bold;
+                        font-size:18px;
+                        color: #999999;
+                        margin-left:15px;
+                        position:relative;
+                        line-height:50px;
+                        &.active    {
+                            color:#333333;
+                        }
+                    }
+                    #icon    {
+                        float:right;
+                        padding-right:15px;
+                        width:12px;
+                        height:19px;
+                        position:relative;
+                        top:16px;
+                        background: url(../images/calculators/calculators_arrow_inactive.png) no-repeat;
+                        &.active    {
+                            background: url(../images/calculators/calculators_arrow_active.png) no-repeat;
+                        }
+                    }
+                }
+            }
+            #main_content    {
+                float:right;
+                display:inline-block;
+                position:absolute;
+                width:67%;
+                min-width:705px;
+                height:100%;
+                
+                #bottom_image    {
+                    z-index:10;
+                    width:705px;
+                    max-width:100%;
+                    height:230px;
+                    background: url(../images/calculators/calculators_bottom_image.png) no-repeat;
+                    position:relative;
+                    overflow-x:hidden;
+                }
+                #field_1    {
+                    width:120px;
+                    .input_field_middle {
+                        background: url(../images/input_middle.png) repeat-x;
+                        input    {
+                            width:120px;
+                            height:46px;
+                            background-color:transparent;
+                            outline:none;
+                            border:0px;
+                        }
+                        height:46px;
+                        border:none;
+                        #login_submit    {
+                            font-weight:bold;
+                            font-size:16px;
+                            white-space: nowrap;
+                            color:#FFFFFF;
+                            margin:5px;
+                        }
+                    }
+                    .input_field_right  {
+                      background: url(../images/input_right.png) no-repeat;
+                      height:46px;
+                      width:11px;
+                      border:none;
+                    }
+                    .input_field_left  {
+                      background: url(../images/input_left.png) no-repeat;
+                      height:46px;
+                      width:11px;
+                      border:none;
+                    }
+                }
+            }
+        }
+    }
+
     #videos    {
         z-index:13000;
         color:#FFFFFF;

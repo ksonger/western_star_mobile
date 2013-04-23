@@ -52,6 +52,7 @@
     <Folder Include="images\home" />
     <Folder Include="images\lang_menu" />
     <Folder Include="images\library" />
+    <Folder Include="images\calculators" />
     <Folder Include="images\tabstrip" />
     <Folder Include="api" />
     <Folder Include="assets" />
@@ -143,6 +144,10 @@
     <Content Include="data\strings.json" />
     <Content Include="data\users.json" />
     <Content Include="data\western_star.sql" />
+    <Content Include="images\calculators\calculators_arrow_active.png" />
+    <Content Include="images\calculators\calculators_arrow_inactive.png" />
+    <Content Include="images\calculators\calculators_background.png" />
+    <Content Include="images\calculators\calculators_bottom_image.png" />
     <Content Include="images\home\home_button_middle.png" />
     <Content Include="images\home\home_collage.jpg" />
     <Content Include="images\home\home_collage.png" />
@@ -152,6 +157,9 @@
     <Content Include="images\home\home_icon_2.png" />
     <Content Include="images\home\home_icon_3.png" />
     <Content Include="images\home\home_icon_4.png" />
+    <Content Include="images\input_left.png" />
+    <Content Include="images\input_middle.png" />
+    <Content Include="images\input_right.png" />
     <Content Include="images\lang_button_left.png" />
     <Content Include="images\lang_button_middle.png" />
     <Content Include="images\lang_button_right.png" />
@@ -165,7 +173,6 @@
     <Content Include="images\lang_menu\lang_menu_topleft.png" />
     <Content Include="images\lang_menu\lang_menu_topmiddle.png" />
     <Content Include="images\lang_menu\lang_menu_topright.png" />
-    <Content Include="images\library\library_background.jpg" />
     <Content Include="images\library\library_background.png" />
     <Content Include="images\library\search_box.png" />
     <Content Include="images\login\login_background.png" />
