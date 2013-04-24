@@ -12,33 +12,107 @@
 			</div>
 		</div>
 		<div id="main_div">
-            <div id="left_nav">
-                <div id="nav_header">
-                    <span id="calculators_select"></span>
-                </div>
+			<div id="left_nav">
+				<div id="nav_header">
+					<span id="calculators_select"></span>
+				</div>
 
-                   <div id="nav_item" class="active">
-                       <span id="calculators_payment" class="active"></span><div id="icon" class="active"></div>
-                   </div>
-                    <div id="nav_item">
-                       <span id="calculators_power"></span><div id="icon"></div>
-                   </div>
-            </div>
-            <div id="main_content">
-                <div id="calculator">
-                    <div id="payments">
-                        <table id="field_1" cellpadding="0px" cellspacing="0px">
-						<td class="input_field_left"></td>
-						<td class="input_field_middle">
-							<input type="text" id="sales_price" />
-						</td>
-						<td class="input_field_right"></td>
-					</table>
-                    </div>
-                    <div id="power"></div>
-                </div>
-                <div id="bottom_image"></div>
-            </div>
+				<div id="nav_item" class="active">
+					<span id="calculators_payment" class="active"></span>
+					<div id="icon" class="active"></div>
+				</div>
+				<div id="nav_item">
+					<span id="calculators_power"></span>
+					<div id="icon"></div>
+				</div>
+			</div>
+			<div id="main_content">
+				<div id="calculator">
+					<div id="payments">
+						<table id="field_values_payments" cellpadding="5px" cellspacing="0px">
+							<td width="33%">
+								<div class="field_value" id="value_1">
+									<span class="calculators_label" id="calculators_label_1"></span>
+									<table id="field_1" cellpadding="0px" cellspacing="0px">
+                                        <td class="calculators_units">$</td>
+										<td class="input_field_left"> </td>
+										<td class="input_field_middle">
+											<input type="text" id="sales_price" />
+										</td>
+										<td class="input_field_right"> </td>
+									</table><br />
+                                    <span class="calculators_desc" id="calculators_desc_1"></span>
+								</div>
+							</td>
+							<td width="33%">
+								<div class="field_value" id="value_2">
+									<span class="calculators_label" id="calculators_label_2"></span>
+									<table id="field_2" cellpadding="0px" cellspacing="0px">
+										<td class="input_field_left"> </td>
+										<td class="input_field_middle">
+											<input type="text" id="interest_rate" />
+										</td>
+										<td class="input_field_right"> </td>
+                                        <td class="calculators_units">%</td>
+									</table>
+                                    <br />
+                                    <span class="calculators_desc" id="calculators_desc_2"></span>
+								</div>
+							</td>
+							<td width="33%">
+								<div class="field_value" id="value_3">
+									<span class="calculators_label" id="calculators_label_3"></span>
+									<table id="field_3" cellpadding="0px" cellspacing="0px">
+										<td class="input_field_left"> </td>
+										<td class="input_field_middle">
+											<input type="text" id="sales_tax" />
+										</td>
+										<td class="input_field_right"> </td>
+                                        <td class="calculators_units">%</td>
+									</table><br />
+                                    <span class="calculators_desc" id="calculators_desc_3"></span>
+								</div>
+							</td>
+							<tr>
+							<td width="33%">
+								<div class="field_value" id="value_4">
+									<span class="calculators_label" id="calculators_label_4"></span>
+									<table id="field_4" cellpadding="0px" cellspacing="0px">
+                                        <td class="calculators_units">$</td>
+										<td class="input_field_left"> </td>
+										<td class="input_field_middle">
+											<input type="text" id="down_payment" />
+										</td>
+										<td class="input_field_right"> </td>
+									</table><br />
+                                    <span class="calculators_desc" id="calculators_desc_4"></span>
+								</div>
+							</td>
+							<td width="33%">
+								<div class="field_value" id="value_5">
+									<span class="calculators_label" id="calculators_label_5"></span>
+									<table id="field_5" cellpadding="0px" cellspacing="0px">
+										<td class="input_field_left"> </td>
+										<td class="input_field_middle">
+											<input type="text" id="financing_months" />
+										</td>
+										<td class="input_field_right"> </td>
+									</table><br />
+                                    <span class="calculators_desc" id="calculators_desc_5"></span>
+								</div>
+							</td>
+							<td width="33%">
+								<span class="calculators_label" id="calculators_label_6"></span>
+                                <span class="calculators_result">$759.50</span>
+							</td>
+						</table>
+					</div>
+					<div id="power"></div>
+				</div>
+				<div id="bottom_frame">
+					<img id="bottom_image" src="./images/calculators/calculators_bottom_image.png" />
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

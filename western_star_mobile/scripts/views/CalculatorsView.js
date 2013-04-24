@@ -14,7 +14,9 @@ window.CalculatorsView = StateView.extend({
             "top":(this.$el.find("#top_div").height()) + $("#header_bar").height() + "px",
             "height":app.windowHeight - this.$el.find("#top_div").height() - $(".footer").height() + "px"
         });
-        this.$el.find("#bottom_image").css({"top":app.windowHeight - this.$el.find("#bottom_image").height() - $(".footer").height() - this.$el.find("#main_div").offset().top + "px"});
+        this.$el.find("#bottom_frame").css({"top":app.windowHeight - this.$el.find("#bottom_image").height() - $(".footer").height() - this.$el.find("#main_div").offset().top + "px"});
+        console.log(app.windowHeight - this.$el.find("#top_div").height() - $(".footer").height() - this.$el.find("#bottom_image").height());
+        this.$el.find("#field_values_payments").height(app.windowHeight - this.$el.find("#top_div").height() - $(".footer").height() - this.$el.find("#bottom_image").height() - 50);
 	},
 	render:function() {
 		this.template = _.template(tpl.get("calculators"));
