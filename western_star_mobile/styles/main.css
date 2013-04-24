@@ -670,8 +670,8 @@ body {
       #main #calculators #main_div #left_nav {
         float: left;
         display: inline-block;
-        width: 33%;
-        min-width: 340px;
+        width: 30%;
+        min-width: 320px;
         background: #333333;
         height: 100%;
         z-index: 10000;
@@ -680,8 +680,8 @@ body {
         box-shadow: 3px 3px 20px black; }
         #main #calculators #main_div #left_nav #nav_header {
           border-bottom: 1px solid #999999;
-          width: 33%;
-          min-width: 340px; }
+          width: 30%;
+          min-width: 320px; }
           #main #calculators #main_div #left_nav #nav_header #calculators_select {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -697,8 +697,8 @@ body {
             line-height: 50px; }
         #main #calculators #main_div #left_nav #nav_item {
           border-bottom: 1px solid #999999;
-          width: 33%;
-          min-width: 340px;
+          width: 30%;
+          min-width: 320px;
           cursor: pointer;
           float: left;
           background: #333333; }
@@ -751,42 +751,99 @@ body {
         width: 67%;
         min-width: 705px;
         height: 100%; }
-        #main #calculators #main_div #main_content #bottom_image {
-          z-index: 10;
+        #main #calculators #main_div #main_content .input_field_middle {
+          background: url(../images/input_middle.png) repeat-x;
+          height: 46px;
+          border: none; }
+          #main #calculators #main_div #main_content .input_field_middle input {
+            min-width: 60px;
+            height: 46px;
+            background-color: transparent;
+            outline: none;
+            border: 0px; }
+        #main #calculators #main_div #main_content .input_field_right {
+          background: url(../images/input_right.png) no-repeat;
+          height: 46px;
+          width: 11px;
+          border: none; }
+        #main #calculators #main_div #main_content .input_field_left {
+          background: url(../images/input_left.png) no-repeat;
+          height: 46px;
+          width: 11px;
+          border: none; }
+        #main #calculators #main_div #main_content #field_values_payments {
+          width: 95%;
+          position: absolute;
+          top: 5px;
+          left: 5px;
+          color: #FFF;
+          line-height: 13px; }
+          #main #calculators #main_div #main_content #field_values_payments .calculators_units {
+            line-height: 50px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            font-wieght: bold; }
+          #main #calculators #main_div #main_content #field_values_payments td {
+            vertical-align: top; }
+          #main #calculators #main_div #main_content #field_values_payments .calculators_label {
+            line-height: 21px;
+            font-weight: bold;
+            font-size: 18px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            padding-bottom: 5px; }
+          #main #calculators #main_div #main_content #field_values_payments .field_value {
+            vertical-align: top;
+            margin-left: 5px; }
+            #main #calculators #main_div #main_content #field_values_payments .field_value .calculators_desc {
+              font-wieght: normal;
+              font-size: 12px;
+              -webkit-touch-callout: none;
+              -webkit-user-select: none;
+              -khtml-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none; }
+          #main #calculators #main_div #main_content #field_values_payments .calculators_result {
+            color: #CCCCCC;
+            font-size: 48px;
+            font-weight: bold;
+            line-height: 60px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+          #main #calculators #main_div #main_content #field_values_payments #field_1 {
+            width: 142px; }
+          #main #calculators #main_div #main_content #field_values_payments #field_2 {
+            width: 102px; }
+          #main #calculators #main_div #main_content #field_values_payments #field_3 {
+            width: 102px; }
+          #main #calculators #main_div #main_content #field_values_payments #field_4 {
+            width: 142px; }
+          #main #calculators #main_div #main_content #field_values_payments #field_5 {
+            width: 82px; }
+        #main #calculators #main_div #main_content #bottom_frame {
           width: 705px;
           max-width: 100%;
           height: 230px;
-          background: url(../images/calculators/calculators_bottom_image.png) no-repeat;
           position: relative;
-          overflow-x: hidden; }
-        #main #calculators #main_div #main_content #field_1 {
-          width: 120px; }
-          #main #calculators #main_div #main_content #field_1 .input_field_middle {
-            background: url(../images/input_middle.png) repeat-x;
-            height: 46px;
-            border: none; }
-            #main #calculators #main_div #main_content #field_1 .input_field_middle input {
-              width: 120px;
-              height: 46px;
-              background-color: transparent;
-              outline: none;
-              border: 0px; }
-            #main #calculators #main_div #main_content #field_1 .input_field_middle #login_submit {
-              font-weight: bold;
-              font-size: 16px;
-              white-space: nowrap;
-              color: #FFFFFF;
-              margin: 5px; }
-          #main #calculators #main_div #main_content #field_1 .input_field_right {
-            background: url(../images/input_right.png) no-repeat;
-            height: 46px;
-            width: 11px;
-            border: none; }
-          #main #calculators #main_div #main_content #field_1 .input_field_left {
-            background: url(../images/input_left.png) no-repeat;
-            height: 46px;
-            width: 11px;
-            border: none; }
+          z-index: -1; }
+          #main #calculators #main_div #main_content #bottom_frame #bottom_image {
+            width: 705px;
+            max-width: 100%;
+            height: 230px;
+            z-index: -1; }
   #main #videos {
     z-index: 13000;
     color: #FFFFFF; }

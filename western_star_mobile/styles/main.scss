@@ -812,7 +812,7 @@ margin:0px;
                         line-height:50px;
                     }
                 }
-                #nav_item    {
+                .nav_item    {
                     border-bottom: 1px solid #999999;
                     width:30%;
                     min-width:320px;
@@ -867,6 +867,10 @@ margin:0px;
                 width:67%;
                 min-width:705px;
                 height:100%;
+                #payments, #power    {
+                    position:absolute;
+                    width:100%;
+                }
                 .input_field_middle {
                     background: url(../images/input_middle.png) repeat-x;
                     input    {
@@ -891,13 +895,16 @@ margin:0px;
                   width:11px;
                   border:none;
                 }
-                #field_values_payments    {
+                #field_values_payments, #field_values_payments_power     {
                     width:95%;
                     position:absolute;
                     top:5px;
                     left:5px;
                     color:#FFF;
-                    
+                    input    {
+                        font-weight:bold;
+                        font-size:18px;
+                    }
                     .calculators_units    {
                         line-height:50px;
                         @include unselectable;
@@ -923,26 +930,24 @@ margin:0px;
                             @include unselectable; 
                         }
                     }
-                    .calculators_result    {
+                    .field_result    {
+                        vertical-align:top;
+                        margin-left:5px;
+                    }
+                    .calculators_result, .calculators_result_power    {
                         color:#CCCCCC;
                         font-size:48px;
                         font-weight:bold;
                         line-height:60px;
                         @include unselectable;
                     }
-                    #field_1    {
+                    #field_1, #field_4, #field_6, #field_7    {
                         width:142px;
                     }
-                    #field_2    {
+                    #field_2, #field_3, #field_8, #field_9   {
                         width:102px;
                     }
-                    #field_3    {
-                        width:102px;
-                    }
-                    #field_4    {
-                        width:142px;
-                    }
-                    #field_5    {
+                    #field_5, #field_10    {
                         width:82px;
                     }
                 }

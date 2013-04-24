@@ -17,11 +17,11 @@
 					<span id="calculators_select"></span>
 				</div>
 
-				<div id="nav_item" class="active">
+				<div id="nav_payments" class="nav_item active">
 					<span id="calculators_payment" class="active"></span>
 					<div id="icon" class="active"></div>
 				</div>
-				<div id="nav_item">
+				<div id="nav_power" class="nav_item">
 					<span id="calculators_power"></span>
 					<div id="icon"></div>
 				</div>
@@ -34,14 +34,14 @@
 								<div class="field_value" id="value_1">
 									<span class="calculators_label" id="calculators_label_1"></span>
 									<table id="field_1" cellpadding="0px" cellspacing="0px">
-                                        <td class="calculators_units">$</td>
+										<td class="calculators_units">$</td>
 										<td class="input_field_left"> </td>
 										<td class="input_field_middle">
 											<input type="text" id="sales_price" />
 										</td>
 										<td class="input_field_right"> </td>
 									</table><br />
-                                    <span class="calculators_desc" id="calculators_desc_1"></span>
+									<span class="calculators_desc" id="calculators_desc_1"></span>
 								</div>
 							</td>
 							<td width="33%">
@@ -53,10 +53,10 @@
 											<input type="text" id="interest_rate" />
 										</td>
 										<td class="input_field_right"> </td>
-                                        <td class="calculators_units">%</td>
+										<td class="calculators_units">%</td>
 									</table>
-                                    <br />
-                                    <span class="calculators_desc" id="calculators_desc_2"></span>
+									<br />
+									<span class="calculators_desc" id="calculators_desc_2"></span>
 								</div>
 							</td>
 							<td width="33%">
@@ -68,9 +68,9 @@
 											<input type="text" id="sales_tax" />
 										</td>
 										<td class="input_field_right"> </td>
-                                        <td class="calculators_units">%</td>
+										<td class="calculators_units">%</td>
 									</table><br />
-                                    <span class="calculators_desc" id="calculators_desc_3"></span>
+									<span class="calculators_desc" id="calculators_desc_3"></span>
 								</div>
 							</td>
 							<tr>
@@ -78,14 +78,14 @@
 								<div class="field_value" id="value_4">
 									<span class="calculators_label" id="calculators_label_4"></span>
 									<table id="field_4" cellpadding="0px" cellspacing="0px">
-                                        <td class="calculators_units">$</td>
+										<td class="calculators_units">$</td>
 										<td class="input_field_left"> </td>
 										<td class="input_field_middle">
 											<input type="text" id="down_payment" />
 										</td>
 										<td class="input_field_right"> </td>
 									</table><br />
-                                    <span class="calculators_desc" id="calculators_desc_4"></span>
+									<span class="calculators_desc" id="calculators_desc_4"></span>
 								</div>
 							</td>
 							<td width="33%">
@@ -98,17 +98,100 @@
 										</td>
 										<td class="input_field_right"> </td>
 									</table><br />
-                                    <span class="calculators_desc" id="calculators_desc_5"></span>
+									<span class="calculators_desc" id="calculators_desc_5"></span>
 								</div>
 							</td>
 							<td width="33%">
-								<span class="calculators_label" id="calculators_label_6"></span>
-                                <span class="calculators_result">$759.50</span>
+								<div class="field_result">
+									<span class="calculators_label" id="calculators_label_6"></span><br/>
+									<span class="calculators_result">$</span>
+								</div>
 							</td>
 						</table>
 					</div>
-					<div id="power"></div>
+					<div id="power">
+                        <table id="field_values_payments_power" cellpadding="5px" cellspacing="0px">
+							<td width="33%">
+								<div class="field_value" id="value_1">
+									<span class="calculators_label" id="calculators_label_7"></span>
+									<table id="field_6" cellpadding="0px" cellspacing="0px">
+										<td class="calculators_units">$</td>
+										<td class="input_field_left"> </td>
+										<td class="input_field_middle">
+											<input type="text" id="monthly_payment_power" />
+										</td>
+										<td class="input_field_right"> </td>
+									</table><br />
+									<span class="calculators_desc" id="calculators_desc_6"></span>
+								</div>
+							</td>
+							<td width="33%">
+								<div class="field_value" id="value_2">
+									<span class="calculators_label" id="calculators_label_8"></span>
+									<table id="field_7" cellpadding="0px" cellspacing="0px">
+                                        <td class="calculators_units">$</td>
+										<td class="input_field_left"> </td>
+										<td class="input_field_middle">
+											<input type="text" id="down_payment_power" />
+										</td>
+										<td class="input_field_right"> </td>
+									</table>
+									<br />
+									<span class="calculators_desc" id="calculators_desc_7"></span>
+								</div>
+							</td>
+							<td width="33%">
+								<div class="field_value" id="value_3">
+									<span class="calculators_label" id="calculators_label_9"></span>
+									<table id="field_8" cellpadding="0px" cellspacing="0px">
+										<td class="input_field_left"> </td>
+										<td class="input_field_middle">
+											<input type="text" id="sales_tax_power" />
+										</td>
+										<td class="input_field_right"> </td>
+										<td class="calculators_units">%</td>
+									</table><br />
+									<span class="calculators_desc" id="calculators_desc_8"></span>
+								</div>
+							</td>
+							<tr>
+							<td width="33%">
+								<div class="field_value" id="value_4">
+									<span class="calculators_label" id="calculators_label_10"></span>
+									<table id="field_9" cellpadding="0px" cellspacing="0px">
+										<td class="input_field_left"> </td>
+										<td class="input_field_middle">
+											<input type="text" id="interest_rate_power" />
+										</td>
+										<td class="input_field_right"> </td>
+                                        <td class="calculators_units">%</td>
+									</table><br />
+									<span class="calculators_desc" id="calculators_desc_9"></span>
+								</div>
+							</td>
+							<td width="33%">
+								<div class="field_value" id="value_5">
+									<span class="calculators_label" id="calculators_label_11"></span>
+									<table id="field_10" cellpadding="0px" cellspacing="0px">
+										<td class="input_field_left"> </td>
+										<td class="input_field_middle">
+											<input type="text" id="financing_months_power" />
+										</td>
+										<td class="input_field_right"> </td>
+									</table><br />
+									<span class="calculators_desc" id="calculators_desc_5"></span>
+								</div>
+							</td>
+							<td width="33%">
+								<div class="field_result">
+									<span class="calculators_label" id="calculators_label_12"></span><br/>
+									<span class="calculators_result_power">$</span>
+								</div>
+							</td>
+						</table>
+                    </div>
 				</div>
+                                
 				<div id="bottom_frame">
 					<img id="bottom_image" src="./images/calculators/calculators_bottom_image.png" />
 				</div>
