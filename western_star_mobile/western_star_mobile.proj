@@ -209,7 +209,11 @@
     <Content Include="kendo\styles\kendo.default.min.css" />
     <Content Include="kendo\styles\kendo.mobile.all.min.css" />
     <Content Include="scripts\collections\AssetsCollection.js" />
+    <Content Include="scripts\collections\InteriorsNavCollection.js" />
+    <Content Include="scripts\collections\InteriorsImagesCollection.js" />
+    <Content Include="scripts\collections\InteriorsSubCatCollection.js" />
     <Content Include="scripts\collections\ImagesCollection.js" />
+    <Content Include="scripts\collections\InteriorsCatCollection.js" />
     <Content Include="scripts\collections\StringsCollection.js" />
     <Content Include="scripts\collections\UsersCollection.js" />
     <Content Include="scripts\lib\backbone-min.js" />
@@ -246,6 +250,10 @@
     <Content Include="scripts\main.js" />
     <Content Include="scripts\models\AssetsModel.js" />
     <Content Include="scripts\models\ImagesModel.js" />
+    <Content Include="scripts\models\InteriorsCatModel.js" />
+    <Content Include="scripts\models\InteriorsImagesModel.js" />
+    <Content Include="scripts\models\InteriorsNavModel.js" />
+    <Content Include="scripts\models\InteriorsSubCatModel.js" />
     <Content Include="scripts\models\IOModel.js" />
     <Content Include="scripts\models\StringsModel.js" />
     <Content Include="scripts\models\UserModel.js" />

@@ -4,6 +4,12 @@ window.IOModel = Backbone.Model.extend({
 	usersReady:false,
 	stringsReady:false,
 	assetsReady:false,
+    imagesReady:false,
+    intCatReady:false,
+    intSubCatReady:false,
+    intImagesReady:false,
+    intNavReady:false,
+    
     
 	
 	downloadFile:function() {
@@ -200,6 +206,12 @@ window.IOModel = Backbone.Model.extend({
 					app.ioModel.db.transaction(app.ioModel.selectUsers, app.ioModel.onUsersError, app.ioModel.onUsersSuccess);
 					app.ioModel.db.transaction(app.ioModel.selectStrings, app.ioModel.onStringsError, app.ioModel.onStringsSuccess);
 					app.ioModel.db.transaction(app.ioModel.selectAssets, app.ioModel.onAssetsError, app.ioModel.onAssetsSuccess);
+                    
+                    app.ioModel.db.transaction(app.ioModel.selectImages, app.ioModel.onImagesError, app.ioModel.onImagesSuccess);
+                    app.ioModel.db.transaction(app.ioModel.selectInteriorsCategories, app.ioModel.onInteriorsCategoriesError, app.ioModel.onInteriorsCategoriesSuccess);
+                    app.ioModel.db.transaction(app.ioModel.selectInteriorsSubCategories, app.ioModel.onInteriorsSubCategoriesError, app.ioModel.onInteriorsSubCategoriesSuccess);
+                    app.ioModel.db.transaction(app.ioModel.selectInteriorsImages, app.ioModel.onInteriorsImagesError, app.ioModel.onInteriorsImagesSuccess);
+                    app.ioModel.db.transaction(app.ioModel.selectInteriorsNav, app.ioModel.onInteriorsNavError, app.ioModel.onInteriorsNavSuccess);
 				}
 			}
 		}
@@ -218,12 +230,29 @@ window.IOModel = Backbone.Model.extend({
 		tx.executeSql('DROP TABLE IF EXISTS strings');
 		tx.executeSql('DROP TABLE IF EXISTS users');
 		tx.executeSql('DROP TABLE IF EXISTS assets');
+        tx.executeSql('DROP TABLE IF EXISTS images');
+        tx.executeSql('DROP TABLE IF EXISTS interiors_categories');
+        tx.executeSql('DROP TABLE IF EXISTS interiors_subcategories');
+        tx.executeSql('DROP TABLE IF EXISTS interiors_images');
+        tx.executeSql('DROP TABLE IF EXISTS interiors_navigation');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS strings(id INTEGER NOT NULL PRIMARY KEY, name TEXT, en TEXT, fr TEXT, dt TEXT, es TEXT, ko TEXT);');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS users(id INTEGER NOT NULL PRIMARY KEY, username TEXT, password TEXT, region TEXT);');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS assets(id INTEGER NOT NULL PRIMARY KEY, type TEXT, storage TEXT, src TEXT, title TEXT, description TEXT, thumbnail TEXT, category TEXT, subcategory TEXT, metadata TEXT);');
-		app.ioModel.db.transaction(app.ioModel.getUsers, app.ioModel.onUsersError, app.ioModel.onUsersSuccess);
+		tx.executeSql('CREATE TABLE IF NOT EXISTS images(key INTEGER NOT NULL PRIMARY KEY, id TEXT, src TEXT);');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS interiors_categories(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, subcategories TEXT);');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS interiors_subcategories(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, images TEXT);');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS interiors_images(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, view TEXT);');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS interiors_navigation(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, view TEXT);');
+        console.log("here??");
+        app.ioModel.db.transaction(app.ioModel.getUsers, app.ioModel.onUsersError, app.ioModel.onUsersSuccess);
 		app.ioModel.db.transaction(app.ioModel.getStrings, app.ioModel.onStringsError, app.ioModel.onStringsSuccess);
 		app.ioModel.db.transaction(app.ioModel.getAssets, app.ioModel.onAssetsError, app.ioModel.onAssetsSuccess);
+        
+        app.ioModel.db.transaction(app.ioModel.getImages, app.ioModel.onImagesError, app.ioModel.onImagesSuccess);
+        app.ioModel.db.transaction(app.ioModel.getInteriorsCategories, app.ioModel.onInteriorsCategoriesError, app.ioModel.onInteriorsCategoriesSuccess);
+        app.ioModel.db.transaction(app.ioModel.getInteriorsSubCategories, app.ioModel.onInteriorsSubCategoriesError, app.ioModel.onInteriorsSubCategoriesSuccess);
+        app.ioModel.db.transaction(app.ioModel.getInteriorsImages, app.ioModel.onInteriorsImagesError, app.ioModel.onInteriorsImagesSuccess);
+        app.ioModel.db.transaction(app.ioModel.getInteriorsNav, app.ioModel.onInteriorsNavError, app.ioModel.onInteriorsNavSuccess);
 	},
     
 	getUsers:function(tx) {
@@ -262,6 +291,66 @@ window.IOModel = Backbone.Model.extend({
 			tx.executeSql("INSERT INTO assets(" + keys + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", vals);
 		});
 	},
+    getImages:function(tx) {
+		$.each(app.imagesCollection.models, function(oind, obj) {
+			var keys = [];
+			var vals = [];
+			$.each(obj.attributes, function(uind, usr) {
+				keys.push(uind);
+				vals.push(usr);
+			});
+                    
+			tx.executeSql("INSERT INTO images(" + keys + ") VALUES (?, ?, ?)", vals);
+		});
+	},
+    getInteriorsCategories:function(tx) {
+		$.each(app.interiorsCatCollection.models, function(oind, obj) {
+			var keys = [];
+			var vals = [];
+			$.each(obj.attributes, function(uind, usr) {
+				keys.push(uind);
+				vals.push(usr);
+			});
+                    
+			tx.executeSql("INSERT INTO images(" + keys + ") VALUES (?, ?, ?, ?)", vals);
+		});
+	},
+    getInteriorsSubCategories:function(tx) {
+		$.each(app.interiorsSubCatCollection.models, function(oind, obj) {
+			var keys = [];
+			var vals = [];
+			$.each(obj.attributes, function(uind, usr) {
+				keys.push(uind);
+				vals.push(usr);
+			});
+                    
+			tx.executeSql("INSERT INTO images(" + keys + ") VALUES (?, ?, ?, ?)", vals);
+		});
+	},
+    getInteriorsImages:function(tx) {
+		$.each(app.interiorsSubCatCollection.models, function(oind, obj) {
+			var keys = [];
+			var vals = [];
+			$.each(obj.attributes, function(uind, usr) {
+				keys.push(uind);
+				vals.push(usr);
+			});
+                    
+			tx.executeSql("INSERT INTO images(" + keys + ") VALUES (?, ?, ?, ?)", vals);
+		});
+	},
+    getInteriorsNav:function(tx) {
+		$.each(app.interiorsSubCatCollection.models, function(oind, obj) {
+			var keys = [];
+			var vals = [];
+			$.each(obj.attributes, function(uind, usr) {
+				keys.push(uind);
+				vals.push(usr);
+			});
+                    
+			tx.executeSql("INSERT INTO images(" + keys + ") VALUES (?, ?, ?, ?)", vals);
+		});
+	},
     
     
     
@@ -274,6 +363,86 @@ window.IOModel = Backbone.Model.extend({
 	},
 	selectAssets:function(tx) {
 		tx.executeSql("SELECT * FROM assets;", [], app.ioModel.assetDataSelectHandler, app.ioModel.onAssetsError);
+	},
+    selectImages:function(tx) {
+		tx.executeSql("SELECT * FROM images;", [], app.ioModel.imagesDataSelectHandler, app.ioModel.onImagesError);
+	},
+    selectInteriorsCategories:function(tx) {
+		tx.executeSql("SELECT * FROM interiors_categories;", [], app.ioModel.interiorsCategoriesDataSelectHandler, app.ioModel.onInteriorsCategoriesError);
+	},
+    selectInteriorsImages:function(tx) {
+		tx.executeSql("SELECT * FROM interiors_images;", [], app.ioModel.interiorsImagesDataSelectHandler, app.ioModel.onInteriorsImagesError);
+	},
+    selectInteriorsSubCategories:function(tx) {
+		tx.executeSql("SELECT * FROM interiors_subcategories;", [], app.ioModel.interiorsSubCategoriesDataSelectHandler, app.ioModel.onInteriorsSubCategoriesError);
+	},
+    selectAssets:function(tx) {
+		tx.executeSql("SELECT * FROM interiors_navigation;", [], app.ioModel.interiorsNavDataSelectHandler, app.ioModel.onInteriorsNavError);
+	},
+    imagesDataSelectHandler:function(transaction, results) {
+		var images_models = [];
+		for (var i = 0; i < results.rows.length; i++) {
+			var row = results.rows.item(i);
+			var images_model = new ImagesModel(row);
+			images_models.push(image_model);
+		}
+		app.imagesCollection = new ImagesCollection(image_models, {model:ImagesModel});
+		app.ioModel.imagesReady = true;
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+			app.onDataReady();
+		}
+	},
+    interiorsCategoriesDataSelectHandler:function(transaction, results) {
+		var intcat_models = [];
+		for (var i = 0; i < results.rows.length; i++) {
+			var row = results.rows.item(i);
+			var intcat_model = new InteriorsCatModel(row);
+			intcat_models.push(intcat_model);
+		}
+		app.interiorsCatCollection = new InteriorsCatCollection(intcat_models, {model:InteriorsCatModel});
+		app.ioModel.intCatReady = true;
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+			app.onDataReady();
+		}
+	},
+    interiorsSubCategoriesDataSelectHandler:function(transaction, results) {
+		var intsubcat_models = [];
+		for (var i = 0; i < results.rows.length; i++) {
+			var row = results.rows.item(i);
+			var intsubcat_model = new InteriorsSubCatModel(row);
+			intsubcat_models.push(intsubcat_model);
+		}
+		app.interiorsSubCatCollection = new InteriorsSubCatCollection(intsubcat_models, {model:InteriorsSubCatModel});
+		app.ioModel.intSubcatReady = true;
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+			app.onDataReady();
+		}
+	},
+    interiorsImagesDataSelectHandler:function(transaction, results) {
+		var intimages_models = [];
+		for (var i = 0; i < results.rows.length; i++) {
+			var row = results.rows.item(i);
+			var intimages_model = new InteriorsImagesModel(row);
+			intimages_models.push(intimages_model);
+		}
+		app.interiorsImagesCollection = new InteriorsImagesCollection(intimages_models, {model:InteriorsImagesModel});
+		app.ioModel.intImagesReady = true;
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+			app.onDataReady();
+		}
+	},
+    interiorsNavDataSelectHandler:function(transaction, results) {
+		var intnav_models = [];
+		for (var i = 0; i < results.rows.length; i++) {
+			var row = results.rows.item(i);
+			var intnav_model = new InteriorsNavModel(row);
+			intnav_models.push(intnav_model);
+		}
+		app.interiorsNavCollection = new InteriorsNavCollection(intnav_models, {model:InteriorsNavModel});
+		app.ioModel.intNavReady = true;
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+			app.onDataReady();
+		}
 	},
 	assetDataSelectHandler:function(transaction, results) {
 		var asset_models = [];
@@ -341,6 +510,52 @@ window.IOModel = Backbone.Model.extend({
 	onAssetsSuccess:function(e) {
 		app.ioModel.assetsReady = true;
 		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady) {
+			app.onDataReady();
+		}
+	},
+    
+    onImagesError:function(e) {
+		console.log("images error: " + e.message);
+	},
+	onImagesSuccess:function(e) {
+		app.ioModel.imagesReady = true;
+		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+			app.onDataReady();
+		}
+	},
+    onInteriorsCategoriesError:function(e) {
+		console.log("interiors categories error: " + e.message);
+	},
+	onInteriorsCategoriesSuccess:function(e) {
+		app.ioModel.intCatReady = true;
+		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+			app.onDataReady();
+		}
+	},
+    onInteriorsSubCategoriesError:function(e) {
+		console.log("interiors subcategories error: " + e.message);
+	},
+	onInteriorsSubCategoriesSuccess:function(e) {
+		app.ioModel.intSubcatReady = true;
+		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+			app.onDataReady();
+		}
+	},
+    onInteriorsImagesError:function(e) {
+		console.log("interiors images error: " + e.message);
+	},
+	onInteriorsImagesSuccess:function(e) {
+		app.ioModel.intImagesReady = true;
+		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+			app.onDataReady();
+		}
+	},
+    onInteriorsNavError:function(e) {
+		console.log("interiors nav error: " + e.message);
+	},
+	onInteriorsNavSuccess:function(e) {
+		app.ioModel.intNavReady = true;
+		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},

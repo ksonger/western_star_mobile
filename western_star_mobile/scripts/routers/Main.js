@@ -28,15 +28,15 @@ var AppRouter = Backbone.Router.extend({
 	isTouchDevice:false,
 	windowWidth:null,
 	windowHeight:null,
-    loader:null,
+	loader:null,
 	states:[],
 	currentState:null,
 	rInt:null,
 	online:true,
 	imageManifest:[],
-    assets_server:"",
-    errors:0,
-    routes:{
+	assets_server:"",
+	errors:0,
+	routes:{
 		"":"index"
 	},
     
@@ -71,8 +71,8 @@ var AppRouter = Backbone.Router.extend({
 	},
 	begin:function (callback) {
 		this.online = window.navigator.onLine;
-        var windowWidth;
-	    var windowHeight;
+		var windowWidth;
+		var windowHeight;
 		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
 			windowWidth = window.innerWidth;
 			windowHeight = window.innerHeight;
@@ -134,6 +134,10 @@ var AppRouter = Backbone.Router.extend({
 		this.usersCollection = new UsersCollection();
 		this.assetsCollection = new AssetsCollection();
 		this.imagesCollection = new ImagesCollection();
+        this.interiorsCatCollection = new InteriorsCatCollection();
+        this.interiorsSubCatCollection = new InteriorsSubCatCollection();
+        this.interiorsImagesCollection = new InteriorsImagesCollection();
+        this.interiorsNavCollection = new InteriorsNavCollection();
         
 		if (this.online) {
 			app.stringsCollection.fetch({
@@ -144,9 +148,37 @@ var AppRouter = Backbone.Router.extend({
 								success:function () {
 									app.imagesCollection.fetch({
 										success:function () {
-											// write to local store
-											app.ioModel = new IOModel();
-											app.ioModel.createLocalStore();
+											app.interiorsCatCollection.fetch({
+												success:function () {
+                                                    console.log('cats');
+													app.interiorsSubCatCollection.fetch({
+														success:function () {
+                                                            console.log('subcats');
+															app.interiorsImagesCollection.fetch({
+																success:function () {
+                                                                    console.log('images');
+																	app.interiorsNavCollection.fetch({
+																		success:function () {
+                                                                            console.log('nav');
+																			// write to local store
+																			app.ioModel = new IOModel();
+																			app.ioModel.createLocalStore();
+																		}, error:function(e) {
+																			console.log(e);
+																		}
+																	});
+																}, error:function(e) {
+																	console.log(e);
+																}
+															});
+														}, error:function(e) {
+															console.log(e);
+														}
+													});
+												}, error:function(e) {
+													console.log(e);
+												}
+											});
 										}, error:function(e) {
 											console.log(e);
 										}
@@ -190,18 +222,17 @@ var AppRouter = Backbone.Router.extend({
 			window.HTMLAudioElement = function () {
 			};
 		}
-        var imgArr = [];
-		$.each(this.imagesCollection.models, function(index, model)    {
-            var iObj = {"id":model.get("id"),"src":model.get("src")}
-            imgArr.push(iObj);
-        });
-        this.cjsLoad(imgArr);
-        //console.log(app.imagesCollection.findWhere({"id":"login_background"}));
+		var imgArr = [];
+		$.each(this.imagesCollection.models, function(index, model) {
+			var iObj = {"id":model.get("id"),"src":model.get("src")}
+			imgArr.push(iObj);
+		});
+		this.cjsLoad(imgArr);
+		//console.log(app.imagesCollection.findWhere({"id":"login_background"}));
 		app.mainView = new MainView({model:app.stringsCollection});
 		app.mainView.render(); 
 	}
 });
-
 
 $(window).resize(function() {
 });

@@ -695,16 +695,16 @@ body {
             margin-left: 15px;
             position: relative;
             line-height: 50px; }
-        #main #calculators #main_div #left_nav #nav_item {
+        #main #calculators #main_div #left_nav .nav_item {
           border-bottom: 1px solid #999999;
           width: 30%;
           min-width: 320px;
           cursor: pointer;
           float: left;
           background: #333333; }
-          #main #calculators #main_div #left_nav #nav_item.active {
+          #main #calculators #main_div #left_nav .nav_item.active {
             background: #999999; }
-          #main #calculators #main_div #left_nav #nav_item #calculators_payment {
+          #main #calculators #main_div #left_nav .nav_item #calculators_payment {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -khtml-user-select: none;
@@ -717,9 +717,9 @@ body {
             margin-left: 15px;
             position: relative;
             line-height: 50px; }
-            #main #calculators #main_div #left_nav #nav_item #calculators_payment.active {
+            #main #calculators #main_div #left_nav .nav_item #calculators_payment.active {
               color: #333333; }
-          #main #calculators #main_div #left_nav #nav_item #calculators_power {
+          #main #calculators #main_div #left_nav .nav_item #calculators_power {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -khtml-user-select: none;
@@ -732,9 +732,9 @@ body {
             margin-left: 15px;
             position: relative;
             line-height: 50px; }
-            #main #calculators #main_div #left_nav #nav_item #calculators_power.active {
+            #main #calculators #main_div #left_nav .nav_item #calculators_power.active {
               color: #333333; }
-          #main #calculators #main_div #left_nav #nav_item #icon {
+          #main #calculators #main_div #left_nav .nav_item #icon {
             float: right;
             padding-right: 15px;
             width: 12px;
@@ -742,7 +742,7 @@ body {
             position: relative;
             top: 16px;
             background: url(../images/calculators/calculators_arrow_inactive.png) no-repeat; }
-            #main #calculators #main_div #left_nav #nav_item #icon.active {
+            #main #calculators #main_div #left_nav .nav_item #icon.active {
               background: url(../images/calculators/calculators_arrow_active.png) no-repeat; }
       #main #calculators #main_div #main_content {
         float: right;
@@ -751,6 +751,9 @@ body {
         width: 67%;
         min-width: 705px;
         height: 100%; }
+        #main #calculators #main_div #main_content #payments, #main #calculators #main_div #main_content #power {
+          position: absolute;
+          width: 100%; }
         #main #calculators #main_div #main_content .input_field_middle {
           background: url(../images/input_middle.png) repeat-x;
           height: 46px;
@@ -771,14 +774,17 @@ body {
           height: 46px;
           width: 11px;
           border: none; }
-        #main #calculators #main_div #main_content #field_values_payments {
+        #main #calculators #main_div #main_content #field_values_payments, #main #calculators #main_div #main_content #field_values_payments_power {
           width: 95%;
           position: absolute;
           top: 5px;
           left: 5px;
           color: #FFF;
           line-height: 13px; }
-          #main #calculators #main_div #main_content #field_values_payments .calculators_units {
+          #main #calculators #main_div #main_content #field_values_payments input, #main #calculators #main_div #main_content #field_values_payments_power input {
+            font-weight: bold;
+            font-size: 18px; }
+          #main #calculators #main_div #main_content #field_values_payments .calculators_units, #main #calculators #main_div #main_content #field_values_payments_power .calculators_units {
             line-height: 50px;
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -787,9 +793,9 @@ body {
             -ms-user-select: none;
             user-select: none;
             font-wieght: bold; }
-          #main #calculators #main_div #main_content #field_values_payments td {
+          #main #calculators #main_div #main_content #field_values_payments td, #main #calculators #main_div #main_content #field_values_payments_power td {
             vertical-align: top; }
-          #main #calculators #main_div #main_content #field_values_payments .calculators_label {
+          #main #calculators #main_div #main_content #field_values_payments .calculators_label, #main #calculators #main_div #main_content #field_values_payments_power .calculators_label {
             line-height: 21px;
             font-weight: bold;
             font-size: 18px;
@@ -800,10 +806,10 @@ body {
             -ms-user-select: none;
             user-select: none;
             padding-bottom: 5px; }
-          #main #calculators #main_div #main_content #field_values_payments .field_value {
+          #main #calculators #main_div #main_content #field_values_payments .field_value, #main #calculators #main_div #main_content #field_values_payments_power .field_value {
             vertical-align: top;
             margin-left: 5px; }
-            #main #calculators #main_div #main_content #field_values_payments .field_value .calculators_desc {
+            #main #calculators #main_div #main_content #field_values_payments .field_value .calculators_desc, #main #calculators #main_div #main_content #field_values_payments_power .field_value .calculators_desc {
               font-wieght: normal;
               font-size: 12px;
               -webkit-touch-callout: none;
@@ -812,7 +818,10 @@ body {
               -moz-user-select: none;
               -ms-user-select: none;
               user-select: none; }
-          #main #calculators #main_div #main_content #field_values_payments .calculators_result {
+          #main #calculators #main_div #main_content #field_values_payments .field_result, #main #calculators #main_div #main_content #field_values_payments_power .field_result {
+            vertical-align: top;
+            margin-left: 5px; }
+          #main #calculators #main_div #main_content #field_values_payments .calculators_result, #main #calculators #main_div #main_content #field_values_payments .calculators_result_power, #main #calculators #main_div #main_content #field_values_payments_power .calculators_result, #main #calculators #main_div #main_content #field_values_payments_power .calculators_result_power {
             color: #CCCCCC;
             font-size: 48px;
             font-weight: bold;
@@ -823,15 +832,11 @@ body {
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none; }
-          #main #calculators #main_div #main_content #field_values_payments #field_1 {
+          #main #calculators #main_div #main_content #field_values_payments #field_1, #main #calculators #main_div #main_content #field_values_payments #field_4, #main #calculators #main_div #main_content #field_values_payments #field_6, #main #calculators #main_div #main_content #field_values_payments #field_7, #main #calculators #main_div #main_content #field_values_payments_power #field_1, #main #calculators #main_div #main_content #field_values_payments_power #field_4, #main #calculators #main_div #main_content #field_values_payments_power #field_6, #main #calculators #main_div #main_content #field_values_payments_power #field_7 {
             width: 142px; }
-          #main #calculators #main_div #main_content #field_values_payments #field_2 {
+          #main #calculators #main_div #main_content #field_values_payments #field_2, #main #calculators #main_div #main_content #field_values_payments #field_3, #main #calculators #main_div #main_content #field_values_payments #field_8, #main #calculators #main_div #main_content #field_values_payments #field_9, #main #calculators #main_div #main_content #field_values_payments_power #field_2, #main #calculators #main_div #main_content #field_values_payments_power #field_3, #main #calculators #main_div #main_content #field_values_payments_power #field_8, #main #calculators #main_div #main_content #field_values_payments_power #field_9 {
             width: 102px; }
-          #main #calculators #main_div #main_content #field_values_payments #field_3 {
-            width: 102px; }
-          #main #calculators #main_div #main_content #field_values_payments #field_4 {
-            width: 142px; }
-          #main #calculators #main_div #main_content #field_values_payments #field_5 {
+          #main #calculators #main_div #main_content #field_values_payments #field_5, #main #calculators #main_div #main_content #field_values_payments #field_10, #main #calculators #main_div #main_content #field_values_payments_power #field_5, #main #calculators #main_div #main_content #field_values_payments_power #field_10 {
             width: 82px; }
         #main #calculators #main_div #main_content #bottom_frame {
           width: 705px;
