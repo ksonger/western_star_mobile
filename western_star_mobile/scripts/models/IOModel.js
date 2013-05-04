@@ -205,9 +205,9 @@ window.IOModel = Backbone.Model.extend({
 				else {
 					app.ioModel.db.transaction(app.ioModel.selectUsers, app.ioModel.onUsersError, app.ioModel.onUsersSuccess);
 					app.ioModel.db.transaction(app.ioModel.selectStrings, app.ioModel.onStringsError, app.ioModel.onStringsSuccess);
-					app.ioModel.db.transaction(app.ioModel.selectAssets, app.ioModel.onAssetsError, app.ioModel.onAssetsSuccess);
-                    
+					app.ioModel.db.transaction(app.ioModel.selectAssets, app.ioModel.onAssetsError, app.ioModel.onAssetsSuccess); 
                     app.ioModel.db.transaction(app.ioModel.selectImages, app.ioModel.onImagesError, app.ioModel.onImagesSuccess);
+                    
                     app.ioModel.db.transaction(app.ioModel.selectInteriorsCategories, app.ioModel.onInteriorsCategoriesError, app.ioModel.onInteriorsCategoriesSuccess);
                     app.ioModel.db.transaction(app.ioModel.selectInteriorsSubCategories, app.ioModel.onInteriorsSubCategoriesError, app.ioModel.onInteriorsSubCategoriesSuccess);
                     app.ioModel.db.transaction(app.ioModel.selectInteriorsImages, app.ioModel.onInteriorsImagesError, app.ioModel.onInteriorsImagesSuccess);
@@ -243,11 +243,10 @@ window.IOModel = Backbone.Model.extend({
         tx.executeSql('CREATE TABLE IF NOT EXISTS interiors_subcategories(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, images TEXT);');
         tx.executeSql('CREATE TABLE IF NOT EXISTS interiors_images(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, view TEXT);');
         tx.executeSql('CREATE TABLE IF NOT EXISTS interiors_navigation(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, view TEXT);');
-        console.log("here??");
+
         app.ioModel.db.transaction(app.ioModel.getUsers, app.ioModel.onUsersError, app.ioModel.onUsersSuccess);
 		app.ioModel.db.transaction(app.ioModel.getStrings, app.ioModel.onStringsError, app.ioModel.onStringsSuccess);
 		app.ioModel.db.transaction(app.ioModel.getAssets, app.ioModel.onAssetsError, app.ioModel.onAssetsSuccess);
-        
         app.ioModel.db.transaction(app.ioModel.getImages, app.ioModel.onImagesError, app.ioModel.onImagesSuccess);
         app.ioModel.db.transaction(app.ioModel.getInteriorsCategories, app.ioModel.onInteriorsCategoriesError, app.ioModel.onInteriorsCategoriesSuccess);
         app.ioModel.db.transaction(app.ioModel.getInteriorsSubCategories, app.ioModel.onInteriorsSubCategoriesError, app.ioModel.onInteriorsSubCategoriesSuccess);
@@ -312,7 +311,7 @@ window.IOModel = Backbone.Model.extend({
 				vals.push(usr);
 			});
                     
-			tx.executeSql("INSERT INTO images(" + keys + ") VALUES (?, ?, ?, ?)", vals);
+			tx.executeSql("INSERT INTO interiors_categories(" + keys + ") VALUES (?, ?, ?, ?)", vals);
 		});
 	},
     getInteriorsSubCategories:function(tx) {
@@ -324,11 +323,11 @@ window.IOModel = Backbone.Model.extend({
 				vals.push(usr);
 			});
                     
-			tx.executeSql("INSERT INTO images(" + keys + ") VALUES (?, ?, ?, ?)", vals);
+			tx.executeSql("INSERT INTO interiors_subcategories(" + keys + ") VALUES (?, ?, ?, ?)", vals);
 		});
 	},
     getInteriorsImages:function(tx) {
-		$.each(app.interiorsSubCatCollection.models, function(oind, obj) {
+		$.each(app.interiorsImagesCollection.models, function(oind, obj) {
 			var keys = [];
 			var vals = [];
 			$.each(obj.attributes, function(uind, usr) {
@@ -336,11 +335,11 @@ window.IOModel = Backbone.Model.extend({
 				vals.push(usr);
 			});
                     
-			tx.executeSql("INSERT INTO images(" + keys + ") VALUES (?, ?, ?, ?)", vals);
+			tx.executeSql("INSERT INTO interiors_images(" + keys + ") VALUES (?, ?, ?, ?)", vals);
 		});
 	},
     getInteriorsNav:function(tx) {
-		$.each(app.interiorsSubCatCollection.models, function(oind, obj) {
+		$.each(app.interiorsNavCollection.models, function(oind, obj) {
 			var keys = [];
 			var vals = [];
 			$.each(obj.attributes, function(uind, usr) {
@@ -348,7 +347,7 @@ window.IOModel = Backbone.Model.extend({
 				vals.push(usr);
 			});
                     
-			tx.executeSql("INSERT INTO images(" + keys + ") VALUES (?, ?, ?, ?)", vals);
+			tx.executeSql("INSERT INTO interiors_navigation(" + keys + ") VALUES (?, ?, ?, ?)", vals);
 		});
 	},
     
@@ -453,7 +452,7 @@ window.IOModel = Backbone.Model.extend({
 		}
 		app.assetsCollection = new AssetsCollection(asset_models, {model:AssetsModel});
 		app.ioModel.assetsReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady) {
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
@@ -466,7 +465,7 @@ window.IOModel = Backbone.Model.extend({
 		}
 		app.stringsCollection = new StringsCollection(str_models, {model:StringsModel});
 		app.ioModel.stringsReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady) {
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
@@ -479,7 +478,7 @@ window.IOModel = Backbone.Model.extend({
 		}
 		app.usersCollection = new UsersCollection(usr_models, {model:UserModel});
 		app.ioModel.usersReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady) {
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
@@ -489,7 +488,7 @@ window.IOModel = Backbone.Model.extend({
 	},
 	onUsersSuccess:function(e) {
 		app.ioModel.usersReady = true;
-		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady) {
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
@@ -499,7 +498,7 @@ window.IOModel = Backbone.Model.extend({
 	},
 	onStringsSuccess:function(e) {
 		app.ioModel.stringsReady = true;
-		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady) {
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
@@ -509,7 +508,7 @@ window.IOModel = Backbone.Model.extend({
 	},
 	onAssetsSuccess:function(e) {
 		app.ioModel.assetsReady = true;
-		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady) {
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
