@@ -1057,6 +1057,53 @@ margin:0px;
             }         
         }     
     }
+    #interiors    {
+        #int_categories    {
+            position:absolute;
+            width:100%;
+            height:100%;
+            top:0px;
+            text-align:center;
+            .interiors_category    {
+                width:100%;
+                height:320px;
+                cursor:pointer;
+                margin-bottom:20px;
+                &.first    {
+                    margin-top:20px;
+                }
+                .catimg    {
+                    position:relative;
+                    border:0px;
+                    -moz-box-shadow: 3px 3px 40px #000;
+                    -webkit-box-shadow: 3px 3px 40px #000;
+                    box-shadow: 3px 3px 40px #000;
+                }
+            }
+        }
+        #int_subcategories    {
+            position:absolute;
+            width:100%;
+            height:100%;
+            top:0px;
+            text-align:center;
+            .interiors_subcategory    {
+                width:100%;
+                height:320px;
+                cursor:pointer;
+                &.first    {
+                    margin-top:20px;
+                }
+                .scatimg    {
+                    position:relative;
+                    border:0px;
+                    -moz-box-shadow: 3px 3px 40px #000;
+                    -webkit-box-shadow: 3px 3px 40px #000;
+                    box-shadow: 3px 3px 40px #000;
+                }
+            }
+        }
+    }
 }
 
 

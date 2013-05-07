@@ -150,16 +150,12 @@ var AppRouter = Backbone.Router.extend({
 										success:function () {
 											app.interiorsCatCollection.fetch({
 												success:function () {
-                                                    console.log('cats');
 													app.interiorsSubCatCollection.fetch({
 														success:function () {
-                                                            console.log('subcats');
 															app.interiorsImagesCollection.fetch({
 																success:function () {
-                                                                    console.log('images');
 																	app.interiorsNavCollection.fetch({
 																		success:function () {
-                                                                            console.log('nav');
 																			// write to local store
 																			app.ioModel = new IOModel();
 																			app.ioModel.createLocalStore();

@@ -8,10 +8,7 @@ _.extend(StateView.prototype, Backbone.View.prototype, {
 	currentLayout:"landscape",
 	responding:false,
 
-	onEnter:function() {
-        app.mainView.setStrings();
-		TweenLite.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4});   
-	},
+	
 	onExit:function() {
 	},
 	respondLayout:function(layout) {

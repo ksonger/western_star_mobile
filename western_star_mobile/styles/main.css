@@ -27,7 +27,7 @@ hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid #ccc;
   margin: 1em 0;
   padding: 0; }
 
@@ -453,9 +453,9 @@ body {
       #main #home #collage img {
         max-height: 100%;
         border: 0px;
-        -moz-box-shadow: 3px 3px 40px black;
-        -webkit-box-shadow: 3px 3px 40px black;
-        box-shadow: 3px 3px 40px black; }
+        -moz-box-shadow: 3px 3px 40px #000;
+        -webkit-box-shadow: 3px 3px 40px #000;
+        box-shadow: 3px 3px 40px #000; }
     #main #home #home_logo {
       background: url(../images/ws_logo.png) no-repeat;
       height: 71px;
@@ -675,9 +675,9 @@ body {
         background: #333333;
         height: 100%;
         z-index: 10000;
-        -moz-box-shadow: 3px 3px 20px black;
-        -webkit-box-shadow: 3px 3px 20px black;
-        box-shadow: 3px 3px 20px black; }
+        -moz-box-shadow: 3px 3px 20px #000;
+        -webkit-box-shadow: 3px 3px 20px #000;
+        box-shadow: 3px 3px 20px #000; }
         #main #calculators #main_div #left_nav #nav_header {
           border-bottom: 1px solid #999999;
           width: 30%;
@@ -908,7 +908,7 @@ body {
         height: 360px;
         margin: 0px;
         padding: 0px;
-        border: 1px solid #cccccc; }
+        border: 1px solid #CCCCCC; }
         #main #videos #shadowbox_video #video_div video {
           width: inherit;
           height: inherit; }
@@ -926,6 +926,43 @@ body {
         overflow: hidden;
         margin: 0px;
         padding: 0px;
-        border: 1px solid #cccccc; }
+        border: 1px solid #CCCCCC; }
         #main #images #shadowbox_image #image_div img {
           width: 850px; }
+  #main #interiors #int_categories {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    text-align: center; }
+    #main #interiors #int_categories .interiors_category {
+      width: 100%;
+      height: 320px;
+      cursor: pointer;
+      margin-bottom: 20px; }
+      #main #interiors #int_categories .interiors_category.first {
+        margin-top: 20px; }
+      #main #interiors #int_categories .interiors_category .catimg {
+        position: relative;
+        border: 0px;
+        -moz-box-shadow: 3px 3px 40px #000;
+        -webkit-box-shadow: 3px 3px 40px #000;
+        box-shadow: 3px 3px 40px #000; }
+  #main #interiors #int_subcategories {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    text-align: center; }
+    #main #interiors #int_subcategories .interiors_subcategory {
+      width: 100%;
+      height: 320px;
+      cursor: pointer; }
+      #main #interiors #int_subcategories .interiors_subcategory.first {
+        margin-top: 20px; }
+      #main #interiors #int_subcategories .interiors_subcategory .scatimg {
+        position: relative;
+        border: 0px;
+        -moz-box-shadow: 3px 3px 40px #000;
+        -webkit-box-shadow: 3px 3px 40px #000;
+        box-shadow: 3px 3px 40px #000; }

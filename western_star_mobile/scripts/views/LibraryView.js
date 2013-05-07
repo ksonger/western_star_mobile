@@ -5,6 +5,10 @@ window.LibraryView = StateView.extend({
 			this.onFirstLoad();
 		}
 	},
+    onEnter:function() {
+        app.mainView.setStrings();
+		TweenLite.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4});   
+	},
 	respond:function() {
 		this.$el.find("#library").width(app.windowWidth);
 		this.$el.find("#library").height(app.windowHeight);
