@@ -42,8 +42,8 @@ window.InteriorsView = StateView.extend({
 				page.onCategorySelect(this)
 			});
 		});
-        TweenMax.to(page.$el.find("#int_subcategories"), .01, {css:{autoAlpha:0}});
-        TweenMax.to(page.$el.find("#int_images"), .01, {css:{autoAlpha:0}});
+		TweenMax.to(page.$el.find("#int_subcategories"), .01, {css:{autoAlpha:0}});
+		TweenMax.to(page.$el.find("#int_images"), .01, {css:{autoAlpha:0}});
 	},
 	onCategorySelect:function(cat) {
 		console.log(cat);
@@ -51,65 +51,114 @@ window.InteriorsView = StateView.extend({
 		TweenMax.to(this.$el.find("#int_categories"), .3, {css:{autoAlpha:0}, onComplete:this.createSubCategories, onCompleteParams:[$(cat).attr("id"), this]});
 	},
 	createSubCategories:function(n, page) {
-        var pg = page;
-        var cat = app.interiorsCatCollection.findWhere({"id":n});
-        var subcatArr = cat.attributes.subcategories.split(",");
-        $.each(subcatArr, function(ind, sc)    {
-            var scobj = app.interiorsSubCatCollection.findWhere({"id":sc});
-            var scat = jQuery('<div/>', {
+		var pg = page;
+		var cat = app.interiorsCatCollection.findWhere({"id":n});
+		var subcatArr = cat.attributes.subcategories.split(",");
+		var sc_swatches = jQuery('<div/>', {
+			id:"interiors_swatches",
+		}).appendTo(pg.$el.find("#int_subcategories"));
+		var swatches = jQuery('<table/>', {
+			id:"table_swatches",
+            align:"center"
+		}).appendTo(pg.$el.find("#interiors_swatches"));
+		$.each(subcatArr, function(ind, sc) {
+			var scobj = app.interiorsSubCatCollection.findWhere({"id":sc});
+			var scat = jQuery('<div/>', {
 				class:"interiors_subcategory",
 				id:scobj.attributes.id
 			}).appendTo(pg.$el.find("#int_subcategories"));
-			if (ind == 0) {
-				scat.addClass("first");
-			}
 			var scat_img = jQuery('<img/>', {
 				src:scobj.attributes.image,
 				class:"scatimg"
 			}).appendTo(scat);
-            scat.click(function() {
-				pg.onSubCategorySelect(this)
+            
+			var td = jQuery('<td/>', {
+				class:"swatch",
+                id:"sw_" + scobj.attributes.id
+			}).appendTo(pg.$el.find("#table_swatches"));
+            td.css({"background":scobj.attributes.swatch});
+            td.click(function()    {
+                pg.onSwatchSelect(this);
+            });
+			scat.click(function() {
+				pg.onSubCategorySelect(this);
 			});
-        });
+		});
 		TweenMax.to(pg.$el.find("#int_subcategories"), .4, {css:{autoAlpha:1}});
 	},
-    onSubCategorySelect:function(scat) {
+    onSwatchSelect:function(sw)    {
+        var swa = sw;
+        $.each(this.$el.find(".interiors_subcategory"), function(index, sc)    {
+            if($(swa).attr("id").substr(3) == $(sc).attr("id"))    {
+                TweenMax.to($(sc), .01, {css:{autoAlpha:1}});
+            }    else{
+                TweenMax.to($(sc), .01, {css:{autoAlpha:0}});
+            }
+        });
+    },
+	onSubCategorySelect:function(scat) {
 		TweenMax.to(this.$el.find("#int_subcategories"), .3, {css:{autoAlpha:0}, onComplete:this.createImages, onCompleteParams:[$(scat).attr("id"), this]});
 	},
-    createImages:function(n, page) {
-        var pg = page;
-        var scat = app.interiorsSubCatCollection.findWhere({"id":n});
-        var imgArr = cat.attributes.subcategories.split(",");
-        $.each(imgArr, function(ind, img)    {
-            var imgobj = app.interiorsImagesCollection.findWhere({"id":img});
-            var imgdiv = jQuery('<div/>', {
+	createImages:function(n, page) {
+		var pg = page;
+		var scat = app.interiorsSubCatCollection.findWhere({"id":n});
+		var imgArr = scat.attributes.images.split(",");
+        var gallery = jQuery('<table/>', {
+			id:"images_gallery",
+		}).appendTo(pg.$el.find("#int_images"));
+        
+        var xpos = (app.windowWidth - 560)/2;
+        
+        gallery.css({"left":xpos + "px"});
+		$.each(imgArr, function(ind, img) {
+			var imgobj = app.interiorsImagesCollection.findWhere({"id":img});
+			var imgtd = jQuery('<td/>', {
 				class:"interiors_image",
 				id:imgobj.attributes.id
-			}).appendTo(pg.$el.find("#int_images"));
-			if (ind == 0) {
-				imgdiv.addClass("first");
-			}
+			}).appendTo(pg.$el.find("#images_gallery"));
+            
+            imgtd.css({"text-align":"center", "padding-right":xpos + "px"});
+            
 			var int_img = jQuery('<img/>', {
 				src:imgobj.attributes.image,
-				class:"intimg"
-			}).appendTo(imgdiv);
-            imgdiv.click(function() {
-				pg.onImageSelect(this)
+				class:"intimg",
+                width:"560px",
+                height:"420px"
+			}).appendTo(imgtd);
+
+		});
+        $.each(pg.$el.find(".interiors_image"), function(index) {
+			$(this).mousedown(function() {
+				return false;
 			});
-        });
+			try {
+				$(this).on("swipe", function(e) {
+					pg.onSwipe(e);
+				});
+			}
+			catch (e) {
+			}
+		});
 		TweenMax.to(pg.$el.find("#int_images"), .4, {css:{autoAlpha:1}});
-
 	},
-    onImageSelect:function(img)    {
-        console.log("image selected");
-    }
-});
-/*
-serializeInteriors:function()    {
-var intObj = {};
-$.each(app.interiorsCatCollection.models, function(i1, cmodel)    {
-            
+    onSwipe:function (e) {
+        if(!this.swiping)   {
+            this.swiping = true;
+            var page = this;
+            self.setTimeout("app.interiorsView.resetSwiping()", 500);
+            if(e.direction == "left") {
+            	this.next();
+            }
+            if(e.direction == "right") {
+            	this.prev();
+            }
+        }
+    },
 
+    resetSwiping:function() {
+        app.mainView.pagesView.swiping = false;
+    }
+	onImageSelect:function(img) {
+		console.log("image selected");
+	}
 });
-}
-*/

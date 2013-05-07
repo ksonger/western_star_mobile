@@ -44,6 +44,7 @@
     </Folder>
     <Folder Include="assets\images" />
     <Folder Include="assets\images\thumbnails" />
+    <Folder Include="assets\interiors\swatches" />
     <Folder Include="assets\pdf" />
     <Folder Include="assets\video" />
     <Folder Include="data" />
@@ -145,6 +146,11 @@
     <Content Include="assets\images\WS_Brn_Grill_Closeup_01r.jpg" />
     <Content Include="assets\images\WS_Brn_Logging_06r.jpg" />
     <Content Include="assets\images\WS_Brn_Tools_02r.jpg" />
+    <Content Include="assets\interiors\swatches\swatch_Base.png" />
+    <Content Include="assets\interiors\swatches\swatch_MLRed.png" />
+    <Content Include="assets\interiors\swatches\swatch_PBuck.png" />
+    <Content Include="assets\interiors\swatches\swatch_PFGreen.png" />
+    <Content Include="assets\interiors\swatches\swatch_SMGray.png" />
     <Content Include="assets\pdf\4418_WS_Highway.pdf" />
     <Content Include="assets\pdf\4951_WS_HeavyHaul_Final.pdf" />
     <Content Include="assets\pdf\4951_WS_loggingFINAL.pdf" />
