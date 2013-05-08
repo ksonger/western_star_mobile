@@ -1,5 +1,7 @@
 window.InteriorsView = StateView.extend({
 	lang_list:null,
+	swiping:false,
+	currentImage:1,
 	initialize:function (options) {
 		if (this.firstLoad) {
 			this.onFirstLoad();
@@ -59,7 +61,7 @@ window.InteriorsView = StateView.extend({
 		}).appendTo(pg.$el.find("#int_subcategories"));
 		var swatches = jQuery('<table/>', {
 			id:"table_swatches",
-            align:"center"
+			align:"center"
 		}).appendTo(pg.$el.find("#interiors_swatches"));
 		$.each(subcatArr, function(ind, sc) {
 			var scobj = app.interiorsSubCatCollection.findWhere({"id":sc});
@@ -74,28 +76,29 @@ window.InteriorsView = StateView.extend({
             
 			var td = jQuery('<td/>', {
 				class:"swatch",
-                id:"sw_" + scobj.attributes.id
+				id:"sw_" + scobj.attributes.id
 			}).appendTo(pg.$el.find("#table_swatches"));
-            td.css({"background":scobj.attributes.swatch});
-            td.click(function()    {
-                pg.onSwatchSelect(this);
-            });
+			td.css({"background":scobj.attributes.swatch});
+			td.click(function() {
+				pg.onSwatchSelect(this);
+			});
 			scat.click(function() {
 				pg.onSubCategorySelect(this);
 			});
 		});
 		TweenMax.to(pg.$el.find("#int_subcategories"), .4, {css:{autoAlpha:1}});
 	},
-    onSwatchSelect:function(sw)    {
-        var swa = sw;
-        $.each(this.$el.find(".interiors_subcategory"), function(index, sc)    {
-            if($(swa).attr("id").substr(3) == $(sc).attr("id"))    {
-                TweenMax.to($(sc), .01, {css:{autoAlpha:1}});
-            }    else{
-                TweenMax.to($(sc), .01, {css:{autoAlpha:0}});
-            }
-        });
-    },
+	onSwatchSelect:function(sw) {
+		var swa = sw;
+		$.each(this.$el.find(".interiors_subcategory"), function(index, sc) {
+			if ($(swa).attr("id").substr(3) == $(sc).attr("id")) {
+				TweenMax.to($(sc), .01, {css:{autoAlpha:1}});
+			}
+			else {
+				TweenMax.to($(sc), .01, {css:{autoAlpha:0}});
+			}
+		});
+	},
 	onSubCategorySelect:function(scat) {
 		TweenMax.to(this.$el.find("#int_subcategories"), .3, {css:{autoAlpha:0}, onComplete:this.createImages, onCompleteParams:[$(scat).attr("id"), this]});
 	},
@@ -103,61 +106,104 @@ window.InteriorsView = StateView.extend({
 		var pg = page;
 		var scat = app.interiorsSubCatCollection.findWhere({"id":n});
 		var imgArr = scat.attributes.images.split(",");
-        var gallery = jQuery('<table/>', {
+		pg.numImages = imgArr.length;
+		var gallery = jQuery('<div/>', {
 			id:"images_gallery",
 		}).appendTo(pg.$el.find("#int_images"));
         
-        var xpos = (app.windowWidth - 560)/2;
+		var indices = jQuery('<div/>', {
+			id:"images_index",
+		}).appendTo(pg.$el.find("#int_images"));
+        indices.css({"top": app.windowHeight - 145 + "px"});
+		var indices_list = jQuery('<ol/>', {
+			id:"images_index_list",
+		}).appendTo(pg.$el.find("#images_index"));
+		for (var i = 0;i < imgArr.length;i++) {
+			var el = jQuery('<li/>', {
+			}).appendTo(pg.$el.find("#images_index_list"));
+            if(i == 0)    {
+                el.addClass("current");
+            }
+		}
+        indices_list.css({"left":((app.windowWidth - indices_list.width())/2) + "px", "margin-left":"-40px"});
         
-        gallery.css({"left":xpos + "px"});
+		var xpos = (app.windowWidth - 560) / 2;
 		$.each(imgArr, function(ind, img) {
 			var imgobj = app.interiorsImagesCollection.findWhere({"id":img});
-			var imgtd = jQuery('<td/>', {
+			var imgtd = jQuery('<div/>', {
 				class:"interiors_image",
 				id:imgobj.attributes.id
 			}).appendTo(pg.$el.find("#images_gallery"));
             
-            imgtd.css({"text-align":"center", "padding-right":xpos + "px"});
-            
+			imgtd.css({"text-align":"center", "width":app.windowWidth + "px"});
+            var h = app.windowHeight * .4;
+            var w = (h/3)*4;
 			var int_img = jQuery('<img/>', {
 				src:imgobj.attributes.image,
 				class:"intimg",
-                width:"560px",
-                height:"420px"
+				width:w + "px",
+				height:h + "px"
 			}).appendTo(imgtd);
+		});
+		var cltd = jQuery('<div/>', {}).appendTo(pg.$el.find("#images_gallery"));
+		cltd.css({"clear":"left"});
 
+		pg.$el.find("#images_gallery").mousedown(function() {
+			return false;
 		});
-        $.each(pg.$el.find(".interiors_image"), function(index) {
-			$(this).mousedown(function() {
-				return false;
+		try {
+			pg.$el.find("#images_gallery").on("swipe", function(e) {
+				pg.onSwipe(e);
 			});
-			try {
-				$(this).on("swipe", function(e) {
-					pg.onSwipe(e);
-				});
-			}
-			catch (e) {
-			}
-		});
+		}
+		catch (e) {
+		}
+
 		TweenMax.to(pg.$el.find("#int_images"), .4, {css:{autoAlpha:1}});
 	},
-    onSwipe:function (e) {
-        if(!this.swiping)   {
-            this.swiping = true;
-            var page = this;
-            self.setTimeout("app.interiorsView.resetSwiping()", 500);
-            if(e.direction == "left") {
-            	this.next();
-            }
-            if(e.direction == "right") {
-            	this.prev();
-            }
-        }
-    },
+	onSwipe:function (e) {
+		if (!this.swiping) {
+			this.swiping = true;
+			var page = this;
+			self.setTimeout("app.mainView.interiorsView.resetSwiping()", 500);
+			if (e.direction == "left") {
+				this.next();
+			}
+			if (e.direction == "right") {
+				this.prev();
+			}
+		}
+	},
 
-    resetSwiping:function() {
-        app.mainView.pagesView.swiping = false;
-    }
+	resetSwiping:function() {
+		app.mainView.interiorsView.swiping = false;
+	},
+    
+	next:function () {
+		if (this.currentImage < this.numImages) {
+			this.gotoImage(this.currentImage + 1);
+		}
+	},
+
+	prev:function () {
+		if (this.currentImage > 1) {
+			this.gotoImage(this.currentImage - 1);
+		}
+	},
+    
+	gotoImage: function(n) {
+        var num = n;
+		TweenMax.to(this.$el.find("#images_gallery"), .5, { css:{left: (-(app.windowWidth * (n - 1))) + "px" }, ease:Back.easeOut});
+        $.each(this.$el.find("#images_index_list").find("li"), function(ind, el)    {
+            if(ind == num-1)    {
+                $(el).addClass("current");
+            }    else{
+                $(el).removeClass("current");
+            }
+        });
+		this.currentImage = parseInt(n);
+	},
+    
 	onImageSelect:function(img) {
 		console.log("image selected");
 	}

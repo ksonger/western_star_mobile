@@ -481,6 +481,7 @@
     <Content Include="scripts\views\TabstripView.js" />
     <Content Include="scripts\views\VideoView.js" />
     <Content Include="scripts\views\WSView.js" />
+    <Content Include="styles\fonts\aachenb.ttf" />
     <Content Include="styles\kendo-custom.css" />
     <Content Include="styles\main.css" />
     <Content Include="cordova.ios.js">
