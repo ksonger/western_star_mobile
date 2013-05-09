@@ -239,8 +239,8 @@ window.IOModel = Backbone.Model.extend({
 		tx.executeSql('CREATE TABLE IF NOT EXISTS users(id INTEGER NOT NULL PRIMARY KEY, username TEXT, password TEXT, region TEXT);');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS assets(id INTEGER NOT NULL PRIMARY KEY, type TEXT, storage TEXT, src TEXT, title TEXT, description TEXT, thumbnail TEXT, category TEXT, subcategory TEXT, metadata TEXT);');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS images(key INTEGER NOT NULL PRIMARY KEY, id TEXT, src TEXT);');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS interiors_categories(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, subcategories TEXT);');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS interiors_subcategories(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, images TEXT, swatch TEXT);');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS interiors_categories(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, title TEXT, subcategories TEXT);');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS interiors_subcategories(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, images TEXT, swatch TEXT, nav_ids TEXT);');
         tx.executeSql('CREATE TABLE IF NOT EXISTS interiors_images(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, view TEXT);');
         tx.executeSql('CREATE TABLE IF NOT EXISTS interiors_navigation(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, view TEXT);');
 
@@ -311,7 +311,7 @@ window.IOModel = Backbone.Model.extend({
 				vals.push(usr);
 			});
                     
-			tx.executeSql("INSERT INTO interiors_categories(" + keys + ") VALUES (?, ?, ?, ?)", vals);
+			tx.executeSql("INSERT INTO interiors_categories(" + keys + ") VALUES (?, ?, ?, ?, ?)", vals);
 		});
 	},
     getInteriorsSubCategories:function(tx) {
@@ -323,7 +323,7 @@ window.IOModel = Backbone.Model.extend({
 				vals.push(usr);
 			});
                     
-			tx.executeSql("INSERT INTO interiors_subcategories(" + keys + ") VALUES (?, ?, ?, ?, ?)", vals);
+			tx.executeSql("INSERT INTO interiors_subcategories(" + keys + ") VALUES (?, ?, ?, ?, ?, ?)", vals);
 		});
 	},
     getInteriorsImages:function(tx) {

@@ -5,6 +5,10 @@ window.WSView = StateView.extend({
 			this.onFirstLoad();
 		}
 	},
+    onEnter:function() {
+        app.mainView.setStrings();
+		TweenLite.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4});   
+	},
 	respond:function() {
 		this.$el.find("#ws, #background_image").height(app.windowHeight);
 		this.$el.find("#ws, #background_image").width(app.windowWidth);

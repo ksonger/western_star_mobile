@@ -1,23 +1,51 @@
+
+
 <?php
+
+header("Content-type: text/html; charset=utf-8"); 
 
 require 'Slim/Slim.php';
 
 $app = new Slim();
-
+$app->contentType('text/html; charset=utf-8');
 $app->get('/strings', 'getStrings');
-$app->get('/movies', 'getMovies');
-$app->get('/movies/:id', 'getMovie');
-$app->post('/movies', 'addMovie');
-$app->put('/movies/:id', 'updateMovie');
-$app->delete('/movies/:id', 'deleteMovie');
+$app->get('/users', 'getUsers');
+$app->get('/assets', 'getAssets');
+$app->get('/images', 'getImages');
+$app->get('/interiors_categories', 'getInteriorCategories');
+$app->get('/interiors_subcategories', 'getInteriorSubCategories');
+$app->get('/interiors_images', 'getInteriorImages');
+$app->get('/interiors_nav', 'getInteriorNav');
 
 
 $app->run();
 
+
+  function utf8_encode_deep(&$input) {
+    if (is_string($input)) {
+        $input = utf8_encode($input);
+    } else if (is_array($input)) {
+        foreach ($input as &$value) {
+            utf8_encode_deep($value);
+        }
+
+        unset($value);
+    } else if (is_object($input)) {
+        $vars = array_keys(get_object_vars($input));
+
+        foreach ($vars as $var) {
+            utf8_encode_deep($input->$var);
+        }
+    }
+}
+
 function getStrings()	{
-	$sql = "select * FROM strings";
+	$sql = "SET NAMES utf8";	
 	try {
 		$db = getConnection();
+
+		$stmt = $db->query($sql);  
+		$sql = "select * FROM strings";
 		$stmt = $db->query($sql);  
 		$strings = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
@@ -27,7 +55,20 @@ function getStrings()	{
 	}
 }
 
-function getManifest() {
+function getUsers() {
+	$sql = "select * FROM users";
+	try {
+		$db = getConnection();
+		$stmt = $db->query($sql);  
+		$users = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+                echo json_encode($users);
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+}
+
+function getAssets() {
 	$sql = "select * FROM assets";
 	try {
 		$db = getConnection();
@@ -40,78 +81,81 @@ function getManifest() {
 	}
 }
 
-function getAsset($id) {
-	$sql = "SELECT * FROM assets WHERE id=:id";
+function getImages() {
+	$sql = "select * FROM images";
 	try {
 		$db = getConnection();
-		$stmt = $db->prepare($sql);  
-		$stmt->bindParam("id", $id);
-		$stmt->execute();
-		$asset = $stmt->fetchObject();
+		$stmt = $db->query($sql);  
+		$images = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
-		return json_encode($asset);
+                echo json_encode($images);
 	} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
 }
 
-function addAsset()  {
-    $request = Slim::getInstance()->request();
-    $session = json_decode($request->getBody());
-    $asset_id = setMovie($session->movie, $session->year);
-
-    echo json_encode(getMovie($movie_id));
-}
-
-function setMovie($name, $year)    {
-    $sql = "INSERT INTO bestmovies (movie, year) VALUES(:movie, :year)";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("movie", $movie);
-        $stmt->bindParam("year", $year);
-        $stmt->execute();
-        return $db->lastInsertId();
-        $db = null;
-    } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
-    }
-}
-
-function updateMovie($movie, $year)    {
-    $sql = "UPDATE bestmovies SET movie=:movie, year=:year, WHERE id=:id";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("movie", $movie);
-        $stmt->bindParam("year", $year);
-        $stmt->execute();
-        return $db->lastInsertId();
-        $db = null;
-    } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
-    }
-}
-
-function deleteMovie($id) {
-	$sql = "DELETE FROM bestmovies WHERE id=:id";
+function getInteriorCategories() {
+	$sql = "select * FROM interiors_categories";
 	try {
 		$db = getConnection();
-		$stmt = $db->prepare($sql);  
-		$stmt->bindParam("id", $id);
-		$stmt->execute();
+		$stmt = $db->query($sql);  
+		$cats = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
+                echo json_encode($cats);
 	} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
 }
+
+function getInteriorSubCategories() {
+	$sql = "select * FROM interiors_subcategories";
+	try {
+		$db = getConnection();
+		$stmt = $db->query($sql);  
+		$subcats = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+                echo json_encode($subcats);
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+}
+
+function getInteriorImages() {
+	$sql = "select * FROM interiors_images";
+	try {
+		$db = getConnection();
+		$stmt = $db->query($sql);  
+		$images = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+                echo json_encode($images);
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+}
+
+function getInteriorNav() {
+	$sql = "select * FROM interiors_navigation";
+	try {
+		$db = getConnection();
+		$stmt = $db->query($sql);  
+		$nav = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+                echo json_encode($nav);
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+}
+
+
+
 
 function getConnection() {
-	$dbhost="127.0.0.1";
-	$dbuser="ksonger";
-	$dbpass="wR8yezad";
-	$dbname="western_star";
-	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);	
+	$dbhost="localhost";
+	$dbuser="kensonge";
+	$dbpass="Superpassword1!";
+	$dbname="kensonge_western_star";
+	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname;charset=UTF8", $dbuser, $dbpass);
+
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $dbh;
 }

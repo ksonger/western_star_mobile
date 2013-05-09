@@ -207,12 +207,12 @@ var AppRouter = Backbone.Router.extend({
 		}
 		// GET AVAILABLE DIMENSIONS
 		if (this.isTouchDevice) {
-			app.windowWidth = window.innerWidth - 8;
-			app.windowHeight = window.innerHeight - 8;
+			app.windowWidth = window.innerWidth;
+			app.windowHeight = window.innerHeight;
 		}
 		else {
-			app.windowWidth = $(window).width() - 8;
-			app.windowHeight = $(window).height() - 8;
+			app.windowWidth = $(window).width();
+			app.windowHeight = $(window).height();
 		}
 		if (typeof window.HTMLAudioElement === "undefined") {
 			window.HTMLAudioElement = function () {

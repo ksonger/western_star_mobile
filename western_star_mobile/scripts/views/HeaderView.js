@@ -6,6 +6,12 @@ window.HeaderView = Backbone.View.extend({
 	respond:function() {
         this.$el.find("#lang_menu_table").css({"left":app.windowWidth - $("#lang_menu_table").width() - 15 + "px"});
 	},
+    hideBack:function()    {
+        TweenLite.to(this.$el.find("#back_button"), .01, {css:{autoAlpha:0}});
+    },
+    showBack:function()    {
+        TweenLite.to(this.$el.find("#back_button"), .01, {css:{autoAlpha:1}});
+    },
 	render:function() {
 		this.template = _.template(tpl.get("header"));
 		this.$el = $("#header_bar");
@@ -30,6 +36,18 @@ window.HeaderView = Backbone.View.extend({
                 app.mainView.onLanguageSelect($(item).attr("id"));
                 hdr.$el.find("#lang_button").click();
             });     
+        });
+        this.$el.find("#back_button").click(function(evt)    {
+            if(app.currentState == app.mainView.interiorsView)    {
+                if(app.currentState.currentView == "subcategories")    {
+                    app.currentState.$el.find("#int_subcategories").html("");
+                    app.currentState.createCategories();
+                }
+                if(app.currentState.currentView == "images")    {
+                    app.currentState.$el.find("#int_images").html("");
+                    app.currentState.createSubCategories(app.currentState.currentCategory, app.currentState);
+                }
+            }
         });
 	}
 });

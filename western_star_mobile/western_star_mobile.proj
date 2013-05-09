@@ -146,6 +146,11 @@
     <Content Include="assets\images\WS_Brn_Grill_Closeup_01r.jpg" />
     <Content Include="assets\images\WS_Brn_Logging_06r.jpg" />
     <Content Include="assets\images\WS_Brn_Tools_02r.jpg" />
+    <Content Include="assets\interiors\subcategories\swatch_Base.png" />
+    <Content Include="assets\interiors\subcategories\swatch_MLRed.png" />
+    <Content Include="assets\interiors\subcategories\swatch_PBuck.png" />
+    <Content Include="assets\interiors\subcategories\swatch_PFGreen.png" />
+    <Content Include="assets\interiors\subcategories\swatch_SMGray.png" />
     <Content Include="assets\interiors\swatches\swatch_Base.png" />
     <Content Include="assets\interiors\swatches\swatch_MLRed.png" />
     <Content Include="assets\interiors\swatches\swatch_PBuck.png" />
@@ -159,6 +164,9 @@
     <Content Include="data\strings.json" />
     <Content Include="data\users.json" />
     <Content Include="data\western_star.sql" />
+    <Content Include="images\back_button_left.png" />
+    <Content Include="images\back_button_middle.png" />
+    <Content Include="images\back_button_right.png" />
     <Content Include="images\calculators\calculators_arrow_active.png" />
     <Content Include="images\calculators\calculators_arrow_inactive.png" />
     <Content Include="images\calculators\calculators_background.png" />
