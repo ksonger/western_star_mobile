@@ -147,6 +147,7 @@
     <Content Include="assets\images\WS_Brn_Grill_Closeup_01r.jpg" />
     <Content Include="assets\images\WS_Brn_Logging_06r.jpg" />
     <Content Include="assets\images\WS_Brn_Tools_02r.jpg" />
+    <Content Include="assets\images\ws_logo.png" />
     <Content Include="assets\interiors\subcategories\swatch_Base.png" />
     <Content Include="assets\interiors\subcategories\swatch_MLRed.png" />
     <Content Include="assets\interiors\subcategories\swatch_PBuck.png" />
@@ -391,6 +392,7 @@
     <Content Include="images\lang_menu\lang_menu_topmiddle.png" />
     <Content Include="images\lang_menu\lang_menu_topright.png" />
     <Content Include="images\library\library_background.png" />
+    <Content Include="images\library\library_comp.jpg" />
     <Content Include="images\library\search_box.png" />
     <Content Include="images\login\login_background.png" />
     <Content Include="images\login\login_box_left.png" />
@@ -399,6 +401,7 @@
     <Content Include="images\login\login_btn_left.png" />
     <Content Include="images\login\login_btn_right.png" />
     <Content Include="images\login\login_middle.png" />
+    <Content Include="images\login\serious_trucks.png" />
     <Content Include="images\main_background.png" />
     <Content Include="images\main_background_portrait.png" />
     <Content Include="images\tabstrip\icon_calculators_off.png" />
@@ -416,6 +419,8 @@
     <Content Include="images\tabstrip\ws_icon_tabstrip.png" />
     <Content Include="images\utility_bar_middle.png" />
     <Content Include="images\ws\why_ws.jpg" />
+    <Content Include="images\ws\why_ws_gradient.png" />
+    <Content Include="images\ws\why_ws_torn_edge.png" />
     <Content Include="images\ws_logo.png" />
     <Content Include="index.html" />
     <Content Include="kendo\js\jquery.min.js" />

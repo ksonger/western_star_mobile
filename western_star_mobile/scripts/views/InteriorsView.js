@@ -1,9 +1,9 @@
 window.InteriorsView = StateView.extend({
-	lang_list:null,
 	swiping:false,
 	currentCategory:0,
 	currentSubcategory:0,
 	currentImage:1,
+	numImages:null,
 	currentView:"categories",
 	viewAnchors:[],
 	applied_views:[],
@@ -14,17 +14,19 @@ window.InteriorsView = StateView.extend({
 	},
 	onEnter:function() {
 		app.mainView.setStrings();
-		try {
-			app.mainView.headerView.hideBack();
-		}
-		catch (err) {
+		if (this.currentView == "categories") {
+			try {
+				app.mainView.headerView.hideBack();
+			}
+			catch (err) {
+			}
 		}
 		TweenLite.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4}); 
 	},
 	respond:function() {
 		this.$el.find("#interiors").css({"height":app.windowHeight + "px", "width":app.windowWidth + "px"});
 		this.$el.find("#background_image").css({"width":app.windowWidth + "px", "height":app.windowHeight + "px"});
-		this.$el.find("#interiors_logo").css({"left":((this.$el.find("#logo_div").width() - this.$el.find("#interiors_logo").width()) / 2) + 20 + "px", "top":((this.$el.find("#top_div").height() - this.$el.find("#logo_div").height()) / 2) + "px"});
+		this.$el.find("#interiors_logo").css({"top":((this.$el.find("#top_div").height() - this.$el.find("#logo_div").height()) / 2) + "px"});
 		this.$el.find("#interiors_title").css({"top":((this.$el.find("#top_div").height() - this.$el.find("#interiors_title").height()) / 2) + "px"});
 		this.$el.find("#int_categories").css({"top":$("#header_bar").height() + this.$el.find("#top_div").height() + (((app.windowHeight - $("#header_bar").height() - this.$el.find("#top_div").height() - $("#tabstrip").height()) - (app.windowHeight * .45) - 80) / 2) + "px", "left":(app.windowWidth - this.$el.find("#int_categories").width()) / 2 + "px"});
 		this.$el.find("#int_categories").height(app.windowHeight - $("#header_bar").height() - $("#tabstrip").height());
@@ -351,7 +353,7 @@ window.InteriorsView = StateView.extend({
 	onImageSelect:function(img) {
 		var iObj = {
 			"attributes":{
-                "src":$(img).attr("src")
+				"src":$(img).attr("src")
 			}
 		}
 		app.mainView.imageView.showImage(iObj);

@@ -29,6 +29,7 @@ window.LoginView = StateView.extend({
 		this.$el.find("#login_table").css({
 			"height":$(window).height() + "px", "margin-left":"5%"
 		});
+        this.$el.find("#serious").css({"top":"50px", "left":app.windowWidth - this.$el.find("#serious").width() - 50 + "px"});
 	},
 	render:function() {
 		this.template = _.template(tpl.get("login"));

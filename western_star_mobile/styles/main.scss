@@ -45,6 +45,7 @@ img {
   vertical-align: middle;
 }
 
+
 fieldset {
   border: 0;
   margin: 0;
@@ -75,6 +76,7 @@ body {
   width: 90%;
   margin: 0 5%;
 }
+
 
 
 /* ===================
@@ -452,6 +454,13 @@ margin:0px;
         padding:0px;
         spacing:0px;
         margin:0px;
+        #serious    {
+            position:absolute;
+            width:167px;
+            height:84px;
+            z-index:10000;
+            background:url(../images/login/serious_trucks.png) no-repeat;
+        }
         img    {
            position:absolute;
            border:0px;
@@ -562,8 +571,8 @@ margin:0px;
         }
         #login_logo    {
             background: url(../images/ws_logo.png) no-repeat;
-            height:71px;
-            width:110px;
+            height:64px;
+            width:99px;
             border:none;
             position:absolute;
         }
@@ -603,8 +612,8 @@ margin:0px;
         }
         #home_logo    {
             background: url(../images/ws_logo.png) no-repeat;
-            height:71px;
-            width:110px;
+            height:64px;
+            width:99px;
             border:none;
             position:absolute;
         }
@@ -726,17 +735,15 @@ margin:0px;
                 border-bottom:1px solid #4d4b4b;
                 #logo_div    {
                     width:25%;
-                    max-width:280px;
-                    min-width:220px;
+                    width:180px;
                     float:left;
-                    text-align:center;
-                    align:center;
+                    margin-left:60px;
                     #library_logo    {
                         text-align:center;
                         align:center;
                         background: url(../images/ws_logo.png) no-repeat;
-                        height:71px;
-                        width:110px;
+                        height:64px;
+                        width:99px;
                         border:none;
                         position:relative;
                     }
@@ -763,6 +770,12 @@ margin:0px;
         }
         #main_div    {
             position:absolute;
+            #comp    {
+                position:absolute;
+                background:url(../images/library/library_comp.jpg) no-repeat;
+                width:1024px;
+                height:602px;
+            }
         }
     }
 
@@ -803,14 +816,13 @@ margin:0px;
                 border-bottom:1px solid #4d4b4b;
                 #logo_div    {
                     float:left;
-                    margin-left:15px;
+                    margin-left:60px;
                     min-width:180px;
                     #calculators_logo    {
                         text-align:center;
                         align:center;
                         background: url(../images/ws_logo.png) no-repeat;
-                        height:71px;
-                        width:110px;
+                        height:64px;
                         border:none;
                         position:relative;
                     }
@@ -1103,6 +1115,107 @@ margin:0px;
             }         
         }     
     }
+    #ws    {
+        width:100%;
+        height:100%;
+        z-index:10;
+        padding:0px;
+        spacing:0px;
+        margin:0px;
+        position:absolute;
+        #top_div    {
+            position:absolute;
+            height:12%;
+            min-height:80px;
+            width:100%;
+            top:43px;
+            padding:0px;
+            spacing:0px;
+            margin:0px;
+            border-bottom:1px solid #4d4b4b;
+            #logo_div    {
+                float:left;
+                margin-left:60px;
+                min-width:180px;
+                #ws_logo    {
+                    text-align:center;
+                    align:center;
+                    background: url(../images/ws_logo.png) no-repeat;
+                    height:64px;
+                    border:none;
+                    position:relative;
+                }
+            }
+            #title_div    {
+                width:50%;
+                height:100%;
+                min-height:80px;
+                float:left;
+                #ws_title    {
+                    @include unselectable;
+                    position:relative;
+                    font-size:24px;
+                    font-weight:bold;
+                    color:#FFFFFF;
+                }
+            }
+        }
+
+        #torn_edge    {
+            position:absolute;
+            width:100%;
+            z-index:100;
+        }
+        #lower_gradient    {
+            width:100%;
+            height:222px;
+            background:url(../images/ws/why_ws_gradient.png) repeat-x;
+            position:absolute;
+            z-index:100;
+        }
+        #main    {
+            position:absolute;
+            top:0px;
+            #placeholder    {
+
+            }
+        }
+        #pages_index    {
+                position:absolute;
+                top:75%;
+                width:100%;
+                z-index:101;
+                ol {
+                    position:absolute;
+                    display: block;
+                    text-align:center;
+                    margin:0px;
+                    padding:0px;
+                    list-style-type: decimal;
+                    -webkit-margin-before: 1em;
+                    -webkit-margin-after: 1em;
+                    -webkit-margin-start: 0px;
+                    -webkit-margin-end: 0px;
+                    -webkit-padding-start: 40px;
+                    li {
+                        width:26px;
+                        float:left;
+                        margin:7px;
+                        background: rgba(0,0,0,0.1);
+                        color: rgba(0,0,0,0.1);
+                        border: 1px solid rgba(0,0,0,0.3);
+                        border-radius: 1em;
+                        -moz-border-radius: 1em;
+                        -webkit-border-radius: 1em;
+                        box-shadow: 0 1px 1px rgba(255,255,255,0.5);
+                        -webkit-box-shadow: 0 1px 1px rgba(255,255,255,0.5);
+                        &.current    {
+                            background: rgba(255,255,255,0.3);
+                        }
+                    }
+                }
+            }
+    }
     #interiors    {
 
         #top_div    {
@@ -1116,18 +1229,16 @@ margin:0px;
                 margin:0px;
                 border-bottom:1px solid #4d4b4b;
                 #logo_div    {
-                    width:25%;
-                    max-width:280px;
-                    min-width:220px;
+                    width:180px;
                     float:left;
                     text-align:center;
                     align:center;
+                    margin-left:60px;
                     #interiors_logo    {
                         text-align:center;
                         align:center;
                         background: url(../images/ws_logo.png) no-repeat;
-                        height:71px;
-                        width:110px;
+                        height:64px;
                         border:none;
                         position:relative;
                     }
@@ -1294,9 +1405,3 @@ margin:0px;
         }
     }
 }
-
-
-
-
-
-
