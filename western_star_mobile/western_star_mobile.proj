@@ -63,6 +63,7 @@
     <Folder Include="images\library" />
     <Folder Include="images\calculators" />
     <Folder Include="assets\interiors" />
+    <Folder Include="images\ws" />
     <Folder Include="images\tabstrip" />
     <Folder Include="api" />
     <Folder Include="assets" />
@@ -414,6 +415,7 @@
     <Content Include="images\tabstrip\tabstrip_active.png" />
     <Content Include="images\tabstrip\ws_icon_tabstrip.png" />
     <Content Include="images\utility_bar_middle.png" />
+    <Content Include="images\ws\why_ws.jpg" />
     <Content Include="images\ws_logo.png" />
     <Content Include="index.html" />
     <Content Include="kendo\js\jquery.min.js" />

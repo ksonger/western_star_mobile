@@ -15,6 +15,9 @@ window.TabstripView = Backbone.View.extend({
                 if($("#videos").css("opacity") != 0)    {
                     app.mainView.videoView.hideVideo();
                 }
+                if($("#images").css("opacity") != 0)    {
+                    app.mainView.imageView.hideImage();
+                }
 				if (index == 0) {
 					app.setState(app.mainView.homeView);
 				}

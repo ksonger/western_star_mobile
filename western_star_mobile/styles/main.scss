@@ -2,6 +2,8 @@
    HTML5 Boilerplate styles - h5bp.com (generated via initializr.com)
    ========================================================================== */
 
+
+
 html,
 button,
 input,
@@ -1251,8 +1253,10 @@ margin:0px;
                     text-align:center;
                     width:100%;
                     float:left;
+                    cursor:pointer;
                 }
             }
+
             #images_index    {
                 position:absolute;
                 top:75%;

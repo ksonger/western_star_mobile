@@ -1,11 +1,12 @@
 window.InteriorsView = StateView.extend({
 	lang_list:null,
 	swiping:false,
-    currentCategory:0,
+	currentCategory:0,
 	currentSubcategory:0,
 	currentImage:1,
 	currentView:"categories",
-    viewAnchors:[],
+	viewAnchors:[],
+	applied_views:[],
 	initialize:function (options) {
 		if (this.firstLoad) {
 			this.onFirstLoad();
@@ -82,7 +83,7 @@ window.InteriorsView = StateView.extend({
 		page.currentView = "categories";
 	},
 	onCategorySelect:function(cat) {
-        this.currentCategory = $(cat).attr("id");
+		this.currentCategory = $(cat).attr("id");
 		TweenMax.to(this.$el.find("#int_categories"), .3, {css:{autoAlpha:0}, onComplete:this.createSubCategories, onCompleteParams:[$(cat).attr("id"), this]});
 	},
 	createSubCategories:function(n, page) {
@@ -134,7 +135,7 @@ window.InteriorsView = StateView.extend({
 		pg.$el.find(".interiors_subcategory").css({"top":(sum_a) + $("#header_bar").height() + pg.$el.find("#top_div").height() + "px"});
 		pg.$el.find("#interiors_swatches").css({"top":$(pg.$el.find(".interiors_subcategory")[0]).offset().top - pg.$el.find("#interiors_swatches").height() - 40 + "px"});
 		app.mainView.headerView.showBack();
-        TweenMax.to(page.$el.find("#int_categories"), .01, {css:{autoAlpha:0}});
+		TweenMax.to(page.$el.find("#int_categories"), .01, {css:{autoAlpha:0}});
 		TweenMax.to(page.$el.find("#int_images"), .01, {css:{autoAlpha:0}});
 		TweenMax.to(pg.$el.find("#int_subcategories"), .4, {css:{autoAlpha:1}});
 		page.currentView = "subcategories";
@@ -190,7 +191,10 @@ window.InteriorsView = StateView.extend({
 		indices_list.css({"left":((app.windowWidth - indices_list.width()) / 2) + "px", "margin-left":"-40px"});
         
 		var xpos = (app.windowWidth - 560) / 2;
-		var applied_views = [];
+		this.applied_views = [];
+		while (pg.viewAnchors.length > 0) {
+			pg.viewAnchors.pop();
+		}
 		$.each(imgArr, function(ind, img) {
 			var imgobj = app.interiorsImagesCollection.findWhere({"id":img});
 			var imgtd = jQuery('<div/>', {
@@ -198,16 +202,16 @@ window.InteriorsView = StateView.extend({
 				id:imgobj.attributes.id,
 			}).appendTo(pg.$el.find("#images_gallery"));
 			var dupe = false;
-			for (var i = 0;i < applied_views.length;i++) {
-				if (imgobj.attributes.view == applied_views[i]) {
+			for (var i = 0;i < pg.applied_views.length;i++) {
+				if (imgobj.attributes.view == pg.applied_views[i]) {
 					dupe = true;
 					break;
 				}
 			}
 			if (!dupe) {
-                pg.viewAnchors.push(ind);
-				applied_views.push(imgobj.attributes.view);
+				pg.applied_views.push(imgobj.attributes.view);
 			}
+			pg.viewAnchors.push(imgobj.attributes.view);
             
 			imgtd.css({"text-align":"center", "width":app.windowWidth + "px"});
 			var h = app.windowHeight * .4;
@@ -218,8 +222,11 @@ window.InteriorsView = StateView.extend({
 				width:w + "px",
 				height:h + "px"
 			}).appendTo(imgtd);
+			int_img.click(function() {
+				pg.onImageSelect(this);
+			});
 		});
-        console.log(pg.viewAnchors);
+        
 		var cltd = jQuery('<div/>', {}).appendTo(pg.$el.find("#images_gallery"));
 		cltd.css({"clear":"left"});
         
@@ -233,10 +240,10 @@ window.InteriorsView = StateView.extend({
         
 		$.each(viewsArr, function(ind, view) {
 			var navobj = app.interiorsNavCollection.findWhere({"id":view});
-			for (var i = 0;i < applied_views.length;i++) {
-				if (navobj.attributes.view == applied_views[i]) {
+			for (var i = 0;i < pg.applied_views.length;i++) {
+				if (navobj.attributes.view == pg.applied_views[i]) {
 					var td = jQuery('<td/>', {
-						class:"interiors_nav_view",
+						class:"interiors_nav_view" + " " + navobj.attributes.view,
 						id:"v_" + navobj.attributes.id
 					}).appendTo(pg.$el.find("#table_views"));
 					if (ind == 0) {
@@ -244,17 +251,17 @@ window.InteriorsView = StateView.extend({
 					}
 					td.css({"background":"url(" + navobj.attributes.image + ") no-repeat"});
 					td.click(function() {
-						pg.onSwatchSelect(this);
+						pg.onViewSelect(this, pg);
 					});
 				}
 			}
 		});
 
-		pg.$el.find("#images_gallery").mousedown(function() {
+		pg.$el.find("#images_gallery, img").mousedown(function() {
 			return false;
 		});
 		try {
-			pg.$el.find("#images_gallery").on("swipe", function(e) {
+			pg.$el.find("#images_gallery, img").on("swipe", function(e) {
 				pg.onSwipe(e);
 			});
 		}
@@ -262,13 +269,31 @@ window.InteriorsView = StateView.extend({
 		}
 		app.mainView.headerView.showBack();
         
-        var sum_a = ((app.windowHeight - (pg.$el.find("#interiors_views").height() + pg.$el.find("#images_gallery").height() + 100)) / 2) + (($("#header_bar").height() + pg.$el.find("#top_div").height() - $("#tabstrip").height()) / 2);
+		var sum_a = ((app.windowHeight - (pg.$el.find("#interiors_views").height() + pg.$el.find("#images_gallery").height() + 100)) / 2) + (($("#header_bar").height() + pg.$el.find("#top_div").height() - $("#tabstrip").height()) / 2);
 		pg.$el.find("#images_gallery").css({"top":(sum_a) + $("#header_bar").height() + pg.$el.find("#top_div").height() + "px"});
-        pg.$el.find("#interiors_views").css({"top":pg.$el.find("#images_gallery").offset().top - pg.$el.find("#interiors_views").height() - 40 + "px"});
-        TweenMax.to(page.$el.find("#int_categories"), .01, {css:{autoAlpha:0}});
+		pg.$el.find("#interiors_views").css({"top":pg.$el.find("#images_gallery").offset().top - pg.$el.find("#interiors_views").height() - 40 + "px"});
+		TweenMax.to(page.$el.find("#int_categories"), .01, {css:{autoAlpha:0}});
 		TweenMax.to(page.$el.find("#int_subcategories"), .01, {css:{autoAlpha:0}});
 		TweenMax.to(pg.$el.find("#int_images"), .4, {css:{autoAlpha:1}});
 		page.currentView = "images";
+	},
+	onViewSelect:function(el, page) {
+		$.each(this.$el.find(".interiors_nav_view"), function(ind, el) {
+			$(el).removeClass("active");
+		});
+		var selectedView;
+		$.each(page.applied_views, function(ind, av) {
+			if ($(el).hasClass(av)) {
+				$(el).addClass("active");
+				selectedView = av;
+			}
+		});
+		for (var i = 0;i < page.viewAnchors.length;i++) {
+			if (selectedView == page.viewAnchors[i]) {
+				page.gotoImage(i + 1);
+				break;
+			}
+		}
 	},
 	onSwipe:function (e) {
 		if (!this.swiping) {
@@ -311,10 +336,24 @@ window.InteriorsView = StateView.extend({
 				$(el).removeClass("current");
 			}
 		});
+		var page = this;
+		$.each(this.$el.find(".interiors_nav_view"), function(ind, el) {
+			if ($(el).hasClass(page.viewAnchors[num - 1])) {
+				$(el).addClass("active");
+			}
+			else {
+				$(el).removeClass("active");
+			}
+		});
 		this.currentImage = parseInt(n);
 	},
     
 	onImageSelect:function(img) {
-		console.log("image selected");
+		var iObj = {
+			"attributes":{
+                "src":$(img).attr("src")
+			}
+		}
+		app.mainView.imageView.showImage(iObj);
 	}
 });
