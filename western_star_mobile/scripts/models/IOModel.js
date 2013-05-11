@@ -207,11 +207,11 @@ window.IOModel = Backbone.Model.extend({
 					app.ioModel.db.transaction(app.ioModel.selectStrings, app.ioModel.onStringsError, app.ioModel.onStringsSuccess);
 					app.ioModel.db.transaction(app.ioModel.selectAssets, app.ioModel.onAssetsError, app.ioModel.onAssetsSuccess); 
                     app.ioModel.db.transaction(app.ioModel.selectImages, app.ioModel.onImagesError, app.ioModel.onImagesSuccess);
-                    
                     app.ioModel.db.transaction(app.ioModel.selectInteriorsCategories, app.ioModel.onInteriorsCategoriesError, app.ioModel.onInteriorsCategoriesSuccess);
                     app.ioModel.db.transaction(app.ioModel.selectInteriorsSubCategories, app.ioModel.onInteriorsSubCategoriesError, app.ioModel.onInteriorsSubCategoriesSuccess);
                     app.ioModel.db.transaction(app.ioModel.selectInteriorsImages, app.ioModel.onInteriorsImagesError, app.ioModel.onInteriorsImagesSuccess);
                     app.ioModel.db.transaction(app.ioModel.selectInteriorsNav, app.ioModel.onInteriorsNavError, app.ioModel.onInteriorsNavSuccess);
+    
 				}
 			}
 		}
@@ -352,7 +352,6 @@ window.IOModel = Backbone.Model.extend({
 	},
     
     
-    
 	
 	selectUsers:function(tx) {
 		tx.executeSql("SELECT * FROM users;", [], app.ioModel.userDataSelectHandler, app.ioModel.onUsersError);
@@ -375,21 +374,17 @@ window.IOModel = Backbone.Model.extend({
     selectInteriorsSubCategories:function(tx) {
 		tx.executeSql("SELECT * FROM interiors_subcategories;", [], app.ioModel.interiorsSubCategoriesDataSelectHandler, app.ioModel.onInteriorsSubCategoriesError);
 	},
-    selectAssets:function(tx) {
+    selectInteriorsNav:function(tx) {
 		tx.executeSql("SELECT * FROM interiors_navigation;", [], app.ioModel.interiorsNavDataSelectHandler, app.ioModel.onInteriorsNavError);
 	},
     imagesDataSelectHandler:function(transaction, results) {
 		var images_models = [];
 		for (var i = 0; i < results.rows.length; i++) {
 			var row = results.rows.item(i);
-			var images_model = new ImagesModel(row);
+			var image_model = new ImagesModel(row);
 			images_models.push(image_model);
 		}
-		app.imagesCollection = new ImagesCollection(image_models, {model:ImagesModel});
-		app.ioModel.imagesReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
-			app.onDataReady();
-		}
+		app.imagesCollection = new ImagesCollection(images_models, {model:ImagesModel});
 	},
     interiorsCategoriesDataSelectHandler:function(transaction, results) {
 		var intcat_models = [];
@@ -399,10 +394,6 @@ window.IOModel = Backbone.Model.extend({
 			intcat_models.push(intcat_model);
 		}
 		app.interiorsCatCollection = new InteriorsCatCollection(intcat_models, {model:InteriorsCatModel});
-		app.ioModel.intCatReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
-			app.onDataReady();
-		}
 	},
     interiorsSubCategoriesDataSelectHandler:function(transaction, results) {
 		var intsubcat_models = [];
@@ -412,12 +403,9 @@ window.IOModel = Backbone.Model.extend({
 			intsubcat_models.push(intsubcat_model);
 		}
 		app.interiorsSubCatCollection = new InteriorsSubCatCollection(intsubcat_models, {model:InteriorsSubCatModel});
-		app.ioModel.intSubcatReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
-			app.onDataReady();
-		}
 	},
     interiorsImagesDataSelectHandler:function(transaction, results) {
+
 		var intimages_models = [];
 		for (var i = 0; i < results.rows.length; i++) {
 			var row = results.rows.item(i);
@@ -425,10 +413,6 @@ window.IOModel = Backbone.Model.extend({
 			intimages_models.push(intimages_model);
 		}
 		app.interiorsImagesCollection = new InteriorsImagesCollection(intimages_models, {model:InteriorsImagesModel});
-		app.ioModel.intImagesReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
-			app.onDataReady();
-		}
 	},
     interiorsNavDataSelectHandler:function(transaction, results) {
 		var intnav_models = [];
@@ -438,10 +422,6 @@ window.IOModel = Backbone.Model.extend({
 			intnav_models.push(intnav_model);
 		}
 		app.interiorsNavCollection = new InteriorsNavCollection(intnav_models, {model:InteriorsNavModel});
-		app.ioModel.intNavReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
-			app.onDataReady();
-		}
 	},
 	assetDataSelectHandler:function(transaction, results) {
 		var asset_models = [];
@@ -451,10 +431,6 @@ window.IOModel = Backbone.Model.extend({
 			asset_models.push(asset_model);
 		}
 		app.assetsCollection = new AssetsCollection(asset_models, {model:AssetsModel});
-		app.ioModel.assetsReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
-			app.onDataReady();
-		}
 	},
 	stringDataSelectHandler:function(transaction, results) {
 		var str_models = [];
@@ -464,10 +440,6 @@ window.IOModel = Backbone.Model.extend({
 			str_models.push(str_model);
 		}
 		app.stringsCollection = new StringsCollection(str_models, {model:StringsModel});
-		app.ioModel.stringsReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
-			app.onDataReady();
-		}
 	},
 	userDataSelectHandler:function(transaction, results) {
 		var usr_models = [];
@@ -477,18 +449,14 @@ window.IOModel = Backbone.Model.extend({
 			usr_models.push(usr_model);
 		}
 		app.usersCollection = new UsersCollection(usr_models, {model:UserModel});
-		app.ioModel.usersReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
-			app.onDataReady();
-		}
 	},
  
 	onUsersError:function(e) {
 		console.log("users error: " + e.message);
 	},
-	onUsersSuccess:function(e) {
+	onUsersSuccess:function() {
 		app.ioModel.usersReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubCatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
@@ -496,9 +464,9 @@ window.IOModel = Backbone.Model.extend({
 	onStringsError:function(e) {
 		console.log("strings error: " + e.code);
 	},
-	onStringsSuccess:function(e) {
+	onStringsSuccess:function() {
 		app.ioModel.stringsReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubCatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
@@ -506,9 +474,9 @@ window.IOModel = Backbone.Model.extend({
 	onAssetsError:function(e) {
 		console.log("assets error: " + e.message);
 	},
-	onAssetsSuccess:function(e) {
+	onAssetsSuccess:function() {
 		app.ioModel.assetsReady = true;
-		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubCatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
@@ -516,48 +484,51 @@ window.IOModel = Backbone.Model.extend({
     onImagesError:function(e) {
 		console.log("images error: " + e.message);
 	},
-	onImagesSuccess:function(e) {
+	onImagesSuccess:function() {
 		app.ioModel.imagesReady = true;
-		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubCatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
     onInteriorsCategoriesError:function(e) {
 		console.log("interiors categories error: " + e.message);
 	},
-	onInteriorsCategoriesSuccess:function(e) {
+	onInteriorsCategoriesSuccess:function() {
+
 		app.ioModel.intCatReady = true;
-		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubCatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
     onInteriorsSubCategoriesError:function(e) {
 		console.log("interiors subcategories error: " + e.message);
 	},
-	onInteriorsSubCategoriesSuccess:function(e) {
-		app.ioModel.intSubcatReady = true;
-		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+	onInteriorsSubCategoriesSuccess:function() {
+        
+		app.ioModel.intSubCatReady = true;
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubCatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
     onInteriorsImagesError:function(e) {
 		console.log("interiors images error: " + e.message);
 	},
-	onInteriorsImagesSuccess:function(e) {
+	onInteriorsImagesSuccess:function() {
 		app.ioModel.intImagesReady = true;
-		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubCatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
     onInteriorsNavError:function(e) {
 		console.log("interiors nav error: " + e.message);
 	},
-	onInteriorsNavSuccess:function(e) {
+	onInteriorsNavSuccess:function() {
 		app.ioModel.intNavReady = true;
-		if (app.online && app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubcatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
+		if (app.ioModel.usersReady && app.ioModel.stringsReady && app.ioModel.assetsReady && app.ioModel.imagesReady && app.ioModel.intCatReady && app.ioModel.intSubCatReady && app.ioModel.intImagesReady && app.ioModel.intNavReady) {
 			app.onDataReady();
 		}
 	},
+    
     
 	nullDataHandler:function(e) {
 		console.log("null data: " + e);

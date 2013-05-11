@@ -32,7 +32,6 @@ var AppRouter = Backbone.Router.extend({
 	states:[],
 	currentState:null,
 	rInt:null,
-	online:true,
 	imageManifest:[],
 	assets_server:"",
 	errors:0,

@@ -91,8 +91,14 @@ window.InteriorsView = StateView.extend({
 	createSubCategories:function(n, page) {
 		var pg = page;
 		pg.$el.find("#int_subcategories").html("");
-		var cat = app.interiorsCatCollection.findWhere({"id":n});
-		var subcatArr = cat.attributes.subcategories.split(",");
+		var cat;
+		var subcatArr;
+		$.each(app.interiorsCatCollection.models, function(ind, model) {
+			if (model.attributes.id == n) {
+				cat = model;
+				subcatArr = cat.attributes.subcategories.split(",");
+			}
+		});
 		var sc_swatches = jQuery('<div/>', {
 			id:"interiors_swatches",
 		}).appendTo(pg.$el.find("#int_subcategories"));
@@ -101,7 +107,13 @@ window.InteriorsView = StateView.extend({
 			align:"center"
 		}).appendTo(pg.$el.find("#interiors_swatches"));
 		$.each(subcatArr, function(ind, sc) {
-			var scobj = app.interiorsSubCatCollection.findWhere({"id":sc});
+			var scobj;       
+			$.each(app.interiorsSubCatCollection.models, function(ind, model) {
+				if (model.attributes.id == sc) {
+					scobj = model;
+				}
+			});
+			
 			var h = app.windowHeight * .4;
 			var w = h * (586 / 320);
 			var scat = jQuery('<div/>', {
@@ -167,8 +179,15 @@ window.InteriorsView = StateView.extend({
 	createImages:function(n, page) {
 		var pg = page;
 		pg.$el.find("#int_images").html("");
-		var scat = app.interiorsSubCatCollection.findWhere({"id":n});
-		var viewsArr = scat.attributes.nav_ids.split(",");
+		var scat;
+		var viewsArr;
+		
+		$.each(app.interiorsSubCatCollection.models, function(ind, model) {
+			if (model.attributes.id == n) {
+				scat = model;
+				viewsArr = scat.attributes.nav_ids.split(",");
+			}
+		});
 		
 		var imgArr = scat.attributes.images.split(",");
 		pg.numImages = imgArr.length;
@@ -198,7 +217,14 @@ window.InteriorsView = StateView.extend({
 			pg.viewAnchors.pop();
 		}
 		$.each(imgArr, function(ind, img) {
-			var imgobj = app.interiorsImagesCollection.findWhere({"id":img});
+			var imgobj;
+            
+			$.each(app.interiorsImagesCollection.models, function(ind, model) {
+				if (model.attributes.id == img) {
+					imgobj = model;
+				}
+			});
+            
 			var imgtd = jQuery('<div/>', {
 				class:"interiors_image",
 				id:imgobj.attributes.id,
@@ -241,7 +267,14 @@ window.InteriorsView = StateView.extend({
 		}).appendTo(pg.$el.find("#interiors_views"));
         
 		$.each(viewsArr, function(ind, view) {
-			var navobj = app.interiorsNavCollection.findWhere({"id":view});
+			var navobj;
+            
+			$.each(app.interiorsNavCollection.models, function(ind, model) {
+				if (model.attributes.id == view) {
+					navobj = model;
+				}
+			});
+            
 			for (var i = 0;i < pg.applied_views.length;i++) {
 				if (navobj.attributes.view == pg.applied_views[i]) {
 					var td = jQuery('<td/>', {
