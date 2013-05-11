@@ -148,8 +148,15 @@ window.CalculatorsView = StateView.extend({
         var t2;
         if(t1 == "#payments")    {
             t2 = "#power";
+            
         }    else{
             t2 = "#payments";
+        }
+        if(t2 == "#power")    {
+            this.$el.find("#bottom_frame").html("<img id='bottom_image' src='./images/calculators/calculators_bottom_image.png' />");
+        }
+        if(t2 == "#payments")    {
+            this.$el.find("#bottom_frame").html("<img id='bottom_image' src='./images/calculators/calculators_bottom_image2.png' />");
         }
         TweenMax.to(this.$el.find(t2), .3, {css:{autoAlpha:0}});
         TweenMax.to(this.$el.find(t1), .4, {css:{autoAlpha:1}, delay:.4});

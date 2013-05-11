@@ -173,6 +173,7 @@
     <Content Include="images\calculators\calculators_arrow_inactive.png" />
     <Content Include="images\calculators\calculators_background.png" />
     <Content Include="images\calculators\calculators_bottom_image.png" />
+    <Content Include="images\calculators\calculators_bottom_image2.png" />
     <Content Include="images\home\home_button_middle.png" />
     <Content Include="images\home\home_collage.jpg" />
     <Content Include="images\home\home_collage.png" />
