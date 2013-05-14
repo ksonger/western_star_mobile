@@ -225,7 +225,8 @@ var AppRouter = Backbone.Router.extend({
 		this.cjsLoad(imgArr);
 		//console.log(app.imagesCollection.findWhere({"id":"login_background"}));
 		app.mainView = new MainView({model:app.stringsCollection});
-		app.mainView.render(); 
+		app.mainView.render();
+        app.ioModel.downloadFile();
 	}
 });
 

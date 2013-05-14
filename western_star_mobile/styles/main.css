@@ -617,8 +617,7 @@ body {
         border-bottom: 1px solid #4d4b4b; }
         #main #library #library_main #top_div #logo_div {
           width: 25%;
-          max-width: 220px;
-          min-width: 220px;
+          width: 180px;
           float: left;
           margin-left: 60px; }
           #main #library #library_main #top_div #logo_div #library_logo {
@@ -1076,9 +1075,7 @@ body {
     margin: 0px;
     border-bottom: 1px solid #4d4b4b; }
     #main #interiors #top_div #logo_div {
-      width: 25%;
-      max-width: 280px;
-      min-width: 220px;
+      width: 180px;
       float: left;
       text-align: center;
       align: center;

@@ -1,0 +1,61 @@
+{
+    "menuobject": "2",
+    "menu": [
+        {
+            "VOCATIONAL": [
+                {
+                    "TOWING & RECOVERY": "towing",
+                    "MUNICIPAL": "municipal",
+                    "MINING": "mining",
+                    "LOGGING": "logging",
+                    "OIL & GAS": "oil",
+                    "CONSTRUCTION": "construction",
+                    "HEAVY HAUL": "heavy_haul",
+                    "LONG HAUL": "long_haul",
+                    "BULK HAUL": "bulk_haul",
+                    "AUTO HAUL": "auto_haul"
+                },
+                {
+                    "COMPONENTS": [
+                        {
+                            "ENGINES": [
+                                {
+                                    "DD15": "dd15"
+                                },
+                                {
+                                    "DD15t": "dd15tc"
+                                },
+                                {
+                                    "DD13": "dd13"
+                                },
+                                {
+                                    "DD16": "dd16"
+                                },
+                                {
+                                    "CUMMINS ISX15": "isx15"
+                                },
+                                {
+                                    "CUMMINS ISX12": "isx12"
+                                },
+                                {
+                                    "CUMMINS ISL9": "isl9"
+                                },
+                                {
+                                    "CUMMINS ISB6.7": "isb6.7"
+                                }
+                            ]
+                        }
+                    ],
+                    "TRUCKS": [
+                        {
+                            "4700": "4700",
+                            "4800": "4800",
+                            "4900": "4900",
+                            "TWIN STEER": "twin"
+
+                        }
+                    ]
+                }
+            ]
+        }
+    ]

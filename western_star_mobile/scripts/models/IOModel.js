@@ -11,6 +11,7 @@ window.IOModel = Backbone.Model.extend({
     intNavReady:false,
     
     
+    
 	
 	downloadFile:function() {
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, this.fileSystemSuccess, this.fileSystemFail);
@@ -23,6 +24,7 @@ window.IOModel = Backbone.Model.extend({
 	},
 	fileEntrySuccess:function(fileEntry) {
 		var sPath = fileEntry.fullPath.replace("dummy.html", "");
+        console.log(sPath);
 		var fileTransfer = new FileTransfer();
 		fileEntry.remove();
 		fileTransfer.download(

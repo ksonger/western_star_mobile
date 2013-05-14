@@ -163,6 +163,7 @@
     <Content Include="assets\pdf\4951_WS_loggingFINAL.pdf" />
     <Content Include="assets\video\wst_vocational_v5.mp4" />
     <Content Include="data\assets.json" />
+    <Content Include="data\menu.json" />
     <Content Include="data\strings.json" />
     <Content Include="data\users.json" />
     <Content Include="data\western_star.sql" />
