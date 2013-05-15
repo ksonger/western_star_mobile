@@ -16,6 +16,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 	stringsCollection:null,
 	usersCollection:null,
+	menuCollection:null,
 	assetsCollection:null,
 	imagesCollection:null,
 	ioModel:null,
@@ -70,6 +71,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 	begin:function (callback) {
 		this.online = window.navigator.onLine;
+        //this.online = false;
 		var windowWidth;
 		var windowHeight;
 		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
@@ -131,33 +133,40 @@ var AppRouter = Backbone.Router.extend({
 	initDatabase:function(callback) {  
 		this.stringsCollection = new StringsCollection();
 		this.usersCollection = new UsersCollection();
+		this.menuCollection = new MenuCollection();
 		this.assetsCollection = new AssetsCollection();
 		this.imagesCollection = new ImagesCollection();
-        this.interiorsCatCollection = new InteriorsCatCollection();
-        this.interiorsSubCatCollection = new InteriorsSubCatCollection();
-        this.interiorsImagesCollection = new InteriorsImagesCollection();
-        this.interiorsNavCollection = new InteriorsNavCollection();
+		this.interiorsCatCollection = new InteriorsCatCollection();
+		this.interiorsSubCatCollection = new InteriorsSubCatCollection();
+		this.interiorsImagesCollection = new InteriorsImagesCollection();
+		this.interiorsNavCollection = new InteriorsNavCollection();
         
 		if (this.online) {
 			app.stringsCollection.fetch({
 				success:function () {
 					app.usersCollection.fetch({
 						success:function () {
-							app.assetsCollection.fetch({
+							app.menuCollection.fetch({
 								success:function () {
-									app.imagesCollection.fetch({
+									app.assetsCollection.fetch({
 										success:function () {
-											app.interiorsCatCollection.fetch({
+											app.imagesCollection.fetch({
 												success:function () {
-													app.interiorsSubCatCollection.fetch({
+													app.interiorsCatCollection.fetch({
 														success:function () {
-															app.interiorsImagesCollection.fetch({
+															app.interiorsSubCatCollection.fetch({
 																success:function () {
-																	app.interiorsNavCollection.fetch({
+																	app.interiorsImagesCollection.fetch({
 																		success:function () {
-																			// write to local store
-																			app.ioModel = new IOModel();
-																			app.ioModel.createLocalStore();
+																			app.interiorsNavCollection.fetch({
+																				success:function () {
+																					// write to local store
+																					app.ioModel = new IOModel();
+																					app.ioModel.createLocalStore();
+																				}, error:function(e) {
+																					console.log(e);
+																				}
+																			});
 																		}, error:function(e) {
 																			console.log(e);
 																		}
@@ -226,7 +235,7 @@ var AppRouter = Backbone.Router.extend({
 		//console.log(app.imagesCollection.findWhere({"id":"login_background"}));
 		app.mainView = new MainView({model:app.stringsCollection});
 		app.mainView.render();
-        app.ioModel.downloadFile();
+		//app.ioModel.downloadFile();
 	}
 });
 

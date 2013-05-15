@@ -439,6 +439,7 @@
     <Content Include="scripts\collections\InteriorsSubCatCollection.js" />
     <Content Include="scripts\collections\ImagesCollection.js" />
     <Content Include="scripts\collections\InteriorsCatCollection.js" />
+    <Content Include="scripts\collections\MenuCollection.js" />
     <Content Include="scripts\collections\StringsCollection.js" />
     <Content Include="scripts\collections\UsersCollection.js" />
     <Content Include="scripts\lib\backbone-min.js" />
@@ -480,6 +481,7 @@
     <Content Include="scripts\models\InteriorsNavModel.js" />
     <Content Include="scripts\models\InteriorsSubCatModel.js" />
     <Content Include="scripts\models\IOModel.js" />
+    <Content Include="scripts\models\MenuModel.js" />
     <Content Include="scripts\models\StringsModel.js" />
     <Content Include="scripts\models\UserModel.js" />
     <Content Include="scripts\plugins.js" />
