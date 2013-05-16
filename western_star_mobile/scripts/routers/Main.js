@@ -34,7 +34,7 @@ var AppRouter = Backbone.Router.extend({
 	currentState:null,
 	rInt:null,
 	imageManifest:[],
-	assets_server:"",
+	assets_server:"http://win-dev.developmentcmd.com",
 	errors:0,
 	routes:{
 		"":"index"
@@ -164,39 +164,39 @@ var AppRouter = Backbone.Router.extend({
 																					app.ioModel = new IOModel();
 																					app.ioModel.createLocalStore();
 																				}, error:function(e) {
-																					console.log(e);
+																					console.log("interiors nav error: " + e);
 																				}
 																			});
 																		}, error:function(e) {
-																			console.log(e);
+																			console.log("interiors images error: " + e);
 																		}
 																	});
 																}, error:function(e) {
-																	console.log(e);
+																	console.log("interiors subcat error: " + e);
 																}
 															});
 														}, error:function(e) {
-															console.log(e);
+															console.log("interiors cat error: " + e);
 														}
 													});
 												}, error:function(e) {
-													console.log(e);
+													console.log("images error: " + e);
 												}
 											});
 										}, error:function(e) {
-											console.log(e);
+											console.log("assets error: " + e);
 										}
 									});
 								}, error:function(e) {
-									console.log(e);
+									console.log("menu error: " + e);
 								}
 							});
 						}, error:function(e) {
-							console.log(e);
+							console.log("users error: " + e);
 						}
 					});
 				}, error:function(e) {
-					console.log(e);
+					console.log("strings error: " + e);
 				}
 			});
 		}
@@ -226,16 +226,16 @@ var AppRouter = Backbone.Router.extend({
 			window.HTMLAudioElement = function () {
 			};
 		}
+        /* Future functionality to load interface elements dynamically from the assets server 
 		var imgArr = [];
 		$.each(this.imagesCollection.models, function(index, model) {
 			var iObj = {"id":model.get("id"),"src":model.get("src")}
 			imgArr.push(iObj);
 		});
 		this.cjsLoad(imgArr);
-		//console.log(app.imagesCollection.findWhere({"id":"login_background"}));
+        */
 		app.mainView = new MainView({model:app.stringsCollection});
 		app.mainView.render();
-		//app.ioModel.downloadFile();
 	}
 });
 

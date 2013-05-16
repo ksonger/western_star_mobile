@@ -174,7 +174,6 @@ body {
   top: 45%;
   left: 50%; }
 
-/* KENDO */
 #main {
   position: absolute;
   background-color: #000;
@@ -597,6 +596,12 @@ body {
       #main #library #bg_div img {
         width: 100%;
         max-width: 100%; }
+    #main #library #serious {
+      position: absolute;
+      width: 167px;
+      height: 84px;
+      z-index: 10000;
+      background: url(../images/login/serious_trucks.png) no-repeat; }
     #main #library #library_main {
       width: 100%;
       height: 100%;
@@ -638,18 +643,79 @@ body {
             font-size: 24px;
             font-weight: bold;
             color: #FFFFFF; }
-        #main #library #library_main #top_div #search_div {
+      #main #library #library_main #main_div {
+        position: absolute;
+        width: 100%; }
+        #main #library #library_main #main_div #left_nav {
+          float: left;
+          display: inline-block;
+          width: 30%;
+          min-width: 320px;
+          background: #333333;
+          height: 100%;
+          z-index: 10000;
+          overflow-x: hidden;
+          -moz-box-shadow: 3px 3px 20px #000;
+          -webkit-box-shadow: 3px 3px 20px #000;
+          box-shadow: 3px 3px 20px #000; }
+          #main #library #library_main #main_div #left_nav #nav_header {
+            border-bottom: 1px solid #999999;
+            width: 30%;
+            min-width: 320px; }
+            #main #library #library_main #main_div #left_nav #nav_header #library_viewby {
+              -webkit-touch-callout: none;
+              -webkit-user-select: none;
+              -khtml-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+              font-weight: bold;
+              font-size: 18px;
+              color: #999999;
+              margin-left: 15px;
+              position: relative;
+              line-height: 50px; }
+          #main #library #library_main #main_div #left_nav #nav_levels {
+            position: relative; }
+            #main #library #library_main #main_div #left_nav #nav_levels td .nav_item {
+              border-bottom: 1px solid #999999;
+              width: 30%;
+              min-width: 320px;
+              cursor: pointer;
+              float: left;
+              background: #333333; }
+              #main #library #library_main #main_div #left_nav #nav_levels td .nav_item.active {
+                background: #999999; }
+              #main #library #library_main #main_div #left_nav #nav_levels td .nav_item #icon {
+                float: right;
+                padding-right: 15px;
+                width: 12px;
+                height: 19px;
+                position: relative;
+                top: 16px;
+                background: url(../images/library/library_arrow_inactive.png) no-repeat; }
+                #main #library #library_main #main_div #left_nav #nav_levels td .nav_item #icon.active {
+                  background: url(../images/library/library_arrow_active.png) no-repeat; }
+              #main #library #library_main #main_div #left_nav #nav_levels td .nav_item span {
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                font-weight: bold;
+                font-size: 18px;
+                color: #FFFFFF;
+                margin-left: 15px;
+                position: relative;
+                line-height: 50px; }
+                #main #library #library_main #main_div #left_nav #nav_levels td .nav_item span.active {
+                  color: #333333; }
+        #main #library #library_main #main_div #main_content #search_div {
           min-width: 220px;
           height: 29px;
           float: right;
           background: url(../images/library/search_box.png) no-repeat; }
-    #main #library #main_div {
-      position: absolute; }
-      #main #library #main_div #comp {
-        position: absolute;
-        background: url(../images/library/library_comp.jpg) no-repeat;
-        width: 1024px;
-        height: 602px; }
   #main #calculators {
     padding: 0px;
     spacing: 0px;

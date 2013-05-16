@@ -59,6 +59,7 @@ window.LibraryView = StateView.extend({
 		page.nav_width = this.$el.find("#left_nav").width();
 		var level = lvl;
 		if (level == 1) {
+            var el = page.$el.find("#first_level");
 			page.$el.find("#first_level").html("");
 			$.each(app.menuCollection.models, function(ind, model) {
 				$.each(model.get("primary_nav"), function(ind, pnav) {
@@ -73,9 +74,9 @@ window.LibraryView = StateView.extend({
 						id:"icon"
 					}).appendTo(item_lvl1);
 					item_lvl1.click(function(evt) {
-						page.$el.find(".nav_item").removeClass("active");
-						page.$el.find("span").removeClass("active");
-						page.$el.find("#icon").removeClass("active");
+						el.find(".nav_item").removeClass("active");
+						el.find("span").removeClass("active");
+						el.find("#icon").removeClass("active");
 						$(this).addClass("active");
 						$(this).find("span").addClass("active");
 						$(this).find("#icon").addClass("active");
@@ -97,6 +98,7 @@ window.LibraryView = StateView.extend({
 			});
 		}
 		if (level == 2) {
+            var el = page.$el.find("#second_level");
 			page.$el.find("#second_level").html("");
 			$.each(page.menu_selections[0].obj.child_menus, function(ind, item) {
 				var item_lvl2 = jQuery('<div/>', {
@@ -110,9 +112,9 @@ window.LibraryView = StateView.extend({
 					id:"icon"
 				}).appendTo(item_lvl2);
 				item_lvl2.click(function(evt) {
-					page.$el.find(".nav_item").removeClass("active");
-					page.$el.find("span").removeClass("active");
-					page.$el.find("#icon").removeClass("active");
+					el.find(".nav_item").removeClass("active");
+					el.find("span").removeClass("active");
+					el.find("#icon").removeClass("active");
 					$(this).addClass("active");
 					$(this).find("span").addClass("active");
 					$(this).find("#icon").addClass("active");
@@ -139,6 +141,7 @@ window.LibraryView = StateView.extend({
 			page.gotoLevel(level);
 		}
 		if (level == 3) {
+            var el = page.$el.find("#third_level");
 			page.$el.find("#third_level").html("");
 			$.each(page.menu_selections[1].obj.child_menus, function(ind, item) {
 				var item_lvl3 = jQuery('<div/>', {
@@ -152,9 +155,9 @@ window.LibraryView = StateView.extend({
 					id:"icon"
 				}).appendTo(item_lvl3);
 				item_lvl3.click(function(evt) {
-					page.$el.find(".nav_item").removeClass("active");
-					page.$el.find("span").removeClass("active");
-					page.$el.find("#icon").removeClass("active");
+					el.find(".nav_item").removeClass("active");
+					el.find("span").removeClass("active");
+					el.find("#icon").removeClass("active");
 					$(this).addClass("active");
 					$(this).find("span").addClass("active");
 					$(this).find("#icon").addClass("active");
@@ -180,6 +183,6 @@ window.LibraryView = StateView.extend({
 		TweenMax.to(this.$el.find("#nav_levels"), .3, { css:{left: (-(this.nav_width * (n - 1))) + "px" }});
 	},
     addFilter:function(obj)    {
-        console.log(obj);
+        //console.log(obj);
     }
 });
