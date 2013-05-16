@@ -393,6 +393,8 @@
     <Content Include="images\lang_menu\lang_menu_topleft.png" />
     <Content Include="images\lang_menu\lang_menu_topmiddle.png" />
     <Content Include="images\lang_menu\lang_menu_topright.png" />
+    <Content Include="images\library\library_arrow_active.png" />
+    <Content Include="images\library\library_arrow_inactive.png" />
     <Content Include="images\library\library_background.png" />
     <Content Include="images\library\library_comp.jpg" />
     <Content Include="images\library\search_box.png" />

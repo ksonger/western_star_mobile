@@ -235,9 +235,7 @@ window.IOModel = Backbone.Model.extend({
 		tx.executeSql('DROP TABLE IF EXISTS users');
 		tx.executeSql('DROP TABLE IF EXISTS assets');
 		tx.executeSql('DROP TABLE IF EXISTS images');
-		tx.executeSql('DROP TABLE IF EXISTS library_menu_primary');
-		tx.executeSql('DROP TABLE IF EXISTS library_menu_secondary');
-		tx.executeSql('DROP TABLE IF EXISTS library_menu_tertiary');
+		tx.executeSql('DROP TABLE IF EXISTS library_menu');
 		tx.executeSql('DROP TABLE IF EXISTS interiors_categories');
 		tx.executeSql('DROP TABLE IF EXISTS interiors_subcategories');
 		tx.executeSql('DROP TABLE IF EXISTS interiors_images');
@@ -247,9 +245,7 @@ window.IOModel = Backbone.Model.extend({
 		tx.executeSql('CREATE TABLE users(id INTEGER NOT NULL PRIMARY KEY, username TEXT, password TEXT, region TEXT);');
 		tx.executeSql('CREATE TABLE assets(id INTEGER NOT NULL PRIMARY KEY, type TEXT, storage TEXT, src TEXT, title TEXT, description TEXT, thumbnail TEXT, category TEXT, subcategory TEXT, metadata TEXT);');
 		tx.executeSql('CREATE TABLE images(key INTEGER NOT NULL PRIMARY KEY, id TEXT, src TEXT);');
-		tx.executeSql('CREATE TABLE library_menu_primary(id INTEGER NOT NULL PRIMARY KEY, text TEXT, value TEXT, position INTEGER, child_id_set TEXT);');
-		tx.executeSql('CREATE TABLE library_menu_secondary(id INTEGER NOT NULL PRIMARY KEY, text TEXT, value TEXT, position INTEGER, child_id_set TEXT);');
-		tx.executeSql('CREATE TABLE library_menu_tertiary(id INTEGER NOT NULL PRIMARY KEY, text TEXT, value TEXT, position INTEGER, child_id_set TEXT);');
+		tx.executeSql('CREATE TABLE library_menu(id INTEGER NOT NULL PRIMARY KEY, text TEXT, value TEXT, position INTEGER, child_id_set TEXT);');
 		tx.executeSql('CREATE TABLE interiors_categories(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, title TEXT, subcategories TEXT);');
 		tx.executeSql('CREATE TABLE interiors_subcategories(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, images TEXT, swatch TEXT, nav_ids TEXT);');
 		tx.executeSql('CREATE TABLE interiors_images(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, view TEXT);');
@@ -322,7 +318,7 @@ window.IOModel = Backbone.Model.extend({
 		$.each(app.menuCollection.models, function(oind, obj) {
 			$.each(obj.get("primary_nav"), function(ind, pmenu) {
 				var p_list = [parseInt(pmenu.id), pmenu.text, pmenu.value, parseInt(pmenu.position), pmenu.child_id_set];
-				tx.executeSql("INSERT INTO library_menu_primary( id, text, value, position, child_id_set) VALUES (?, ?, ?, ?, ?)", p_list);
+				tx.executeSql("INSERT INTO library_menu( id, text, value, position, child_id_set) VALUES (?, ?, ?, ?, ?)", p_list);
 				$.each(pmenu.child_menus, function(sind, smenu) {
 					dupe = false;
 					$.each(ids, function(dind, del) {
@@ -333,7 +329,7 @@ window.IOModel = Backbone.Model.extend({
 					if (!dupe) {
 						ids.push(parseInt(smenu.id));
 						var s_list = [parseInt(smenu.id), String(smenu.text), String(smenu.value), parseInt(smenu.position), String(smenu.child_id_set)];
-						tx.executeSql("INSERT INTO library_menu_secondary( id, text, value, position, child_id_set) VALUES (?, ?, ?, ?, ?)", s_list);
+						tx.executeSql("INSERT INTO library_menu( id, text, value, position, child_id_set) VALUES (?, ?, ?, ?, ?)", s_list);
 						$.each(smenu.child_menus, function(tind, tmenu) {
 							dupe = false;
 							$.each(t_ids, function(tind, tel) {
@@ -344,7 +340,7 @@ window.IOModel = Backbone.Model.extend({
 							if (!dupe) {
 								t_ids.push(parseInt(tmenu.id));
 								var t_list = [parseInt(tmenu.id), String(tmenu.text), String(tmenu.value), parseInt(tmenu.position), String(tmenu.child_id_set)];
-								tx.executeSql("INSERT INTO library_menu_tertiary( id, text, value, position, child_id_set) VALUES (?, ?, ?, ?, ?)", t_list);
+								tx.executeSql("INSERT INTO library_menu( id, text, value, position, child_id_set) VALUES (?, ?, ?, ?, ?)", t_list);
 							}
 						});
 					}
@@ -452,12 +448,12 @@ window.IOModel = Backbone.Model.extend({
 		$.each(menuObj.primary_nav, function(ind, el) {
 			el.child_menus = [];
 			app.ioModel.db.transaction(function(tx) {
-				var stmt = "SELECT * FROM library_menu_secondary WHERE id IN(" + el.get("child_id_set") + ");";
+				var stmt = "SELECT * FROM library_menu WHERE id IN(" + el.get("child_id_set") + ");";
 				tx.executeSql(stmt, [], function(trans, re) { 
 					for (var i = 0; i < re.rows.length; i++) {
 						var row = re.rows.item(i);
                         el.child_menus.push(row); 
-						var stmt2 = "SELECT * FROM library_menu_tertiary WHERE id IN(" + row.child_id_set + ");";
+						var stmt2 = "SELECT * FROM library_menu WHERE id IN(" + row.child_id_set + ");";
 						tx.executeSql(stmt2, [], function(trans2, re2) { 
                             el.child_menus[el.child_menus.length-1].child_menus = [];
 							for (var j = 0; j < re2.rows.length; j++) {

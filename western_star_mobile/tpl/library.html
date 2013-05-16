@@ -2,6 +2,7 @@
 	<div id="bg_div">
 		<img id="background_image" src="./images/library/library_background.png" />
 	</div>
+    <div id="serious"></div>
 	<div id="library_main">
 		<div id="top_div">
 			<div id="logo_div">
@@ -10,23 +11,22 @@
 			<div id="title_div">
 				<span id="library_title"></span>
 			</div>
-			<div id="search_div"></div>
 		</div>
 		<div id="main_div">
-            
-			<div class="library_asset" style="position:absolute; top:99px; left:360px; z-index:1">
-				<img id="thumbnail" width="143px" height="143px" src="./assets/images/thumbnails/asset_0002.jpg" />
-				<input type="hidden" id="asset_id" value="2" />
-				<input type="hidden" id="asset_type" value="video" />
+			<div id="left_nav">
+				<div id="nav_header">
+					<span id="library_viewby"></span>
+				</div>
+                <table id="nav_levels" cellpadding="0px" cellspacing="0px" valign="top">
+                    <td valign="top" id="first_level"></td><td valign="top" id="second_level"></td><td valign="top" id="third_level"></td>
+                </table>
 			</div>
-            
-            <div class="library_asset" style="position:absolute; top:99px; left:513px; z-index:1">
-				<img id="thumbnail" width="143px" height="143px" src="./assets/images/thumbnails/asset_0001.jpg" />
-				<input type="hidden" id="asset_id" value="11" />
-				<input type="hidden" id="asset_type" value="image" />
+			<div id="main_content">
+                <div id="search_div"></div>
+				<div id="library">
+	
+				</div>
 			</div>
-            
-            <div id="comp"></div>
 		</div>
 	</div>
 </div>

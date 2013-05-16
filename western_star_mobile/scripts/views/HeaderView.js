@@ -48,6 +48,12 @@ window.HeaderView = Backbone.View.extend({
                     app.currentState.createSubCategories(app.currentState.currentCategory, app.currentState);
                 }
             }
+            if(app.currentState == app.mainView.libraryView)    {
+                if(app.mainView.libraryView.currentLevel > 1)    {
+                    app.mainView.libraryView.currentLevel--;
+                    app.mainView.libraryView.gotoLevel(app.mainView.libraryView.currentLevel);
+                }
+            }
         });
 	}
 });

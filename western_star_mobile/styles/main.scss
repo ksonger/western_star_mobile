@@ -239,8 +239,6 @@ margin:0px;
   left:50%;
 }
 
-/* KENDO */
-
 
 #main    {
     position:absolute;
@@ -717,6 +715,13 @@ margin:0px;
                 max-width:100%;
             }
         }
+        #serious    {
+            position:absolute;
+            width:167px;
+            height:84px;
+            z-index:10000;
+            background:url(../images/login/serious_trucks.png) no-repeat;
+        }
         #library_main    {
             width:100%;
             height:100%;
@@ -762,21 +767,86 @@ margin:0px;
                         color:#FFFFFF;
                     }
                 }
-                #search_div    {
-                    min-width:220px;
-                    height:29px;
-                    float:right;
-                    background: url(../images/library/search_box.png) no-repeat;
-                }
             }
-        }
-        #main_div    {
-            position:absolute;
-            #comp    {
+            #main_div    {
                 position:absolute;
-                background:url(../images/library/library_comp.jpg) no-repeat;
-                width:1024px;
-                height:602px;
+                width:100%;
+                
+                #left_nav    {
+                    float:left;
+                    display:inline-block;
+                    width:30%;
+                    min-width:320px;
+                    background: #333333;
+                    height:100%;
+                    z-index:10000;
+                    overflow-x:hidden;
+                    -moz-box-shadow: 3px 3px 20px #000;
+                    -webkit-box-shadow: 3px 3px 20px #000;
+                    box-shadow: 3px 3px 20px #000;
+                    #nav_header    {
+                        border-bottom: 1px solid #999999;
+                        width:30%;
+                        min-width:320px;
+                        #library_viewby    {
+                            @include unselectable;
+                            font-weight:bold;
+                            font-size:18px;
+                            color: #999999;
+                            margin-left:15px;
+                            position:relative;
+                            line-height:50px;
+                        }
+                    }
+                    #nav_levels    {
+                        position:relative;
+                        td    {
+                            .nav_item    {
+                                border-bottom: 1px solid #999999;
+                                width:30%;
+                                min-width:320px;
+                                cursor:pointer;
+                                float:left;
+                                background:#333333;
+                                &.active    {
+                                    background:#999999;
+                                }
+                                #icon    {
+                                    float:right;
+                                    padding-right:15px;
+                                    width:12px;
+                                    height:19px;
+                                    position:relative;
+                                    top:16px;
+                                    background: url(../images/library/library_arrow_inactive.png) no-repeat;
+                                    &.active    {
+                                        background: url(../images/library/library_arrow_active.png) no-repeat;
+                                    }
+                                }
+                                span    {
+                                    @include unselectable;
+                                    font-weight:bold;
+                                    font-size:18px;
+                                    color: #FFFFFF;
+                                    margin-left:15px;
+                                    position:relative;
+                                    line-height:50px;
+                                    &.active    {
+                                        color:#333333;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                #main_content    {
+                    #search_div    {
+                        min-width:220px;
+                        height:29px;
+                        float:right;
+                        background: url(../images/library/search_box.png) no-repeat;
+                    }
+                }
             }
         }
     }
