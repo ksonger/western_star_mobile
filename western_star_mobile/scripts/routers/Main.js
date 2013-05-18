@@ -9,6 +9,7 @@ Backbone.View.prototype.close = function () {
 
 var app;
 
+
 var AppRouter = Backbone.Router.extend({
 
 	initialize:function () {
@@ -18,6 +19,7 @@ var AppRouter = Backbone.Router.extend({
 	usersCollection:null,
 	menuCollection:null,
 	assetsCollection:null,
+    localAssetsCollection:null,
 	imagesCollection:null,
 	ioModel:null,
 	mainView:null,
@@ -34,7 +36,7 @@ var AppRouter = Backbone.Router.extend({
 	currentState:null,
 	rInt:null,
 	imageManifest:[],
-	assets_server:"http://win-dev.developmentcmd.com",
+	assets_server:"http://kensonger.com/",
 	errors:0,
 	routes:{
 		"":"index"
@@ -135,6 +137,7 @@ var AppRouter = Backbone.Router.extend({
 		this.usersCollection = new UsersCollection();
 		this.menuCollection = new MenuCollection();
 		this.assetsCollection = new AssetsCollection();
+        this.localAssetsCollection = new LocalAssetsCollection();
 		this.imagesCollection = new ImagesCollection();
 		this.interiorsCatCollection = new InteriorsCatCollection();
 		this.interiorsSubCatCollection = new InteriorsSubCatCollection();

@@ -18,15 +18,8 @@ window.IOModel = Backbone.Model.extend({
 	localAssetsArray:[],
     
     
-    
 	
-	downloadFile:function() {
-		app.ioModel.currentDownload = app.assetsCollection.models[app.ioModel.assetsLoaded];
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, this.fileSystemSuccess, this.fileSystemFail);
-	},
 	downloadAllFiles:function() {
-		app.ioModel.assetsToLoad = app.assetsCollection.models.length;
-		app.ioModel.currentDownload = app.assetsCollection.models[app.ioModel.assetsLoaded];
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, this.fileSystemSuccess, this.fileSystemFail);
 	},
 	fileSystemSuccess:function(fileSystem) {
@@ -34,49 +27,46 @@ window.IOModel = Backbone.Model.extend({
 	},
 	fileSystemFail:function(err) {
 		alert("filesystem: " + err);
+        app.onDataReady();
 	},
+    
 	fileEntrySuccess:function(fileEntry) {
 		var sPath = fileEntry.fullPath.replace("dummy.html", "");
-
 		var fileTransfer = new FileTransfer();
 		fileEntry.remove();
 		var fileArr = app.ioModel.currentDownload.get("src").split("/");
 		fileTransfer.download(
-			// this is just a test file, of course
 			app.assets_server + app.ioModel.currentDownload.get("src"),
 			sPath + fileArr[fileArr.length - 1],
 			function(theFile) {
 				alert("download complete: " + theFile.toURI());
-				showLink(theFile.toURI());
-				app.ioModel.db.transaction(function(tx) {
-					var keys = ['id','type','src', 'title','description','thumbnail','metadata'];
+				// are we downloading the whole bulk set?
+				if (app.ioModel.firstLoad) {
+					app.ioModel.assetsLoaded++;  
 					var vals = [
 						app.ioModel.currentDownload.get("id"), 
-						pp.ioModel.currentDownload.get("type"), 
+						app.ioModel.currentDownload.get("type"), 
 						theFile.toURI(), 
 						app.ioModel.currentDownload.get("title"), 
 						app.ioModel.currentDownload.get("description"), 
 						app.ioModel.currentDownload.get("thumbnail"), 
 						app.ioModel.currentDownload.get("metadata")
 					]
-					tx.executeSql("INSERT INTO local_assets(" + keys + ") VALUES (?, ?, ?, ?, ?, ?, ?)", vals);
-				}, function() {
-					//success 
-					if (app.ioModel.firstLoad) {
-                        app.ioModel.assetsLoaded++;
-						if (app.ioModel.assetsLoaded < app.ioModel.assetsToLoad) {
-							app.ioModel.currentDownload = app.assetsCollection.models[app.ioModel.assetsLoaded];
-							app.ioModel.downloadFile();
-						}
+					var aObj = {"id":vals[0], "type":vals[1], "src":vals[2], "title":vals[3], "description":vals[4], "thumbnail":vals[5], "metadata":vals[6]};
+					app.ioModel.localAssetsArray.push(aObj);
+					if (app.ioModel.assetsLoaded < app.ioModel.assetsToLoad) {
+						app.ioModel.currentDownload = app.assetsCollection.models[app.ioModel.assetsLoaded];
+						app.ioModel.downloadAllFiles();
 					}
-				}, function(e) {
-					console.log("error recording download to local_assets: " + e);
-				});
+					else {
+						app.localAssetsCollection.models = app.ioModel.localAssetsArray;
+						app.ioModel.populateLocalAssetsTable();
+					}
+				}
 			},
 			function(error) {
 				alert("download error source " + error.source);
 				alert("download error target " + error.target);
-				alert("upload error code: " + error.code);
 			}
 			);
 	},
@@ -237,7 +227,7 @@ window.IOModel = Backbone.Model.extend({
 					this.db = window.sqlitePlugin.openDatabase(shortName);
 				}
 				else {
-					// For debugin in simulator fallback to native SQL Lite
+					// For debug in in simulator fallback to native SQL Lite
 					this.db = window.openDatabase(shortName, version, displayName, maxSize);
 				}	
 				if (app.online) {
@@ -247,6 +237,7 @@ window.IOModel = Backbone.Model.extend({
 					app.ioModel.db.transaction(app.ioModel.selectUsers, app.ioModel.onUsersError, app.ioModel.onUsersSuccess);
 					app.ioModel.db.transaction(app.ioModel.selectStrings, app.ioModel.onStringsError, app.ioModel.onStringsSuccess);
 					app.ioModel.db.transaction(app.ioModel.selectAssets, app.ioModel.onAssetsError, app.ioModel.onAssetsSuccess); 
+					app.ioModel.db.transaction(app.ioModel.selectLocalAssets, app.ioModel.onLocalAssetsError, app.ioModel.onLocalAssetsSuccess); 
 					app.ioModel.db.transaction(app.ioModel.selectImages, app.ioModel.onImagesError, app.ioModel.onImagesSuccess);
 					app.ioModel.db.transaction(app.ioModel.selectMenus, app.ioModel.onMenusError, app.ioModel.onMenusSuccess);
 					app.ioModel.db.transaction(app.ioModel.selectInteriorsCategories, app.ioModel.onInteriorsCategoriesError, app.ioModel.onInteriorsCategoriesSuccess);
@@ -254,7 +245,6 @@ window.IOModel = Backbone.Model.extend({
 					app.ioModel.db.transaction(app.ioModel.selectInteriorsImages, app.ioModel.onInteriorsImagesError, app.ioModel.onInteriorsImagesSuccess);
 					app.ioModel.db.transaction(app.ioModel.selectInteriorsNav, app.ioModel.onInteriorsNavError, app.ioModel.onInteriorsNavSuccess);
 				}
-				app.ioModel.db.transaction(app.ioModel.selectLocal, app.ioModel.onLocalError, app.ioModel.onLocalSuccess);
 			}
 		}
 		catch (e) {
@@ -269,10 +259,14 @@ window.IOModel = Backbone.Model.extend({
 		}
 	},
 	createTables:function(tx) {
+        
+		// FOR TESTING ONLY
+		//tx.executeSql('DROP TABLE IF EXISTS local_assets');
+        
+        
 		tx.executeSql('DROP TABLE IF EXISTS strings');
 		tx.executeSql('DROP TABLE IF EXISTS users');
 		tx.executeSql('DROP TABLE IF EXISTS assets');
-		tx.executeSql('DROP TABLE IF EXISTS local_assets');
 		tx.executeSql('DROP TABLE IF EXISTS images');
 		tx.executeSql('DROP TABLE IF EXISTS library_menu');
 		tx.executeSql('DROP TABLE IF EXISTS interiors_categories');
@@ -289,6 +283,9 @@ window.IOModel = Backbone.Model.extend({
 		tx.executeSql('CREATE TABLE interiors_subcategories(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, images TEXT, swatch TEXT, nav_ids TEXT);');
 		tx.executeSql('CREATE TABLE interiors_images(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, view TEXT);');
 		tx.executeSql('CREATE TABLE interiors_navigation(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, view TEXT);');
+        
+		// AN INDICATOR IF THIS IS FIRST RUN
+		tx.executeSql('CREATE TABLE IF NOT EXISTS local_assets(id INTEGER NOT NULL PRIMARY KEY, type TEXT, src TEXT, title TEXT, description TEXT, thumbnail TEXT, metadata TEXT);');
 
 		app.ioModel.db.transaction(app.ioModel.getUsers, app.ioModel.onUsersError, app.ioModel.onUsersSuccess);
 		app.ioModel.db.transaction(app.ioModel.getStrings, app.ioModel.onStringsError, app.ioModel.onStringsSuccess);
@@ -299,46 +296,70 @@ window.IOModel = Backbone.Model.extend({
 		app.ioModel.db.transaction(app.ioModel.getInteriorsSubCategories, app.ioModel.onInteriorsSubCategoriesError, app.ioModel.onInteriorsSubCategoriesSuccess);
 		app.ioModel.db.transaction(app.ioModel.getInteriorsImages, app.ioModel.onInteriorsImagesError, app.ioModel.onInteriorsImagesSuccess);
 		app.ioModel.db.transaction(app.ioModel.getInteriorsNav, app.ioModel.onInteriorsNavError, app.ioModel.onInteriorsNavSuccess);
+        
+		// CHECK TO SEE IF local_assets RETURNS ANY ROWS.  THIS SHOULD INDICATE FIRST TIME CREATION.
+		app.ioModel.db.transaction(app.ioModel.checkLocalAssetsLength, app.ioModel.checkError, app.ioModel.checkSuccess);
 	},
     
-    
-    
-	onLocalError:function(e) {
-		console.log("exists error: " + e.message);
+	checkError:function(err) {
+		alert("check error: " + err.message);
 	},
-	onLocalSuccess:function(transaction, results) {
+	checkSuccess:function() {
+		//alert("check success");  
+	},   
+    
+	checkLocalAssetsLength:function(tx) {       
+		tx.executeSql("SELECT * FROM local_assets;", [], app.ioModel.checkLocalAssetsLengthSuccess, app.ioModel.checkLocalAssetsLengthError);	
+	},
+	checkLocalAssetsLengthError:function(err) {
+		//alert("error trying to determine the length of local_assets table");
+	},
+	checkLocalAssetsLengthSuccess:function(transaction, results) {
 		if (results == undefined || results.rows.length == 0) {
-			// this must be the first time the application has loaded
-			console.log("first load");
-			app.ioModel.db.transaction(app.ioModel.getLocalAssetTable, app.ioModel.onLocalError, app.ioModel.onLocalAssetTableSuccess);
-		}
-		else {
-			//table exists, are we online?
-			if (app.online) {
-				// check for any assets to be added, updated or removed
-				app.ioModel.checkAssetsChanged();
+			alert("no results from local_assets, trying to load all assets");
+			if (!app.online) {
+				alert("the application must be run online when launching for the first time");
+			}
+			else {
+				app.ioModel.assetsToLoad = app.assetsCollection.models.length;
+				alert("there are " + app.ioModel.assetsToLoad + " total assets.");
+				app.ioModel.firstLoad = true;
+				//alert("app.ioModel.firstLoad has been set to: " + app.ioModel.firstLoad);
+				// Set current download to the first model in the collection.
+				// We will increment this number and loop until assetsLoaded == assetsToLoad
+				app.ioModel.currentDownload = app.assetsCollection.models[app.ioModel.assetsLoaded];
+				// Okay, kick of the looping process
+				app.ioModel.downloadAllFiles();
 			}
 		}
-	},
-    
-	getLocalAssetTable:function(tx) {
-		tx.executeSql('CREATE TABLE IF NOT EXISTS local_assets(id INTEGER NOT NULL PRIMARY KEY, type TEXT, src TEXT, title TEXT, description TEXT, thumbnail TEXT, metadata TEXT);');
-	},
-	onLocalAssetTableSuccess:function() {
-		app.ioModel.firstLoad = true;
-		app.ioModel.doInitialAssetLoad();
+		else {
+			alert("This is not the first time the app has loaded, there are: " + results.rows.length + " local assets.");
+            app.ioModel.db.transaction(app.ioModel.selectLocalAssets, app.ioModel.onLocalAssetsError, app.ioModel.onLocalAssetsSuccess); 
+		}
 	},
 	checkAssetsChanged:function() {
-		console.log("web service call for guids should happen here");
-		app.onDataReady();
+        if(app.online)    {
+            alert("checking for changed assets");
+            app.onDataReady();
+        }    else    {
+            app.onDataReady();
+        }		
 	},
-     
-	selectLocal:function(tx) {
-		tx.executeSql("SELECT name FROM sqlite_master WHERE type='table' AND name='local_assets';", [], app.ioModel.onLocalSuccess, app.ioModel.onLocalError);
+    
+	populateLocalAssetsTable:function() {
+		app.ioModel.db.transaction(app.ioModel.getLocalAssets, app.ioModel.onLocalAssetsError, app.ioModel.onLocalAssetsSuccess);
 	},
-	doInitialAssetLoad:function() {
-		app.ioModel.downloadAllFiles();
+
+    
+	getLocalAssets:function(tx) {
+		$.each(app.localAssetsCollection.models, function(oind, obj) {
+			var keys = ['id', 'type', 'src', 'title', 'description', 'thumbnail', 'metadata'];
+			var vals = [parseInt(obj.id), String(obj.type), String(obj.src), String(obj.title), String(obj.description), String(obj.thumbnail), String(obj.metadata)];
+			tx.executeSql("INSERT INTO local_assets(" + keys + ") VALUES (?, ?, ?, ?, ?, ?, ?)", vals);
+		});	
 	},
+    
+    
     
 	getUsers:function(tx) {
 		$.each(app.usersCollection.models, function(oind, obj) {
@@ -487,6 +508,9 @@ window.IOModel = Backbone.Model.extend({
 	selectAssets:function(tx) {
 		tx.executeSql("SELECT * FROM assets;", [], app.ioModel.assetDataSelectHandler, app.ioModel.onAssetsError);
 	},
+	selectLocalAssets:function(tx) {
+		tx.executeSql("SELECT * FROM local_assets;", [], app.ioModel.localAssetsDataSelectHandler, app.ioModel.onLocalAssetsError);
+	},
 	selectImages:function(tx) {
 		tx.executeSql("SELECT * FROM images;", [], app.ioModel.imagesDataSelectHandler, app.ioModel.onImagesError);
 	},
@@ -597,6 +621,18 @@ window.IOModel = Backbone.Model.extend({
 		}
 		app.assetsCollection = new AssetsCollection(asset_models, {model:AssetsModel});
 	},
+	localAssetsDataSelectHandler:function(transaction, results) {
+        //alert('localAssetsDataSelectHandler');
+		var local_asset_models = [];
+		for (var i = 0; i < results.rows.length; i++) {
+			var row = results.rows.item(i);
+			var local_asset_model = new LocalAssetsModel(row);
+			local_asset_models.push(local_asset_model);
+		}
+		app.localAssetsCollection = new LocalAssetsCollection(local_asset_models, {model:LocalAssetsModel});
+        app.ioModel.checkAssetsChanged();
+        
+	},
 	stringDataSelectHandler:function(transaction, results) {
 		var str_models = [];
 		for (var i = 0; i < results.rows.length; i++) {
@@ -621,9 +657,6 @@ window.IOModel = Backbone.Model.extend({
 	},
 	onUsersSuccess:function() {
 		app.ioModel.usersReady = true;
-		if (app.ioModel.modelsReady()) {
-			app.ioModel.checkAssetsChanged();
-		}
 	},
     
 	onStringsError:function(e) {
@@ -631,9 +664,6 @@ window.IOModel = Backbone.Model.extend({
 	},
 	onStringsSuccess:function() {
 		app.ioModel.stringsReady = true;
-		if (app.ioModel.modelsReady()) {
-			app.ioModel.checkAssetsChanged();
-		}
 	},
     
 	onAssetsError:function(e) {
@@ -641,19 +671,24 @@ window.IOModel = Backbone.Model.extend({
 	},
 	onAssetsSuccess:function() {
 		app.ioModel.assetsReady = true;
-		if (app.ioModel.modelsReady()) {
-			app.ioModel.checkAssetsChanged();
-		}
 	},
+    
+	onLocalAssetsError:function(e) {
+		alert("local assets error: " + e.message);
+	},
+	onLocalAssetsSuccess:function() {
+		app.ioModel.localAssetsReady = true;
+        //app.ioModel.db.transaction(app.ioModel.selectLocalAssets, app.ioModel.onLocalAssetsError, app.ioModel.onLocalAssetsSelectedSuccess); 
+	},
+    onLocalAssetsSelectedSuccess:function()    {
+        //alert("onLocalAssetsSelectedSuccess");
+    },
     
 	onImagesError:function(e) {
 		console.log("images error: " + e.message);
 	},
 	onImagesSuccess:function() {
 		app.ioModel.imagesReady = true;
-		if (app.ioModel.modelsReady()) {
-			app.ioModel.checkAssetsChanged();
-		}
 	},
     
 	onMenusError:function(e) {
@@ -661,9 +696,6 @@ window.IOModel = Backbone.Model.extend({
 	},
 	onMenusSuccess:function() {
 		app.ioModel.menusReady = true;
-		if (app.ioModel.modelsReady()) {
-			app.ioModel.checkAssetsChanged();
-		}
 	},
     
 	onInteriorsCategoriesError:function(e) {
@@ -671,36 +703,24 @@ window.IOModel = Backbone.Model.extend({
 	},
 	onInteriorsCategoriesSuccess:function() {
 		app.ioModel.intCatReady = true;
-		if (app.ioModel.modelsReady()) {
-			app.ioModel.checkAssetsChanged();
-		}
 	},
 	onInteriorsSubCategoriesError:function(e) {
 		console.log("interiors subcategories error: " + e.message);
 	},
 	onInteriorsSubCategoriesSuccess:function() {
 		app.ioModel.intSubCatReady = true;
-		if (app.ioModel.modelsReady()) {
-			app.ioModel.checkAssetsChanged();
-		}
 	},
 	onInteriorsImagesError:function(e) {
 		console.log("interiors images error: " + e.message);
 	},
 	onInteriorsImagesSuccess:function() {
 		app.ioModel.intImagesReady = true;
-		if (app.ioModel.modelsReady()) {
-			app.ioModel.checkAssetsChanged();
-		}
 	},
 	onInteriorsNavError:function(e) {
 		console.log("interiors nav error: " + e.message);
 	},
 	onInteriorsNavSuccess:function() {
 		app.ioModel.intNavReady = true;
-		if (app.ioModel.modelsReady()) {
-			app.ioModel.checkAssetsChanged();
-		}
 	},
     
 	checkLibraryAssets:function() {

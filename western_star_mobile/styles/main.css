@@ -27,7 +27,7 @@ hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #cccccc;
   margin: 1em 0;
   padding: 0; }
 
@@ -496,9 +496,9 @@ body {
       #main #home #collage img {
         max-height: 100%;
         border: 0px;
-        -moz-box-shadow: 3px 3px 40px #000;
-        -webkit-box-shadow: 3px 3px 40px #000;
-        box-shadow: 3px 3px 40px #000; }
+        -moz-box-shadow: 3px 3px 40px black;
+        -webkit-box-shadow: 3px 3px 40px black;
+        box-shadow: 3px 3px 40px black; }
     #main #home #home_logo {
       background: url(../images/ws_logo.png) no-repeat;
       height: 64px;
@@ -655,9 +655,9 @@ body {
           height: 100%;
           z-index: 10000;
           overflow-x: hidden;
-          -moz-box-shadow: 3px 3px 20px #000;
-          -webkit-box-shadow: 3px 3px 20px #000;
-          box-shadow: 3px 3px 20px #000; }
+          -moz-box-shadow: 3px 3px 20px black;
+          -webkit-box-shadow: 3px 3px 20px black;
+          box-shadow: 3px 3px 20px black; }
           #main #library #library_main #main_div #left_nav #nav_header {
             border-bottom: 1px solid #999999;
             width: 30%;
@@ -787,9 +787,9 @@ body {
         background: #333333;
         height: 100%;
         z-index: 10000;
-        -moz-box-shadow: 3px 3px 20px #000;
-        -webkit-box-shadow: 3px 3px 20px #000;
-        box-shadow: 3px 3px 20px #000; }
+        -moz-box-shadow: 3px 3px 20px black;
+        -webkit-box-shadow: 3px 3px 20px black;
+        box-shadow: 3px 3px 20px black; }
         #main #calculators #main_div #left_nav #nav_header {
           border-bottom: 1px solid #999999;
           width: 30%;
@@ -1020,7 +1020,7 @@ body {
         height: 360px;
         margin: 0px;
         padding: 0px;
-        border: 1px solid #CCCCCC; }
+        border: 1px solid #cccccc; }
         #main #videos #shadowbox_video #video_div video {
           width: inherit;
           height: inherit; }
@@ -1038,7 +1038,7 @@ body {
         overflow: hidden;
         margin: 0px;
         padding: 0px;
-        border: 1px solid #CCCCCC; }
+        border: 1px solid #cccccc; }
         #main #images #shadowbox_image #image_div img {
           width: 850px; }
   #main #ws {
@@ -1198,9 +1198,9 @@ body {
       #main #interiors #int_categories .interiors_category .catimg {
         float: left;
         border: 0px;
-        -moz-box-shadow: 3px 3px 40px #000;
-        -webkit-box-shadow: 3px 3px 40px #000;
-        box-shadow: 3px 3px 40px #000; }
+        -moz-box-shadow: 3px 3px 40px black;
+        -webkit-box-shadow: 3px 3px 40px black;
+        box-shadow: 3px 3px 40px black; }
   #main #interiors #int_subcategories {
     position: absolute;
     width: 100%;
@@ -1225,9 +1225,9 @@ body {
       #main #interiors #int_subcategories .interiors_subcategory .scatimg {
         position: relative;
         border: 0px;
-        -moz-box-shadow: 3px 3px 40px #000;
-        -webkit-box-shadow: 3px 3px 40px #000;
-        box-shadow: 3px 3px 40px #000; }
+        -moz-box-shadow: 3px 3px 40px black;
+        -webkit-box-shadow: 3px 3px 40px black;
+        box-shadow: 3px 3px 40px black; }
   #main #interiors #int_images {
     position: absolute;
     width: 100%;
