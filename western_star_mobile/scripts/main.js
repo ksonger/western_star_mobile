@@ -8,6 +8,7 @@ function onDeviceReady() {
 		'login',
 		'home',
         'library',
+        'library_item',
         'ws',
 		'calculators',
 		'interiors',

@@ -764,10 +764,18 @@ margin:0px;
                         color:#FFFFFF;
                     }
                 }
+                #search_div    {
+                    min-width:220px;
+                    height:29px;
+                    float:right;
+                    background: url(../images/library/search_box.png) no-repeat;
+                }
             }
+
             #main_div    {
                 position:absolute;
                 width:100%;
+                
                 
                 #left_nav    {
                     float:left;
@@ -837,11 +845,30 @@ margin:0px;
                     }
                 }
                 #main_content    {
-                    #search_div    {
-                        min-width:220px;
-                        height:29px;
-                        float:right;
-                        background: url(../images/library/search_box.png) no-repeat;
+                    #library_content    {
+                        border-top:1px solid #4d4b4b;
+                        #library_list    {
+                            width:100%;
+                            .library_item    {
+                                display:inline-block;
+                                width:33%;
+                                height:250px;
+                                text-align:center;
+                                padding-top:10px;
+                                .library_item_title    {
+                                    color:#FFF;
+                                    font-size:12px;
+                                    font-weight:bold;
+                                    line-height:14px;
+                                    margin-top:10px;
+                                }
+                                .library_item_description    {
+                                    color:#FFF;
+                                    font-size:12px;
+                                    line-height:14px;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -865,6 +892,7 @@ margin:0px;
                 max-width:100%;
             }
         }
+
         #calculators_main    {
             width:100%;
             height:100%;

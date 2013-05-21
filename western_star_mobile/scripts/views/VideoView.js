@@ -10,7 +10,8 @@ window.VideoView = Backbone.View.extend({
 			"height":app.windowHeight + "px", "width":app.windowWidth + "px"
 		});
         this.$el.find("#video_div").css({
-			"top":((app.windowHeight - this.$el.find("#video_div").height())/2) + "px", "left":((app.windowWidth - this.$el.find("#video_div").width())/2) + "px"
+			"top":((app.windowHeight - this.$el.find("#video_div").height())/2) + "px", 
+            "left":((app.windowWidth - this.$el.find("#video_div").width())/2) + "px"
 		});
 	},
 	showVideo:function(obj) {

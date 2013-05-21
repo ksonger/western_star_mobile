@@ -9,7 +9,6 @@ Backbone.View.prototype.close = function () {
 
 var app;
 
-
 var AppRouter = Backbone.Router.extend({
 
 	initialize:function () {
@@ -19,7 +18,9 @@ var AppRouter = Backbone.Router.extend({
 	usersCollection:null,
 	menuCollection:null,
 	assetsCollection:null,
-    localAssetsCollection:null,
+    thumbnailsCollection:null,
+	localAssetsCollection:null,
+    localThumbnailsCollection:null,
 	imagesCollection:null,
 	ioModel:null,
 	mainView:null,
@@ -41,8 +42,7 @@ var AppRouter = Backbone.Router.extend({
 	routes:{
 		"":"index"
 	},
-    
-    
+      
 	index:function () {
 		app.begin();
 	},
@@ -73,7 +73,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 	begin:function (callback) {
 		this.online = window.navigator.onLine;
-        //this.online = false;
+		//this.online = false;
 		var windowWidth;
 		var windowHeight;
 		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
@@ -132,12 +132,15 @@ var AppRouter = Backbone.Router.extend({
 		}
 	},
        
-	initDatabase:function(callback) {  
+	initDatabase:function(callback) {
+        
 		this.stringsCollection = new StringsCollection();
 		this.usersCollection = new UsersCollection();
 		this.menuCollection = new MenuCollection();
 		this.assetsCollection = new AssetsCollection();
-        this.localAssetsCollection = new LocalAssetsCollection();
+        this.thumbnailsCollection = new ThumbnailCollection();
+		this.localAssetsCollection = new LocalAssetsCollection();
+        this.localThumbnailsCollection = new LocalThumbnailsCollection();
 		this.imagesCollection = new ImagesCollection();
 		this.interiorsCatCollection = new InteriorsCatCollection();
 		this.interiorsSubCatCollection = new InteriorsSubCatCollection();
@@ -153,41 +156,47 @@ var AppRouter = Backbone.Router.extend({
 								success:function () {
 									app.assetsCollection.fetch({
 										success:function () {
-											app.imagesCollection.fetch({
+											app.thumbnailsCollection.fetch({
 												success:function () {
-													app.interiorsCatCollection.fetch({
+													app.imagesCollection.fetch({
 														success:function () {
-															app.interiorsSubCatCollection.fetch({
+															app.interiorsCatCollection.fetch({
 																success:function () {
-																	app.interiorsImagesCollection.fetch({
+																	app.interiorsSubCatCollection.fetch({
 																		success:function () {
-																			app.interiorsNavCollection.fetch({
+																			app.interiorsImagesCollection.fetch({
 																				success:function () {
-																					// write to local store
-																					app.ioModel = new IOModel();
-																					app.ioModel.createLocalStore();
+																					app.interiorsNavCollection.fetch({
+																						success:function () {
+																							// write to local store
+																							app.ioModel = new IOModel();
+																							app.ioModel.createLocalStore();
+																						}, error:function(e) {
+																							console.log("interiors nav error: " + e);
+																						}
+																					});
 																				}, error:function(e) {
-																					console.log("interiors nav error: " + e);
+																					console.log("interiors images error: " + e);
 																				}
 																			});
 																		}, error:function(e) {
-																			console.log("interiors images error: " + e);
+																			console.log("interiors subcat error: " + e);
 																		}
 																	});
 																}, error:function(e) {
-																	console.log("interiors subcat error: " + e);
+																	console.log("interiors cat error: " + e);
 																}
 															});
 														}, error:function(e) {
-															console.log("interiors cat error: " + e);
+															console.log("images error: " + e);
 														}
 													});
 												}, error:function(e) {
-													console.log("images error: " + e);
+													console.log("assets error: " + e);
 												}
 											});
 										}, error:function(e) {
-											console.log("assets error: " + e);
+											console.log("thumbnails error: " + e);
 										}
 									});
 								}, error:function(e) {
@@ -229,14 +238,14 @@ var AppRouter = Backbone.Router.extend({
 			window.HTMLAudioElement = function () {
 			};
 		}
-        /* Future functionality to load interface elements dynamically from the assets server 
+		/* Future functionality to load interface elements dynamically from the assets server 
 		var imgArr = [];
 		$.each(this.imagesCollection.models, function(index, model) {
-			var iObj = {"id":model.get("id"),"src":model.get("src")}
-			imgArr.push(iObj);
+		var iObj = {"id":model.get("id"),"src":model.get("src")}
+		imgArr.push(iObj);
 		});
 		this.cjsLoad(imgArr);
-        */
+		*/
 		app.mainView = new MainView({model:app.stringsCollection});
 		app.mainView.render();
 	}

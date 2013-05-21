@@ -27,7 +27,7 @@ hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid #ccc;
   margin: 1em 0;
   padding: 0; }
 
@@ -496,9 +496,9 @@ body {
       #main #home #collage img {
         max-height: 100%;
         border: 0px;
-        -moz-box-shadow: 3px 3px 40px black;
-        -webkit-box-shadow: 3px 3px 40px black;
-        box-shadow: 3px 3px 40px black; }
+        -moz-box-shadow: 3px 3px 40px #000;
+        -webkit-box-shadow: 3px 3px 40px #000;
+        box-shadow: 3px 3px 40px #000; }
     #main #home #home_logo {
       background: url(../images/ws_logo.png) no-repeat;
       height: 64px;
@@ -643,6 +643,11 @@ body {
             font-size: 24px;
             font-weight: bold;
             color: #FFFFFF; }
+        #main #library #library_main #top_div #search_div {
+          min-width: 220px;
+          height: 29px;
+          float: right;
+          background: url(../images/library/search_box.png) no-repeat; }
       #main #library #library_main #main_div {
         position: absolute;
         width: 100%; }
@@ -655,9 +660,9 @@ body {
           height: 100%;
           z-index: 10000;
           overflow-x: hidden;
-          -moz-box-shadow: 3px 3px 20px black;
-          -webkit-box-shadow: 3px 3px 20px black;
-          box-shadow: 3px 3px 20px black; }
+          -moz-box-shadow: 3px 3px 20px #000;
+          -webkit-box-shadow: 3px 3px 20px #000;
+          box-shadow: 3px 3px 20px #000; }
           #main #library #library_main #main_div #left_nav #nav_header {
             border-bottom: 1px solid #999999;
             width: 30%;
@@ -711,11 +716,24 @@ body {
                 line-height: 50px; }
                 #main #library #library_main #main_div #left_nav #nav_levels td .nav_item span.active {
                   color: #333333; }
-        #main #library #library_main #main_div #main_content #search_div {
-          min-width: 220px;
-          height: 29px;
-          float: right;
-          background: url(../images/library/search_box.png) no-repeat; }
+        #main #library #library_main #main_div #main_content #library_content {
+          border-top: 1px solid #4d4b4b; }
+          #main #library #library_main #main_div #main_content #library_content #library_list {
+            width: 100%; }
+            #main #library #library_main #main_div #main_content #library_content #library_list .library_item {
+              display: inline-block;
+              width: 33%;
+              height: 250px;
+              text-align: center; }
+              #main #library #library_main #main_div #main_content #library_content #library_list .library_item .library_item_title {
+                color: #FFF;
+                font-size: 12px;
+                font-weight: bold;
+                line-height: 14px; }
+              #main #library #library_main #main_div #main_content #library_content #library_list .library_item .library_item_description {
+                color: #FFF;
+                font-size: 12px;
+                line-height: 14px; }
   #main #calculators {
     padding: 0px;
     spacing: 0px;
@@ -787,9 +805,9 @@ body {
         background: #333333;
         height: 100%;
         z-index: 10000;
-        -moz-box-shadow: 3px 3px 20px black;
-        -webkit-box-shadow: 3px 3px 20px black;
-        box-shadow: 3px 3px 20px black; }
+        -moz-box-shadow: 3px 3px 20px #000;
+        -webkit-box-shadow: 3px 3px 20px #000;
+        box-shadow: 3px 3px 20px #000; }
         #main #calculators #main_div #left_nav #nav_header {
           border-bottom: 1px solid #999999;
           width: 30%;
@@ -1020,7 +1038,7 @@ body {
         height: 360px;
         margin: 0px;
         padding: 0px;
-        border: 1px solid #cccccc; }
+        border: 1px solid #CCCCCC; }
         #main #videos #shadowbox_video #video_div video {
           width: inherit;
           height: inherit; }
@@ -1038,7 +1056,7 @@ body {
         overflow: hidden;
         margin: 0px;
         padding: 0px;
-        border: 1px solid #cccccc; }
+        border: 1px solid #CCCCCC; }
         #main #images #shadowbox_image #image_div img {
           width: 850px; }
   #main #ws {
@@ -1198,9 +1216,9 @@ body {
       #main #interiors #int_categories .interiors_category .catimg {
         float: left;
         border: 0px;
-        -moz-box-shadow: 3px 3px 40px black;
-        -webkit-box-shadow: 3px 3px 40px black;
-        box-shadow: 3px 3px 40px black; }
+        -moz-box-shadow: 3px 3px 40px #000;
+        -webkit-box-shadow: 3px 3px 40px #000;
+        box-shadow: 3px 3px 40px #000; }
   #main #interiors #int_subcategories {
     position: absolute;
     width: 100%;
@@ -1225,9 +1243,9 @@ body {
       #main #interiors #int_subcategories .interiors_subcategory .scatimg {
         position: relative;
         border: 0px;
-        -moz-box-shadow: 3px 3px 40px black;
-        -webkit-box-shadow: 3px 3px 40px black;
-        box-shadow: 3px 3px 40px black; }
+        -moz-box-shadow: 3px 3px 40px #000;
+        -webkit-box-shadow: 3px 3px 40px #000;
+        box-shadow: 3px 3px 40px #000; }
   #main #interiors #int_images {
     position: absolute;
     width: 100%;

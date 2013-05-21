@@ -75,6 +75,10 @@
     <Folder Include="scripts\routers" />
     <Folder Include="styles\fonts" />
     <Folder Include="styles\.sass-cache" />
+    <Folder Include="ws_assets\thumbnails" />
+    <Folder Include="ws_assets\thumbnails\brochures" />
+    <Folder Include="ws_assets\thumbnails\videos" />
+    <Folder Include="ws_assets\thumbnails\photos" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="App_Resources\iOS\icon.png" />
@@ -129,6 +133,12 @@
     <Content Include="api\Slim\Session\Handler\Cookies.php" />
     <Content Include="api\Slim\Slim.php" />
     <Content Include="api\Slim\View.php" />
+    <Content Include="scripts\collections\LocalThumbnailsCollection.js" />
+    <Content Include="scripts\collections\ThumbnailsCollection.js" />
+    <Content Include="scripts\models\LocalThumbnailsModel.js" />
+    <Content Include="scripts\models\ThumbnailsModel.js" />
+    <Content Include="scripts\views\LibraryItemView.js" />
+    <Content Include="tpl\library_item.html" />
     <Content Include="ws_assets\interiors\subcategories\swatch_Base.png" />
     <Content Include="ws_assets\interiors\subcategories\swatch_MLRed.png" />
     <Content Include="ws_assets\interiors\subcategories\swatch_PBuck.png" />
@@ -503,6 +513,17 @@
     <Content Include="tpl\tabstrip.html" />
     <Content Include="tpl\video.html" />
     <Content Include="tpl\ws.html" />
+    <Content Include="ws_assets\thumbnails\brochures\5997-4_WS_HeavyHaul-thumb.jpg" />
+    <Content Include="ws_assets\thumbnails\brochures\7326-2_WS_4700-seg-thumb.jpg" />
+    <Content Include="ws_assets\thumbnails\brochures\7326-2_WS_Mining-seg-thumb.jpg" />
+    <Content Include="ws_assets\thumbnails\brochures\7326-2_WS_OilGas-seg-thumb.jpg" />
+    <Content Include="ws_assets\thumbnails\brochures\AWDTeachSheet_ENG-thumb.jpg" />
+    <Content Include="ws_assets\thumbnails\brochures\AWDTechSheet_FR-thumb.jpg" />
+    <Content Include="ws_assets\thumbnails\brochures\Axles-Full-Brochure-thumb.jpg" />
+    <Content Include="ws_assets\thumbnails\brochures\DD13-Brochure-thumb.jpg" />
+    <Content Include="ws_assets\thumbnails\brochures\DD15TC-Brochure-thumb.jpg" />
+    <Content Include="ws_assets\thumbnails\brochures\DD16-Brochure-thumb.jpg" />
+    <Content Include="ws_assets\thumbnails\brochures\DualTracBrochure-thumb.jpg" />
   </ItemGroup>
   <ItemGroup>
     <CordovaPlugin Include="com.phonegap.plugins.sqlite">

@@ -4,6 +4,7 @@ window.LibraryView = StateView.extend({
 	filters:[],
 	nav_width:0,
 	currentLevel:1,
+	assets:[],
 	initialize:function (options) {
 		if (this.firstLoad) {   
 			this.onFirstLoad();
@@ -19,25 +20,35 @@ window.LibraryView = StateView.extend({
 		this.$el.find("#library").height(app.windowHeight);
 		this.$el.find("#library_logo").css({"top":((this.$el.find("#top_div").height() - this.$el.find("#logo_div").height()) / 2) + "px"});
 		this.$el.find("#library_title").css({"top":((this.$el.find("#top_div").height() - this.$el.find("#library_title").height()) / 2) + "px"});
-		this.$el.find("#search_div").css({"margin-top":((this.$el.find("#top_div").height() - this.$el.find("#search_div").height()) / 2) + "px"});
+		this.$el.find("#search_div").css({"margin-top":(this.$el.find("#top_div").height() - this.$el.find("#search_div").height()) / 2 + "px"});
 		this.$el.find("#main_div").css({
 			"top":(this.$el.find("#top_div").height()) + $("#header_bar").height() + "px",
 			"height":app.windowHeight - this.$el.find("#top_div").height() - $(".footer").height() + "px"
 		});
-		this.$el.find("#serious").css({"top":this.$el.find("#library_logo").offset().top - 10 + "px", "left":app.windowWidth - this.$el.find("#serious").width() - 50 + "px"});
+		this.$el.find("#library_content").css({"height":app.windowHeight - $("#header_bar").height() - this.$el.find("#top_div").height() - $(".footer").height() - 53 + "px","width":app.windowWidth - this.$el.find("#left_nav").width() + "px", "left":this.$el.find("#left_nav").width() + "px", "margin-top":"53px"});
 	},
 	selectAsset:function(type, id) {
+        
 		if (type == "video") {
-			$.each(app.assetsCollection.models, function(index, model) {
+			$.each(app.localAssetsCollection.models, function(index, model) {
 				if (model.get("id") == id) {
 					app.mainView.videoView.showVideo(model);
 				}
 			});
 		}
-		if (type == "image") {
-			$.each(app.assetsCollection.models, function(index, model) {
+		if (type == "image" || type == "photo") {   
+			$.each(app.localAssetsCollection.models, function(index, model) {
 				if (model.get("id") == id) {
+                    
 					app.mainView.imageView.showImage(model);
+				}
+			});
+		}
+        if (type == "pdf") {
+			$.each(app.localAssetsCollection.models, function(index, model) {
+				if (model.get("id") == id) {
+					//window.open(model.attributes.src);
+                    var ref = window.open(model.attributes.src, '_blank', 'location=no');
 				}
 			});
 		}
@@ -53,13 +64,15 @@ window.LibraryView = StateView.extend({
 			});
 		});
 		this.buildMenu(1);
+		this.buildAssets();
+		this.$el.find("#library_content").niceScroll({cursorcolor: "#c1c1c1", cursorborder: "1px solid #c1c1c1", cursorwidth: "10px", cursoropacitymax: .8, cursorborderradius: "6px"});
 	},
 	buildMenu:function(lvl) {
 		var page = this;
 		page.nav_width = this.$el.find("#left_nav").width();
 		var level = lvl;
 		if (level == 1) {
-            var el = page.$el.find("#first_level");
+			var el = page.$el.find("#first_level");
 			page.$el.find("#first_level").html("");
 			$.each(app.menuCollection.models, function(ind, model) {
 				$.each(model.get("primary_nav"), function(ind, pnav) {
@@ -88,7 +101,7 @@ window.LibraryView = StateView.extend({
 									page.menu_selections[0].obj = child;
 									if (pnav.child_id_set != "0") {
 										page.buildMenu(2);
-                                        page.addFilter(child);
+										page.addFilter(child);
 									}
 								}
 							});
@@ -98,7 +111,7 @@ window.LibraryView = StateView.extend({
 			});
 		}
 		if (level == 2) {
-            var el = page.$el.find("#second_level");
+			var el = page.$el.find("#second_level");
 			page.$el.find("#second_level").html("");
 			$.each(page.menu_selections[0].obj.child_menus, function(ind, item) {
 				var item_lvl2 = jQuery('<div/>', {
@@ -128,7 +141,7 @@ window.LibraryView = StateView.extend({
 										page.menu_selections[1].obj = child;
 										if (child.child_id_set != "0") {
 											page.buildMenu(3);
-                                            page.addFilter(child);
+											page.addFilter(child);
 										}
 									}
 								});
@@ -141,7 +154,7 @@ window.LibraryView = StateView.extend({
 			page.gotoLevel(level);
 		}
 		if (level == 3) {
-            var el = page.$el.find("#third_level");
+			var el = page.$el.find("#third_level");
 			page.$el.find("#third_level").html("");
 			$.each(page.menu_selections[1].obj.child_menus, function(ind, item) {
 				var item_lvl3 = jQuery('<div/>', {
@@ -167,7 +180,7 @@ window.LibraryView = StateView.extend({
 						$.each(model1.get("primary_nav"), function(ind1, child) {
 							if (child.value + "_" + child.id == item.attr("id")) {
 								page.menu_selections[2].obj = child;
-                                page.addFilter(child);
+								page.addFilter(child);
 							}
 						});
 					});
@@ -182,7 +195,33 @@ window.LibraryView = StateView.extend({
 		var num = n;
 		TweenMax.to(this.$el.find("#nav_levels"), .3, { css:{left: (-(this.nav_width * (n - 1))) + "px" }});
 	},
-    addFilter:function(obj)    {
-        //console.log(obj);
-    }
+	buildAssets:function() {
+		try {
+			var page = this;
+			
+			$.each(app.localAssetsCollection.models, function(aind, amodel) {
+				var asset = new LibraryItemView({model:amodel});
+				asset.$el.appendTo(page.$el.find("#library_list"));
+				page.assets.push(asset);
+			});
+            $.each(page.assets, function(ind, asset)    {
+                asset.$el.click(function(evt)    {;
+                   app.mainView.libraryView.selectAsset($(this).find("#asset_type").val(), $(this).find("#asset_id").val());
+                });
+            });
+			/*
+			$.each(app.assetsCollection.models, function(aind, amodel) {
+			var asset = new LibraryItemView({model:amodel});
+			asset.$el.appendTo(page.$el.find("#library_list"));
+			page.assets.push(asset);
+			});
+			*/
+		}
+		catch (e ) {
+			alert(e);
+		}
+	},
+	addFilter:function(obj) {
+		//console.log(obj);
+	}
 });
