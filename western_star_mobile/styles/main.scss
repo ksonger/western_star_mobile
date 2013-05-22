@@ -236,6 +236,14 @@ margin:0px;
   left:50%;
 }
 
+.styledCheckbox {
+  white-space: nowrap;
+  display: inline-block;
+  line-height: 20px;
+  vertical-align: top;
+  margin-bottom: 10px;
+}
+
 
 #main    {
     position:absolute;
@@ -712,13 +720,6 @@ margin:0px;
                 max-width:100%;
             }
         }
-        #serious    {
-            position:absolute;
-            width:167px;
-            height:84px;
-            z-index:10000;
-            background:url(../images/login/serious_trucks.png) no-repeat;
-        }
         #library_main    {
             width:100%;
             height:100%;
@@ -769,6 +770,14 @@ margin:0px;
                     height:29px;
                     float:right;
                     background: url(../images/library/search_box.png) no-repeat;
+                    #search_input    {
+                        color:#AAAAAA;
+                        font-size:15px;
+                        width:160px;
+                        margin-left:30px;
+                        margin-top:5px;
+                        border:0px;
+                    }
                 }
             }
 
@@ -845,6 +854,34 @@ margin:0px;
                     }
                 }
                 #main_content    {
+                    #filters_title    {
+                        position:absolute;
+                        top:7px;
+                        margin-left:20px;
+                        color:#FFF;
+                        font-size:14px;
+                        line-height:14px;
+                        font-weight:bold;
+                    }
+                    #doc_type_filters    {
+                        position:absolute;
+                        top:26px;
+                        margin-left:20px;
+                        color:#FFF;
+                        font-size:14px;
+                        line-height:14px;
+                        font-weight:bold;
+                        .doc_type_filter    {
+                            color:#FFF;
+                            font-size:14px;
+                            line-height:20px;
+                            font-weight:normal;
+                            float:left;
+                            display:inline;
+                            white-space:nowrap;
+                            margin-right:15px;
+                        }
+                    }
                     #library_content    {
                         border-top:1px solid #4d4b4b;
                         #library_list    {
@@ -1123,15 +1160,6 @@ margin:0px;
         }
     }
 
-    #videos    {
-        z-index:13000;
-        color:#FFFFFF;
-        video    {
-            width:100%;
-            height:100%;
-        }
-    }
-
     #tabstrip    {
         padding:0px;
         margin:0px;
@@ -1144,7 +1172,7 @@ margin:0px;
             position:absolute;
             width:100%;
             height:62px;
-            z-index:10000;
+            z-index:13000;
             padding:0px;
             margin:0px;
 
@@ -1178,8 +1206,8 @@ margin:0px;
             background: rgba(0, 0, 0, .7); 
             #video_div    {
                 position:absolute;
-                width:640px;
-                height:360px;
+                width:800px;
+                height:450px;
                 margin:0px;
                 padding:0px;
                 border: 1px solid #CCCCCC;

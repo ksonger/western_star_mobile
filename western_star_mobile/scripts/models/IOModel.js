@@ -51,9 +51,9 @@ window.IOModel = Backbone.Model.extend({
 							app.ioModel.currentDownload.get("title"), 
 							app.ioModel.currentDownload.get("description"), 
 							app.ioModel.currentDownload.get("thumbnail"), 
-							app.ioModel.currentDownload.get("metadata")
+							app.ioModel.currentDownload.get("metaTag")
 						]
-						var aObj = {"id":vals[0], "type":vals[1], "src":vals[2], "title":vals[3], "description":vals[4], "thumbnail":vals[5], "metadata":vals[6]};
+						var aObj = {"id":vals[0], "type":vals[1], "src":vals[2], "title":vals[3], "description":vals[4], "thumbnail":vals[5], "metaTag":vals[6]};
 						app.ioModel.localAssetsArray.push(aObj);
 					}
 					if (app.ioModel.localCollection == app.thumbnailsCollection) {
@@ -292,17 +292,17 @@ window.IOModel = Backbone.Model.extend({
         
 		tx.executeSql('CREATE TABLE strings(id INTEGER NOT NULL PRIMARY KEY, name TEXT, en TEXT, fr TEXT, dt TEXT, es TEXT, ko TEXT);');
 		tx.executeSql('CREATE TABLE users(id INTEGER NOT NULL PRIMARY KEY, username TEXT, password TEXT, region TEXT);');
-		tx.executeSql('CREATE TABLE assets(id INTEGER NOT NULL PRIMARY KEY, type TEXT, src TEXT, title TEXT, description TEXT, thumbnail TEXT, metadata TEXT);');
+		tx.executeSql('CREATE TABLE assets(id INTEGER NOT NULL PRIMARY KEY, type TEXT, src TEXT, title TEXT, description TEXT, thumbnail TEXT, metaTag TEXT);');
 		tx.executeSql('CREATE TABLE thumbnails(id INTEGER NOT NULL PRIMARY KEY, src TEXT);');
 		tx.executeSql('CREATE TABLE images(key INTEGER NOT NULL PRIMARY KEY, id TEXT, src TEXT);');
-		tx.executeSql('CREATE TABLE library_menu(id INTEGER NOT NULL PRIMARY KEY, text TEXT, value TEXT, position INTEGER, child_id_set TEXT);');
+		tx.executeSql('CREATE TABLE library_menu(id INTEGER NOT NULL PRIMARY KEY, text TEXT, value TEXT, displayOrder INTEGER, child_id_set TEXT);');
 		tx.executeSql('CREATE TABLE interiors_categories(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, title TEXT, subcategories TEXT);');
 		tx.executeSql('CREATE TABLE interiors_subcategories(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, images TEXT, swatch TEXT, nav_ids TEXT);');
 		tx.executeSql('CREATE TABLE interiors_images(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, view TEXT);');
 		tx.executeSql('CREATE TABLE interiors_navigation(id INTEGER NOT NULL PRIMARY KEY, name TEXT, image TEXT, view TEXT);');
         
 		// AN INDICATOR IF THIS IS FIRST RUN
-		tx.executeSql('CREATE TABLE IF NOT EXISTS local_assets(id INTEGER NOT NULL PRIMARY KEY, type TEXT, src TEXT, title TEXT, description TEXT, thumbnail TEXT, metadata TEXT);');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS local_assets(id INTEGER NOT NULL PRIMARY KEY, type TEXT, src TEXT, title TEXT, description TEXT, thumbnail TEXT, metaTag TEXT);');
         
 		tx.executeSql('CREATE TABLE IF NOT EXISTS local_thumbnails(id INTEGER NOT NULL PRIMARY KEY, src TEXT);');
 
@@ -375,8 +375,8 @@ window.IOModel = Backbone.Model.extend({
     
 	getLocalAssets:function(tx) {
 		$.each(app.localAssetsCollection.models, function(oind, obj) {
-			var keys = ['id', 'type', 'src', 'title', 'description', 'thumbnail', 'metadata'];
-			var vals = [parseInt(obj.id), String(obj.type), String(obj.src), String(obj.title), String(obj.description), String(obj.thumbnail), String(obj.metadata)];
+			var keys = ['id', 'type', 'src', 'title', 'description', 'thumbnail', 'metaTag'];
+			var vals = [parseInt(obj.id), String(obj.type), String(obj.src), String(obj.title), String(obj.description), String(obj.thumbnail), String(obj.metaTag)];
 			tx.executeSql("INSERT INTO local_assets(" + keys + ") VALUES (?, ?, ?, ?, ?, ?, ?)", vals);
 		});	
 	},
@@ -420,11 +420,11 @@ window.IOModel = Backbone.Model.extend({
 	checkThumbnailsChanged:function() {
 		if (app.online) {
 			//alert("checking for changed thumbnails");
-			app.onDataReady();
 		}
 		else {
-			app.onDataReady();
-		}		
+			
+		}
+        app.onDataReady();
 	},
     
 	populateLocalThumbnailsTable:function() {
@@ -509,8 +509,8 @@ window.IOModel = Backbone.Model.extend({
 		var t_ids = [];
 		$.each(app.menuCollection.models, function(oind, obj) {
 			$.each(obj.get("primary_nav"), function(ind, pmenu) {
-				var p_list = [parseInt(pmenu.id), pmenu.text, pmenu.value, parseInt(pmenu.position), pmenu.child_id_set];
-				tx.executeSql("INSERT INTO library_menu( id, text, value, position, child_id_set) VALUES (?, ?, ?, ?, ?)", p_list);
+				var p_list = [parseInt(pmenu.id), pmenu.text, pmenu.value, parseInt(pmenu.displayOrder), pmenu.child_id_set];
+				tx.executeSql("INSERT INTO library_menu( id, text, value, displayOrder, child_id_set) VALUES (?, ?, ?, ?, ?)", p_list);
 				$.each(pmenu.child_menus, function(sind, smenu) {
 					dupe = false;
 					$.each(ids, function(dind, del) {
@@ -520,8 +520,8 @@ window.IOModel = Backbone.Model.extend({
 					});
 					if (!dupe) {
 						ids.push(parseInt(smenu.id));
-						var s_list = [parseInt(smenu.id), String(smenu.text), String(smenu.value), parseInt(smenu.position), String(smenu.child_id_set)];
-						tx.executeSql("INSERT INTO library_menu( id, text, value, position, child_id_set) VALUES (?, ?, ?, ?, ?)", s_list);
+						var s_list = [parseInt(smenu.id), String(smenu.text), String(smenu.value), parseInt(smenu.displayOrder), String(smenu.child_id_set)];
+						tx.executeSql("INSERT INTO library_menu( id, text, value, displayOrder, child_id_set) VALUES (?, ?, ?, ?, ?)", s_list);
 						$.each(smenu.child_menus, function(tind, tmenu) {
 							dupe = false;
 							$.each(t_ids, function(tind, tel) {
@@ -531,8 +531,8 @@ window.IOModel = Backbone.Model.extend({
 							});
 							if (!dupe) {
 								t_ids.push(parseInt(tmenu.id));
-								var t_list = [parseInt(tmenu.id), String(tmenu.text), String(tmenu.value), parseInt(tmenu.position), String(tmenu.child_id_set)];
-								tx.executeSql("INSERT INTO library_menu( id, text, value, position, child_id_set) VALUES (?, ?, ?, ?, ?)", t_list);
+								var t_list = [parseInt(tmenu.id), String(tmenu.text), String(tmenu.value), parseInt(tmenu.displayOrder), String(tmenu.child_id_set)];
+								tx.executeSql("INSERT INTO library_menu( id, text, value, displayOrder, child_id_set) VALUES (?, ?, ?, ?, ?)", t_list);
 							}
 						});
 					}

@@ -52,6 +52,15 @@ window.HeaderView = Backbone.View.extend({
                 if(app.mainView.libraryView.currentLevel > 1)    {
                     app.mainView.libraryView.currentLevel--;
                     app.mainView.libraryView.gotoLevel(app.mainView.libraryView.currentLevel);
+                    app.mainView.libraryView.menu_filters.pop();
+                    app.mainView.libraryView.filterAssets();
+                }    else    {
+                    
+                }
+                if(app.mainView.libraryView.currentLevel == 1)    {
+                    TweenLite.to($(this), .01, {css:{autoAlpha:0}});
+                }    else    {
+                    TweenLite.to($(this), .01, {css:{autoAlpha:1}});
                 }
             }
         });

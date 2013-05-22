@@ -1,7 +1,7 @@
 window.LibraryView = StateView.extend({
 	lang_list:null,
 	menu_selections:[{"level":1, "el":null, "obj":null},{"level":2, "el":null, "obj":null},{"level":3, "el":null, "obj":null}],
-	filters:[],
+	menu_filters:[],
 	nav_width:0,
 	currentLevel:1,
 	assets:[],
@@ -11,9 +11,12 @@ window.LibraryView = StateView.extend({
 		}
 	},
     
+    
+    
 	onEnter:function() {
 		app.mainView.setStrings();
-		TweenLite.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4});   
+		TweenLite.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4});  
+        TweenLite.to(app.mainView.headerView.$el.find("#back_button"), .01, {css:{autoAlpha:0}});
 	},
 	respond:function() {
 		this.$el.find("#library").width(app.windowWidth);
@@ -25,10 +28,16 @@ window.LibraryView = StateView.extend({
 			"top":(this.$el.find("#top_div").height()) + $("#header_bar").height() + "px",
 			"height":app.windowHeight - this.$el.find("#top_div").height() - $(".footer").height() + "px"
 		});
+		this.$el.find("#doc_type_filters").css({
+			"left":this.$el.find("#left_nav").width() + "px",
+			"height":"52px"
+		});
+		this.$el.find("#filters_title").css({
+			"left":this.$el.find("#left_nav").width() + "px",
+		});
 		this.$el.find("#library_content").css({"height":app.windowHeight - $("#header_bar").height() - this.$el.find("#top_div").height() - $(".footer").height() - 53 + "px","width":app.windowWidth - this.$el.find("#left_nav").width() + "px", "left":this.$el.find("#left_nav").width() + "px", "margin-top":"53px"});
 	},
 	selectAsset:function(type, id) {
-        
 		if (type == "video") {
 			$.each(app.localAssetsCollection.models, function(index, model) {
 				if (model.get("id") == id) {
@@ -39,16 +48,15 @@ window.LibraryView = StateView.extend({
 		if (type == "image" || type == "photo") {   
 			$.each(app.localAssetsCollection.models, function(index, model) {
 				if (model.get("id") == id) {
-                    
 					app.mainView.imageView.showImage(model);
 				}
 			});
 		}
-        if (type == "pdf") {
+		if (type == "pdf") {
 			$.each(app.localAssetsCollection.models, function(index, model) {
 				if (model.get("id") == id) {
 					//window.open(model.attributes.src);
-                    var ref = window.open(model.attributes.src, '_blank', 'location=no');
+					var ref = window.open(model.attributes.src, '_blank', 'location=no');
 				}
 			});
 		}
@@ -66,6 +74,20 @@ window.LibraryView = StateView.extend({
 		this.buildMenu(1);
 		this.buildAssets();
 		this.$el.find("#library_content").niceScroll({cursorcolor: "#c1c1c1", cursorborder: "1px solid #c1c1c1", cursorwidth: "10px", cursoropacitymax: .8, cursorborderradius: "6px"});
+        
+		this.$el.find('input:checkbox').screwDefaultButtons({
+			image: 'url("images/checkboxes.png")',
+			width: 20,
+			height: 20
+		});
+        
+		$.each(lib.$el.find(".doc_type_filter"), function(index, ans) {
+			$(ans).click(function(e) {
+				if (e.target.tagName.toUpperCase() !== 'INPUT') {
+					lib.filterDocType($(ans)); 
+				}
+			});
+		});
 	},
 	buildMenu:function(lvl) {
 		var page = this;
@@ -101,11 +123,12 @@ window.LibraryView = StateView.extend({
 									page.menu_selections[0].obj = child;
 									if (pnav.child_id_set != "0") {
 										page.buildMenu(2);
-										page.addFilter(child);
 									}
+									page.addFilter(child);
 								}
 							});
 						});
+                        TweenLite.to(app.mainView.headerView.$el.find("#back_button"), .01, {css:{autoAlpha:1}});
 					});
 				});
 			});
@@ -141,13 +164,14 @@ window.LibraryView = StateView.extend({
 										page.menu_selections[1].obj = child;
 										if (child.child_id_set != "0") {
 											page.buildMenu(3);
-											page.addFilter(child);
 										}
+										page.addFilter(child);
 									}
 								});
 							}
 						});
 					});
+                    TweenLite.to(app.mainView.headerView.$el.find("#back_button"), .01, {css:{autoAlpha:1}});
 				});
 			});
 			page.currentLevel = level;
@@ -177,51 +201,83 @@ window.LibraryView = StateView.extend({
 					page.menu_selections[2].el = $(this);
 					var item = $(this);
 					$.each(app.menuCollection.models, function(ind1, model1) {
-						$.each(model1.get("primary_nav"), function(ind1, child) {
-							if (child.value + "_" + child.id == item.attr("id")) {
-								page.menu_selections[2].obj = child;
-								page.addFilter(child);
-							}
+						$.each(model1.get("primary_nav"), function(ind1, pnav1) {
+							$.each(pnav1.child_menus, function(ind2, pnav2) {
+								$.each(pnav2.child_menus, function(ind3, pnav3) {
+									if (pnav3.value + "_" + pnav3.id == item.attr("id")) {
+										page.menu_selections[2].obj = pnav3;
+										page.addFilter(pnav3);
+									}
+								});
+							});
 						});
 					});
 				});
-			});
+			}
+			);
 			page.currentLevel = level;
 			page.gotoLevel(level);
 		}
 		app.mainView.setStrings();
 	},
-	gotoLevel: function(n) {
+	gotoLevel:function(n) {
 		var num = n;
 		TweenMax.to(this.$el.find("#nav_levels"), .3, { css:{left: (-(this.nav_width * (n - 1))) + "px" }});
 	},
 	buildAssets:function() {
 		try {
 			var page = this;
-			
-			$.each(app.localAssetsCollection.models, function(aind, amodel) {
-				var asset = new LibraryItemView({model:amodel});
-				asset.$el.appendTo(page.$el.find("#library_list"));
-				page.assets.push(asset);
-			});
-            $.each(page.assets, function(ind, asset)    {
-                asset.$el.click(function(evt)    {;
-                   app.mainView.libraryView.selectAsset($(this).find("#asset_type").val(), $(this).find("#asset_id").val());
-                });
-            });
 			/*
-			$.each(app.assetsCollection.models, function(aind, amodel) {
+			$.each(app.localAssetsCollection.models, function(aind, amodel) {
 			var asset = new LibraryItemView({model:amodel});
 			asset.$el.appendTo(page.$el.find("#library_list"));
 			page.assets.push(asset);
 			});
 			*/
+
+			$.each(app.assetsCollection.models, function(aind, amodel) {
+				var asset = new LibraryItemView({model:amodel});
+				asset.$el.appendTo(page.$el.find("#library_list"));
+				page.assets.push(asset);
+			});
+            
+			$.each(page.assets, function(ind, asset) {
+				asset.$el.click(function(evt) {
+					app.mainView.libraryView.selectAsset($(this).find("#asset_type").val(), $(this).find("#asset_id").val());
+				});
+			});
 		}
 		catch (e ) {
 			alert(e);
 		}
 	},
+	filterDocType:function(ans) {
+		console.log(ans);
+	},
 	addFilter:function(obj) {
-		//console.log(obj);
+		this.menu_filters.push(obj);
+		this.filterAssets();
+	},
+	filterAssets:function() {
+		var lib = this;
+		console.log(lib.menu_filters);
+		$.each(lib.menu_filters, function(ind, filt) {
+			//console.log(filt.value);
+			$.each(lib.$el.find(".library_item"), function(aind, item) {
+				var match = false;
+				var item_tags = $(item).find("#asset_metatag").val().split(":");
+				$.each(item_tags, function(tind, tag) {
+					if (tag == filt.value) {
+						match = true;
+					}
+				});
+				if (!match) {
+					$(item).css({"display":"none"});
+				}
+				else {
+					$(item).css({"display":"inline-block"});
+				}
+			});
+		});
 	}
 });

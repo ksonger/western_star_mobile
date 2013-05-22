@@ -133,8 +133,10 @@
     <Content Include="api\Slim\Session\Handler\Cookies.php" />
     <Content Include="api\Slim\Slim.php" />
     <Content Include="api\Slim\View.php" />
+    <Content Include="images\checkboxes.png" />
     <Content Include="scripts\collections\LocalThumbnailsCollection.js" />
     <Content Include="scripts\collections\ThumbnailsCollection.js" />
+    <Content Include="scripts\lib\min.sdb.js" />
     <Content Include="scripts\models\LocalThumbnailsModel.js" />
     <Content Include="scripts\models\ThumbnailsModel.js" />
     <Content Include="scripts\views\LibraryItemView.js" />

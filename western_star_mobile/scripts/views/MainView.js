@@ -56,6 +56,9 @@ window.MainView = Backbone.View.extend({
 			this.initVideo();
             this.initImage();
 			this.initialized = true;
+            
+            TweenLite.to($("#videos"), .01, {css:{autoAlpha:0}});
+            TweenLite.to($("#images"), .01, {css:{autoAlpha:0}});
 		}
 	},
 

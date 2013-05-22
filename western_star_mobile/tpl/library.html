@@ -2,7 +2,7 @@
 	<div id="bg_div">
 		<img id="background_image" src="./images/library/library_background.png" />
 	</div>
-    <!-- <div id="serious"></div> -->
+	<!-- <div id="serious"></div> -->
 	<div id="library_main">
 		<div id="top_div">
 			<div id="logo_div">
@@ -11,23 +11,32 @@
 			<div id="title_div">
 				<span id="library_title"></span>
 			</div>
-            <div id="search_div"></div>
+			<div id="search_div">
+                <input type="input" id="search_input" />
+            </div>
 		</div>
 		<div id="main_div">
 			<div id="left_nav">
 				<div id="nav_header">
 					<span id="library_viewby"></span>
 				</div>
-                <table id="nav_levels" cellpadding="0px" cellspacing="0px" valign="top">
-                    <td valign="top" id="first_level"></td><td valign="top" id="second_level"></td><td valign="top" id="third_level"></td>
-                </table>
+				<table id="nav_levels" cellpadding="0px" cellspacing="0px" valign="top">
+					<td valign="top" id="first_level"></td>
+					<td valign="top" id="second_level"></td>
+					<td valign="top" id="third_level"></td>
+				</table>
 			</div>
 			<div id="main_content">
-                
+                <div id="filters_title">Filter By:</div>
+				<div id="doc_type_filters">
+					<div class="doc_type_filter"><input id="ch1" checked="true" type="checkbox" value="documents" /><label style="cursor:pointer" for="ch1"> Documents</label></div>
+                    <div class="doc_type_filter"><input id="ch2" checked="true" type="checkbox" value="videos" /><label style="cursor:pointer" for="ch2"> Videos</label></div>
+                    <div class="doc_type_filter"><input id="ch3" checked="true" type="checkbox" value="images" /><label style="cursor:pointer" for="ch3"> Images</label></div>
+				</div>
 				<div id="library_content">
-	                <div id="library_list">
-                        
-                    </div>
+					<div id="library_list">
+
+					</div>
 				</div>
 			</div>
 		</div>

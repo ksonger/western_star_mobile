@@ -14,6 +14,7 @@ window.ImageView = Backbone.View.extend({
 		});
 	},
 	showImage:function(obj) {
+        alert("here");
         this.template = _.template(tpl.get("image"));
 		this.$el.html(this.template({image:obj, server:app.assets_server}));
         this.respond();
@@ -33,4 +34,5 @@ window.ImageView = Backbone.View.extend({
         TweenLite.to(this.$el, .01, {css:{autoAlpha:0}});
 	}
 });
+
 
