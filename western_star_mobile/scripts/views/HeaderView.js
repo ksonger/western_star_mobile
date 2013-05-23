@@ -52,11 +52,11 @@ window.HeaderView = Backbone.View.extend({
                 if(app.mainView.libraryView.currentLevel > 1)    {
                     app.mainView.libraryView.currentLevel--;
                     app.mainView.libraryView.gotoLevel(app.mainView.libraryView.currentLevel);
-                    app.mainView.libraryView.menu_filters.pop();
-                    app.mainView.libraryView.filterAssets();
                 }    else    {
                     
                 }
+                app.mainView.libraryView.menu_filters.pop();
+                app.mainView.libraryView.filterAssets();
                 if(app.mainView.libraryView.currentLevel == 1)    {
                     TweenLite.to($(this), .01, {css:{autoAlpha:0}});
                 }    else    {

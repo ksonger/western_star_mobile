@@ -1,6 +1,7 @@
-<div class="library_item_thumbnail"><img src="<%= thumbnail.src %>" /></div>
+<div class="library_item_thumbnail"><img src="<%= thumbnail.attributes.filename %>" /></div>
 <div class="library_item_title"><%= model.attributes.title %></div>
 <div class="library_item_description"><%= model.attributes.description %></div>
-<input type="hidden" id="asset_type" value="<%= model.attributes.type %>" />
+<input type="hidden" id="asset_type" value="<%= model.attributes.assetType %>" />
 <input type="hidden" id="asset_id" value="<%= model.attributes.id %>" />
+<input type="hidden" id="asset_menutag" value="<%= model.attributes.menuTag %>" />
 <input type="hidden" id="asset_metatag" value="<%= model.attributes.metaTag %>" />

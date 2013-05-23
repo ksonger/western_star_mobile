@@ -11,19 +11,20 @@ window.LibraryItemView = Backbone.View.extend({
 		this.$el.addClass("library_item");
 		var thumb;
 		var item = this;
-                /*
-		$.each(app.localThumbnailsCollection.models, function(index, model) {
-			if (model.get("id") == item.model.get("id")) {
+		
+		$.each(app.localAssetsCollection.models, function(index, model) {
+			if (model.attributes.id == item.model.attributes.thumbnailID) {
 				thumb = model;
 			}
 		});
-        */
-        $.each(app.thumbnailsCollection.models, function(index, model) {
-			if (model.get("id") == item.model.get("id")) {
-				thumb = model;
-			}
+		/*  
+		$.each(app.assetsCollection.models[0].assetManifest[0].assets, function(index, model) {
+		if (model.id == item.model.thumbnailID) {
+		thumb = model;
+		console.log(thumb);
+		}
 		});
-
-		this.$el.html(this.template({"model":this.model, "thumbnail":thumb.attributes}));
+		*/
+		this.$el.html(this.template({"model":this.model, "thumbnail":thumb}));
 	}
 });

@@ -23,7 +23,7 @@ window.VideoView = Backbone.View.extend({
         });
         TweenLite.to(app.mainView.videoView.$el, .3, {css:{autoAlpha:1}});
 	},
-    hideVideo:function(    ){
+    hideVideo:function(){
         try{
             app.mainView.videoView.$el.find("video").get(0).pause();
         }    catch(err)    {

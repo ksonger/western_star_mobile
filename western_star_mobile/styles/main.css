@@ -651,8 +651,10 @@ body {
           background: url(../images/library/search_box.png) no-repeat; }
           #main #library #library_main #top_div #search_div #search_input {
             color: #AAAAAA;
-            font-size: 13px;
-            width: 100%;
+            font-size: 14px;
+            width: 148px;
+            margin-left: 30px;
+            margin-top: 0px;
             border: 0px; }
       #main #library #library_main #main_div {
         position: absolute;

@@ -16,7 +16,7 @@ window.LibraryView = StateView.extend({
 	onEnter:function() {
 		app.mainView.setStrings();
 		TweenLite.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4});  
-        TweenLite.to(app.mainView.headerView.$el.find("#back_button"), .01, {css:{autoAlpha:0}});
+		TweenLite.to(app.mainView.headerView.$el.find("#back_button"), .01, {css:{autoAlpha:0}});
 	},
 	respond:function() {
 		this.$el.find("#library").width(app.windowWidth);
@@ -38,25 +38,26 @@ window.LibraryView = StateView.extend({
 		this.$el.find("#library_content").css({"height":app.windowHeight - $("#header_bar").height() - this.$el.find("#top_div").height() - $(".footer").height() - 53 + "px","width":app.windowWidth - this.$el.find("#left_nav").width() + "px", "left":this.$el.find("#left_nav").width() + "px", "margin-top":"53px"});
 	},
 	selectAsset:function(type, id) {
-		if (type == "video") {
+        
+		if (type.toLowerCase() == "video") {
 			$.each(app.localAssetsCollection.models, function(index, model) {
 				if (model.get("id") == id) {
 					app.mainView.videoView.showVideo(model);
 				}
 			});
 		}
-		if (type == "image" || type == "photo") {   
+		if (type.toLowerCase() == "image" || type.toLowerCase() == "photo") {   
 			$.each(app.localAssetsCollection.models, function(index, model) {
 				if (model.get("id") == id) {
 					app.mainView.imageView.showImage(model);
 				}
 			});
 		}
-		if (type == "pdf") {
+		if (type.toLowerCase() == "brochure" || type.toLowerCase() == "document") {
 			$.each(app.localAssetsCollection.models, function(index, model) {
 				if (model.get("id") == id) {
 					//window.open(model.attributes.src);
-					var ref = window.open(model.attributes.src, '_blank', 'location=no');
+					var ref = window.open(model.attributes.filename, '_blank', 'location=no');
 				}
 			});
 		}
@@ -97,7 +98,7 @@ window.LibraryView = StateView.extend({
 			var el = page.$el.find("#first_level");
 			page.$el.find("#first_level").html("");
 			$.each(app.menuCollection.models, function(ind, model) {
-				$.each(model.get("primary_nav"), function(ind, pnav) {
+				$.each(model.primary_nav, function(ind, pnav) {
 					var item_lvl1 = jQuery('<div/>', {
 						class:"nav_item",
 						id:pnav.value + "_" + pnav.id
@@ -105,6 +106,7 @@ window.LibraryView = StateView.extend({
 					var item_lvl1_span = jQuery('<span/>', {
 						id:"library_menu_" + pnav.value + "_" + + pnav.id
 					}).appendTo(item_lvl1);
+					item_lvl1_span.html(pnav.text);
 					var item_lvl1_icon = jQuery('<div/>', {
 						id:"icon"
 					}).appendTo(item_lvl1);
@@ -118,7 +120,7 @@ window.LibraryView = StateView.extend({
 						page.menu_selections[0].el = $(this);
 						var item = $(this);
 						$.each(app.menuCollection.models, function(ind1, model1) {
-							$.each(model.get("primary_nav"), function(ind1, child) {
+							$.each(model.primary_nav, function(ind1, child) {
 								if (child.value + "_" + child.id == item.attr("id")) {
 									page.menu_selections[0].obj = child;
 									if (pnav.child_id_set != "0") {
@@ -128,7 +130,7 @@ window.LibraryView = StateView.extend({
 								}
 							});
 						});
-                        TweenLite.to(app.mainView.headerView.$el.find("#back_button"), .01, {css:{autoAlpha:1}});
+						TweenLite.to(app.mainView.headerView.$el.find("#back_button"), .01, {css:{autoAlpha:1}});
 					});
 				});
 			});
@@ -136,85 +138,90 @@ window.LibraryView = StateView.extend({
 		if (level == 2) {
 			var el = page.$el.find("#second_level");
 			page.$el.find("#second_level").html("");
-			$.each(page.menu_selections[0].obj.child_menus, function(ind, item) {
-				var item_lvl2 = jQuery('<div/>', {
-					class:"nav_item",
-					id:item.value + "_" + item.id
-				}).appendTo(page.$el.find("#second_level"));
-				var item_lvl2_span = jQuery('<span/>', {
-					id:"library_menu_" + item.value + "_" + + item.id
-				}).appendTo(item_lvl2);
-				var item_lvl2_icon = jQuery('<div/>', {
-					id:"icon"
-				}).appendTo(item_lvl2);
-				item_lvl2.click(function(evt) {
-					el.find(".nav_item").removeClass("active");
-					el.find("span").removeClass("active");
-					el.find("#icon").removeClass("active");
-					$(this).addClass("active");
-					$(this).find("span").addClass("active");
-					$(this).find("#icon").addClass("active");
-					page.menu_selections[1].el = $(this);
-					var item = $(this);
-					$.each(app.menuCollection.models, function(ind1, model1) {
-						$.each(model1.get("primary_nav"), function(ind1, pnav1) {
-							if (pnav1 == page.menu_selections[0].obj) {
-								$.each(pnav1.child_menus, function(ind2, child) {
-									if (child.value + "_" + child.id == item.attr("id")) {
-										page.menu_selections[1].obj = child;
-										if (child.child_id_set != "0") {
-											page.buildMenu(3);
+			if (page.menu_selections[0].obj.child_menus != undefined && page.menu_selections[0].obj.child_menus != null) {
+				$.each(page.menu_selections[0].obj.child_menus, function(ind, item) {
+					var item_lvl2 = jQuery('<div/>', {
+						class:"nav_item",
+						id:item.value + "_" + item.id
+					}).appendTo(page.$el.find("#second_level"));
+					var item_lvl2_span = jQuery('<span/>', {
+						id:"library_menu_" + item.value + "_" + + item.id
+					}).appendTo(item_lvl2);
+					item_lvl2_span.html(item.text);
+					var item_lvl2_icon = jQuery('<div/>', {
+						id:"icon"
+					}).appendTo(item_lvl2);
+					item_lvl2.click(function(evt) {
+						el.find(".nav_item").removeClass("active");
+						el.find("span").removeClass("active");
+						el.find("#icon").removeClass("active");
+						$(this).addClass("active");
+						$(this).find("span").addClass("active");
+						$(this).find("#icon").addClass("active");
+						page.menu_selections[1].el = $(this);
+						var item = $(this);
+						$.each(app.menuCollection.models, function(ind1, model1) {
+							$.each(model1.primary_nav, function(ind1, pnav1) {
+								if (pnav1 == page.menu_selections[0].obj) {
+									$.each(pnav1.child_menus, function(ind2, child) {
+										if (child.value + "_" + child.id == item.attr("id")) {
+											page.menu_selections[1].obj = child;
+											if (child.child_id_set != "0") {
+												page.buildMenu(3);
+											}
+											page.addFilter(child);
 										}
-										page.addFilter(child);
-									}
-								});
-							}
+									});
+								}
+							});
 						});
+						TweenLite.to(app.mainView.headerView.$el.find("#back_button"), .01, {css:{autoAlpha:1}});
 					});
-                    TweenLite.to(app.mainView.headerView.$el.find("#back_button"), .01, {css:{autoAlpha:1}});
 				});
-			});
+			}
 			page.currentLevel = level;
 			page.gotoLevel(level);
 		}
 		if (level == 3) {
 			var el = page.$el.find("#third_level");
 			page.$el.find("#third_level").html("");
-			$.each(page.menu_selections[1].obj.child_menus, function(ind, item) {
-				var item_lvl3 = jQuery('<div/>', {
-					class:"nav_item",
-					id:item.value + "_" + item.id
-				}).appendTo(page.$el.find("#third_level"));
-				var item_lvl3_span = jQuery('<span/>', {
-					id:"library_menu_" + item.value + "_" + + item.id
-				}).appendTo(item_lvl3);
-				var item_lvl3_icon = jQuery('<div/>', {
-					id:"icon"
-				}).appendTo(item_lvl3);
-				item_lvl3.click(function(evt) {
-					el.find(".nav_item").removeClass("active");
-					el.find("span").removeClass("active");
-					el.find("#icon").removeClass("active");
-					$(this).addClass("active");
-					$(this).find("span").addClass("active");
-					$(this).find("#icon").addClass("active");
-					page.menu_selections[2].el = $(this);
-					var item = $(this);
-					$.each(app.menuCollection.models, function(ind1, model1) {
-						$.each(model1.get("primary_nav"), function(ind1, pnav1) {
-							$.each(pnav1.child_menus, function(ind2, pnav2) {
-								$.each(pnav2.child_menus, function(ind3, pnav3) {
-									if (pnav3.value + "_" + pnav3.id == item.attr("id")) {
-										page.menu_selections[2].obj = pnav3;
-										page.addFilter(pnav3);
-									}
+			if (page.menu_selections[1].obj.child_menus != undefined && page.menu_selections[1].obj.child_menus != null) {
+				$.each(page.menu_selections[1].obj.child_menus, function(ind, item) {
+					var item_lvl3 = jQuery('<div/>', {
+						class:"nav_item",
+						id:item.value + "_" + item.id
+					}).appendTo(page.$el.find("#third_level"));
+					var item_lvl3_span = jQuery('<span/>', {
+						id:"library_menu_" + item.value + "_" + + item.id
+					}).appendTo(item_lvl3);
+					item_lvl3_span.html(item.text);
+					var item_lvl3_icon = jQuery('<div/>', {
+						id:"icon"
+					}).appendTo(item_lvl3);
+					item_lvl3.click(function(evt) {
+						el.find(".nav_item").removeClass("active");
+						el.find("span").removeClass("active");
+						el.find("#icon").removeClass("active");
+						$(this).addClass("active");
+						$(this).find("span").addClass("active");
+						$(this).find("#icon").addClass("active");
+						page.menu_selections[2].el = $(this);
+						var item = $(this);
+						$.each(app.menuCollection.models, function(ind1, model1) {
+							$.each(model1.primary_nav, function(ind1, pnav1) {
+								$.each(pnav1.child_menus, function(ind2, pnav2) {
+									$.each(pnav2.child_menus, function(ind3, pnav3) {
+										if (pnav3.value + "_" + pnav3.id == item.attr("id")) {
+											page.menu_selections[2].obj = pnav3;
+											page.addFilter(pnav3);
+										}
+									});
 								});
 							});
 						});
 					});
 				});
 			}
-			);
 			page.currentLevel = level;
 			page.gotoLevel(level);
 		}
@@ -227,20 +234,21 @@ window.LibraryView = StateView.extend({
 	buildAssets:function() {
 		try {
 			var page = this;
-			/*
 			$.each(app.localAssetsCollection.models, function(aind, amodel) {
+				if (amodel.attributes.assetType != "THUMBNAIL") {
+					var asset = new LibraryItemView({model:amodel});
+					asset.$el.appendTo(page.$el.find("#library_list"));
+					page.assets.push(asset);
+				}
+			});
+			
+			/*
+			$.each(app.assetsCollection.models[0].assetManifest[0].assets, function(aind, amodel) { 
 			var asset = new LibraryItemView({model:amodel});
 			asset.$el.appendTo(page.$el.find("#library_list"));
 			page.assets.push(asset);
 			});
 			*/
-
-			$.each(app.assetsCollection.models, function(aind, amodel) {
-				var asset = new LibraryItemView({model:amodel});
-				asset.$el.appendTo(page.$el.find("#library_list"));
-				page.assets.push(asset);
-			});
-            
 			$.each(page.assets, function(ind, asset) {
 				asset.$el.click(function(evt) {
 					app.mainView.libraryView.selectAsset($(this).find("#asset_type").val(), $(this).find("#asset_id").val());
@@ -260,24 +268,32 @@ window.LibraryView = StateView.extend({
 	},
 	filterAssets:function() {
 		var lib = this;
-		console.log(lib.menu_filters);
-		$.each(lib.menu_filters, function(ind, filt) {
-			//console.log(filt.value);
+		if (lib.menu_filters.length == 0) {
 			$.each(lib.$el.find(".library_item"), function(aind, item) {
-				var match = false;
-				var item_tags = $(item).find("#asset_metatag").val().split(":");
-				$.each(item_tags, function(tind, tag) {
-					if (tag == filt.value) {
-						match = true;
-					}
-				});
-				if (!match) {
-					$(item).css({"display":"none"});
-				}
-				else {
-					$(item).css({"display":"inline-block"});
+				$(item).css({"display":"inline-block"});
+			});
+		}
+		else {
+			$.each(lib.menu_filters, function(ind, filt) {
+				if (filt.value != null) {
+					$.each(lib.$el.find(".library_item"), function(aind, item) {
+						var match = false;
+						var item_tags = $(item).find("#asset_menutag").val().split(":");
+						$.each(item_tags, function(tind, tag) {
+							if (tag.toLowerCase() == filt.value.toLowerCase()) {
+								match = true;
+							}
+						});
+						if (!match) {
+							$(item).css({"display":"none"});
+						}
+						else {
+							alert("match");
+							$(item).css({"display":"inline-block"});
+						}
+					});
 				}
 			});
-		});
+		}
 	}
 });

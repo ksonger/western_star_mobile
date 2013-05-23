@@ -18,9 +18,9 @@ var AppRouter = Backbone.Router.extend({
 	usersCollection:null,
 	menuCollection:null,
 	assetsCollection:null,
-    thumbnailsCollection:null,
+	thumbnailsCollection:null,
 	localAssetsCollection:null,
-    localThumbnailsCollection:null,
+	localThumbnailsCollection:null,
 	imagesCollection:null,
 	ioModel:null,
 	mainView:null,
@@ -133,14 +133,13 @@ var AppRouter = Backbone.Router.extend({
 	},
        
 	initDatabase:function(callback) {
-        
 		this.stringsCollection = new StringsCollection();
 		this.usersCollection = new UsersCollection();
 		this.menuCollection = new MenuCollection();
 		this.assetsCollection = new AssetsCollection();
-        this.thumbnailsCollection = new ThumbnailCollection();
+		this.thumbnailsCollection = new ThumbnailCollection();
 		this.localAssetsCollection = new LocalAssetsCollection();
-        this.localThumbnailsCollection = new LocalThumbnailsCollection();
+		this.localThumbnailsCollection = new LocalThumbnailsCollection();
 		this.imagesCollection = new ImagesCollection();
 		this.interiorsCatCollection = new InteriorsCatCollection();
 		this.interiorsSubCatCollection = new InteriorsSubCatCollection();
@@ -154,8 +153,14 @@ var AppRouter = Backbone.Router.extend({
 						success:function () {
 							app.menuCollection.fetch({
 								success:function () {
+                                    var menu_json = app.menuCollection.models[0].attributes.GetMenuResult;
+									menu_json = menu_json.replace(/\'/g, '"');
+									app.menuCollection.models[0] = JSON.parse(menu_json);
 									app.assetsCollection.fetch({
-										success:function () {
+										success:function (result) {
+											var asset_json = app.assetsCollection.models[0].attributes.GetDataResult;
+											asset_json = asset_json.replace(/\'/g, '"');
+											app.assetsCollection.models[0] = JSON.parse(asset_json);
 											app.thumbnailsCollection.fetch({
 												success:function () {
 													app.imagesCollection.fetch({
@@ -195,6 +200,7 @@ var AppRouter = Backbone.Router.extend({
 													console.log("assets error: " + e);
 												}
 											});
+											
 										}, error:function(e) {
 											console.log("thumbnails error: " + e);
 										}

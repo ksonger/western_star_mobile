@@ -106,6 +106,7 @@
   <ItemGroup>
     <Content Include="api\.htaccess" />
     <Content Include="api\index.php" />
+    <Content Include="api\kensonge_western_star.sql" />
     <Content Include="api\Slim\Environment.php" />
     <Content Include="api\Slim\Exception\Pass.php" />
     <Content Include="api\Slim\Exception\RequestSlash.php" />
@@ -136,6 +137,7 @@
     <Content Include="images\checkboxes.png" />
     <Content Include="scripts\collections\LocalThumbnailsCollection.js" />
     <Content Include="scripts\collections\ThumbnailsCollection.js" />
+    <Content Include="scripts\json2.js" />
     <Content Include="scripts\lib\min.sdb.js" />
     <Content Include="scripts\models\LocalThumbnailsModel.js" />
     <Content Include="scripts\models\ThumbnailsModel.js" />
