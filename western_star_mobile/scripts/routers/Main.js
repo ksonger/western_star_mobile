@@ -42,7 +42,7 @@ var AppRouter = Backbone.Router.extend({
 	routes:{
 		"":"index"
 	},
-      
+
 	index:function () {
 		app.begin();
 	},
@@ -55,7 +55,7 @@ var AppRouter = Backbone.Router.extend({
 			app.currentState = state;
 			app.currentState.onEnter();
 
-			if (app.currentState != app.mainView.loginView) {  
+			if (app.currentState != app.mainView.loginView) {
 				if (app.currentState != app.mainView.homeView) {
 					TweenMax.to($("#tabstrip"), .01, {css:{autoAlpha:1}});
 					TweenMax.to($("#header_bar"), .01, {css:{autoAlpha:1}});
@@ -93,7 +93,7 @@ var AppRouter = Backbone.Router.extend({
 		}
 		app.initDatabase();
 	},
-    
+
 	cjsLoad:function(manifest) {
 		//TODO show a loader
 		app.loader = new createjs.PreloadJS(false);
@@ -131,7 +131,7 @@ var AppRouter = Backbone.Router.extend({
 			console.log("manifest length is zero.");
 		}
 	},
-       
+
 	initDatabase:function(callback) {
 		this.stringsCollection = new StringsCollection();
 		this.usersCollection = new UsersCollection();
@@ -145,8 +145,13 @@ var AppRouter = Backbone.Router.extend({
 		this.interiorsSubCatCollection = new InteriorsSubCatCollection();
 		this.interiorsImagesCollection = new InteriorsImagesCollection();
 		this.interiorsNavCollection = new InteriorsNavCollection();
-        
+
 		if (this.online) {
+            /*
+            TODO: Sort out the services side to prevent the need for this crazy chain of calls,
+            or add a helper method to pass each collection to and return success/fail.
+            Should just make one trip over the wire and respond with a single JSON object, though.
+             */
 			app.stringsCollection.fetch({
 				success:function () {
 					app.usersCollection.fetch({
@@ -200,7 +205,7 @@ var AppRouter = Backbone.Router.extend({
 													console.log("assets error: " + e);
 												}
 											});
-											
+
 										}, error:function(e) {
 											console.log("thumbnails error: " + e);
 										}
@@ -223,7 +228,7 @@ var AppRouter = Backbone.Router.extend({
 			app.ioModel.createLocalStore();
 		}
 	},
-    
+
 	onDataReady:function() {
 		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
 			app.isTouchDevice = true;
@@ -244,7 +249,7 @@ var AppRouter = Backbone.Router.extend({
 			window.HTMLAudioElement = function () {
 			};
 		}
-		/* Future functionality to load interface elements dynamically from the assets server 
+		/* Future functionality to load interface elements dynamically from the assets server
 		var imgArr = [];
 		$.each(this.imagesCollection.models, function(index, model) {
 		var iObj = {"id":model.get("id"),"src":model.get("src")}
