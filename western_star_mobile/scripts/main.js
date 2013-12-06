@@ -1,6 +1,6 @@
 var db_host = "http://developmentcmd.com";
 var net_host = "http://win-dev.developmentcmd.com/Service1.svc";
-var asset_host = "http://win-dev.developmentcmd.com/AppAssets/"
+var asset_host = "http://win-dev.developmentcmd.com/AppAssets/";
 
 
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -19,7 +19,7 @@ function onDeviceReady() {
         'video',
         'image'
 	], function () {
-		app = new AppRouter();
+		this.app = new AppRouter();
 		Backbone.history.start();
 	});
 	navigator.splashscreen.hide();

@@ -1,6 +1,6 @@
 window.LibraryItemView = Backbone.View.extend({
 
-	initialize:function (options) {
+	initialize:function () {
 		this.render();
 	},
 	respond:function() {
@@ -9,7 +9,7 @@ window.LibraryItemView = Backbone.View.extend({
 	render:function() {
 		this.template = _.template(tpl.get("library_item"));
 		this.$el.addClass("library_item");
-		var thumb;
+		var thumb = '';
 		var item = this;
 		
 		$.each(app.localAssetsCollection.models, function(index, model) {

@@ -25,7 +25,7 @@ window.IOModel = Backbone.Model.extend({
 	fileSystemSuccess:function(fileSystem) {
 		fileSystem.root.getFile("dummy.html", {create: true, exclusive: false}, app.ioModel.fileEntrySuccess, app.ioModel.fileEntryFail);
 	},
-	fileSystemFail:function(err) {
+	fileSystemFail:function() {
 		//alert("filesystem: " + err);
 		app.onDataReady();
 	},
@@ -63,7 +63,7 @@ window.IOModel = Backbone.Model.extend({
 							app.ioModel.currentDownload.updated, 
 							app.ioModel.currentDownload.verb, 
 							app.ioModel.currentDownload.visible
-						]
+						];
 						var aObj = {
 							"assetMedia":vals[0], 
 							"assetType":vals[1], 
@@ -243,7 +243,7 @@ window.IOModel = Backbone.Model.extend({
     
 	removeFile : function(fileEntry, onSuccess, onError) {
 		var mdl = this;
-		fileEntry.remove(function (entry) {
+		fileEntry.remove(function () {
 			var message = "File removed.";
 			onSuccess.call(mdl, message);
 		}, function (error) {
@@ -297,7 +297,6 @@ window.IOModel = Backbone.Model.extend({
 			else {
 				alert("Unknown error " + e + ".");
 			}
-			return;
 		}
 	},
 	createTables:function(tx) {
@@ -350,7 +349,7 @@ window.IOModel = Backbone.Model.extend({
 	checkLocalAssetsLength:function(tx) {       
 		tx.executeSql("SELECT * FROM local_assets;", [], app.ioModel.checkLocalAssetsLengthSuccess, app.ioModel.checkLocalAssetsLengthError);	
 	},
-	checkLocalAssetsLengthError:function(err) {
+	checkLocalAssetsLengthError:function() {
 		alert("error trying to determine the length of local_assets table");
 	},
 	checkLocalAssetsLengthSuccess:function(transaction, results) {
@@ -539,43 +538,52 @@ window.IOModel = Backbone.Model.extend({
 			tx.executeSql("INSERT INTO interiors_navigation(" + keys + ") VALUES (?, ?, ?, ?)", vals);
 		});
 	},
-    
-    
-	
+
 	selectUsers:function(tx) {
 		tx.executeSql("SELECT * FROM users;", [], app.ioModel.userDataSelectHandler, app.ioModel.onUsersError);
 	},
+
 	selectStrings:function(tx) {
 		tx.executeSql("SELECT * FROM strings;", [], app.ioModel.stringDataSelectHandler, app.ioModel.onStringsError);
 	},
+
 	selectAssets:function(tx) {
 		tx.executeSql("SELECT * FROM assets;", [], app.ioModel.assetDataSelectHandler, app.ioModel.onAssetsError);
 	},
+
 	selectLocalAssets:function(tx) {
 		//alert("selectLocalAssets");
 		tx.executeSql("SELECT * FROM local_assets;", [], app.ioModel.localAssetsDataSelectHandler, app.ioModel.onLocalAssetsError);
 	},
+
 	selectLocalThumbnails:function(tx) {
 		tx.executeSql("SELECT * FROM local_thumbnails;", [], app.ioModel.localThumbnailsDataSelectHandler, app.ioModel.onLocalThumbnailsError);
 	},
+
 	selectImages:function(tx) {
 		tx.executeSql("SELECT * FROM images;", [], app.ioModel.imagesDataSelectHandler, app.ioModel.onImagesError);
 	},
+
 	selectMenus:function(tx) {
 		tx.executeSql("SELECT * FROM library_menu;", [], app.ioModel.menusDataSelectHandler, app.ioModel.onMenusError);
 	},
+
 	selectInteriorsCategories:function(tx) {
 		tx.executeSql("SELECT * FROM interiors_categories;", [], app.ioModel.interiorsCategoriesDataSelectHandler, app.ioModel.onInteriorsCategoriesError);
 	},
+
 	selectInteriorsImages:function(tx) {
 		tx.executeSql("SELECT * FROM interiors_images;", [], app.ioModel.interiorsImagesDataSelectHandler, app.ioModel.onInteriorsImagesError);
 	},
+
 	selectInteriorsSubCategories:function(tx) {
 		tx.executeSql("SELECT * FROM interiors_subcategories;", [], app.ioModel.interiorsSubCategoriesDataSelectHandler, app.ioModel.onInteriorsSubCategoriesError);
 	},
+
 	selectInteriorsNav:function(tx) {
 		tx.executeSql("SELECT * FROM interiors_navigation;", [], app.ioModel.interiorsNavDataSelectHandler, app.ioModel.onInteriorsNavError);
 	},
+
 	imagesDataSelectHandler:function(transaction, results) {
 		var images_models = [];
 		for (var i = 0; i < results.rows.length; i++) {
@@ -585,6 +593,7 @@ window.IOModel = Backbone.Model.extend({
 		}
 		app.imagesCollection = new ImagesCollection(images_models, {model:ImagesModel});
 	},
+
 	menusDataSelectHandler:function(transaction, results) {
 		var menuObj = {};
 		menuObj.primary_nav = [];
@@ -622,6 +631,7 @@ window.IOModel = Backbone.Model.extend({
 			});
 		});
 	},
+
 	interiorsCategoriesDataSelectHandler:function(transaction, results) {
 		var intcat_models = [];
 		for (var i = 0; i < results.rows.length; i++) {
@@ -631,6 +641,7 @@ window.IOModel = Backbone.Model.extend({
 		}
 		app.interiorsCatCollection = new InteriorsCatCollection(intcat_models, {model:InteriorsCatModel});
 	},
+
 	interiorsSubCategoriesDataSelectHandler:function(transaction, results) {
 		var intsubcat_models = [];
 		for (var i = 0; i < results.rows.length; i++) {
@@ -640,6 +651,7 @@ window.IOModel = Backbone.Model.extend({
 		}
 		app.interiorsSubCatCollection = new InteriorsSubCatCollection(intsubcat_models, {model:InteriorsSubCatModel});
 	},
+
 	interiorsImagesDataSelectHandler:function(transaction, results) {
 		var intimages_models = [];
 		for (var i = 0; i < results.rows.length; i++) {
@@ -649,6 +661,7 @@ window.IOModel = Backbone.Model.extend({
 		}
 		app.interiorsImagesCollection = new InteriorsImagesCollection(intimages_models, {model:InteriorsImagesModel});
 	},
+
 	interiorsNavDataSelectHandler:function(transaction, results) {
 		var intnav_models = [];
 		for (var i = 0; i < results.rows.length; i++) {
@@ -658,6 +671,7 @@ window.IOModel = Backbone.Model.extend({
 		}
 		app.interiorsNavCollection = new InteriorsNavCollection(intnav_models, {model:InteriorsNavModel});
 	},
+
 	assetDataSelectHandler:function(transaction, results) {
 		var asset_models = [];
 		for (var i = 0; i < results.rows.length; i++) {
@@ -667,6 +681,7 @@ window.IOModel = Backbone.Model.extend({
 		}
 		app.assetsCollection = new AssetsCollection(asset_models, {model:AssetsModel});
 	},
+
 	localAssetsDataSelectHandler:function(transaction, results) {
 		//alert('localAssetsDataSelectHandler');
 		var local_asset_models = [];
@@ -677,6 +692,7 @@ window.IOModel = Backbone.Model.extend({
 		}
 		app.localAssetsCollection = new LocalAssetsCollection(local_asset_models, {model:LocalAssetsModel});
 	},
+
 	localThumbnailsDataSelectHandler:function(transaction, results) {
 		var local_thumbnail_models = [];
 		for (var i = 0; i < results.rows.length; i++) {
@@ -687,6 +703,7 @@ window.IOModel = Backbone.Model.extend({
 		app.localThumbnailsCollection = new LocalThumbnailsCollection(local_thumbnail_models, {model:LocalThumbnailsModel}); 
 		app.ioModel.checkThumbnailsChanged();
 	},
+
 	stringDataSelectHandler:function(transaction, results) {
 		var str_models = [];
 		for (var i = 0; i < results.rows.length; i++) {
@@ -696,6 +713,7 @@ window.IOModel = Backbone.Model.extend({
 		}
 		app.stringsCollection = new StringsCollection(str_models, {model:StringsModel});
 	},
+
 	userDataSelectHandler:function(transaction, results) {
 		var usr_models = [];
 		for (var i = 0; i < results.rows.length; i++) {
@@ -709,6 +727,7 @@ window.IOModel = Backbone.Model.extend({
 	onUsersError:function(e) {
 		console.log("users error: " + e.message);
 	},
+
 	onUsersSuccess:function() {
 		app.ioModel.usersReady = true;
 	},
@@ -716,6 +735,7 @@ window.IOModel = Backbone.Model.extend({
 	onStringsError:function(e) {
 		console.log("strings error: " + e.code);
 	},
+
 	onStringsSuccess:function() {
 		app.ioModel.stringsReady = true;
 	},
@@ -723,16 +743,13 @@ window.IOModel = Backbone.Model.extend({
 	onAssetsError:function(e) {
 		console.log("assets error: " + e.message);
 	},
+
 	onAssetsSuccess:function() {
 		app.ioModel.assetsReady = true;
 	},
     
 	onLocalAssetsError:function(e) {
 		alert("local assets error: " + e.message);
-	},
-
-	onLocalAssetsSelectedSuccess:function() {
-		//alert("onLocalAssetsSelectedSuccess");
 	},
     
 	onLocalAssetsSuccess:function() {
@@ -744,6 +761,7 @@ window.IOModel = Backbone.Model.extend({
 	onImagesError:function(e) {
 		console.log("images error: " + e.message);
 	},
+
 	onImagesSuccess:function() {
 		app.ioModel.imagesReady = true;
 	},
@@ -751,6 +769,7 @@ window.IOModel = Backbone.Model.extend({
 	onMenusError:function(e) {
 		console.log("menus error: " + e.message);
 	},
+
 	onMenusSuccess:function() {
 		//console.log("menus success");
 		app.ioModel.menusReady = true;
@@ -759,33 +778,41 @@ window.IOModel = Backbone.Model.extend({
 	onInteriorsCategoriesError:function(e) {
 		console.log("interiors categories error: " + e.message);
 	},
+
 	onInteriorsCategoriesSuccess:function() {
 		app.ioModel.intCatReady = true;
 	},
+
 	onInteriorsSubCategoriesError:function(e) {
 		console.log("interiors subcategories error: " + e.message);
 	},
+
 	onInteriorsSubCategoriesSuccess:function() {
 		app.ioModel.intSubCatReady = true;
 	},
+
 	onInteriorsImagesError:function(e) {
 		console.log("interiors images error: " + e.message);
 	},
+
 	onInteriorsImagesSuccess:function() {
 		app.ioModel.intImagesReady = true;
 	},
+
 	onInteriorsNavError:function(e) {
 		console.log("interiors nav error: " + e.message);
 	},
+
 	onInteriorsNavSuccess:function() {
 		app.ioModel.intNavReady = true;
 	},
-    
-    
+
 	nullDataHandler:function(e) {
 		console.log("null data: " + e);
 	},
+
 	modelsReady:function() {
+        var ready = false;
 		if (
 			app.ioModel.menusReady && 
 			app.ioModel.usersReady && 
@@ -796,10 +823,8 @@ window.IOModel = Backbone.Model.extend({
 			app.ioModel.intSubCatReady && 
 			app.ioModel.intImagesReady && 
 			app.ioModel.intNavReady) {
-			return true;
+			ready = true;
 		}
-		else {
-			return false;
-		}
+		return ready;
 	}
 });

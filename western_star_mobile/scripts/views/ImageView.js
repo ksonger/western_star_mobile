@@ -2,7 +2,7 @@ window.ImageView = Backbone.View.extend({
 	lang_list:null,
 	selectedImage:null,
 	appended:false,
-	initialize:function (options) {
+	initialize:function () {
 		this.render();
 	},
 	respond:function() {

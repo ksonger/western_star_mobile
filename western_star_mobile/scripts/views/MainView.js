@@ -2,6 +2,7 @@ window.MainView = Backbone.View.extend({
 
 	initialize:function () {
 	},
+
 	initialized:false,
 	loginView:null,
 	homeView:null,
@@ -128,13 +129,18 @@ window.MainView = Backbone.View.extend({
 			app.currentLayout = "landscape";
 		}
 		try {
-			$("#main").width(app.windowWidth);
-			$("#main").height(app.windowHeight);
-			if ($("#tabstrip").css("opacity") != "0") {
-				$("#tabstrip").css({"top":app.windowHeight - $("#tabstrip").height() - $("#home_header").height() + "px"});
+            var main = $("#main"),
+                tabstrip = $("#tabstrip"),
+                header_bar = $("#header_bar"),
+                lang_button = $("#lang_button");
+
+			main.width(app.windowWidth);
+			main.height(app.windowHeight);
+			if (tabstrip.css("opacity") != "0") {
+				tabstrip.css({"top":app.windowHeight - tabstrip.height() - $("#home_header").height() + "px"});
 			}
-			if ($("#header_bar").css("opacity") != "0") {
-				$("#lang_button").css({"left":app.windowWidth - $("#lang_button").width() - 15 + "px", "top":(($("#header_bar").height() - $("#lang_button").height()) / 2) + "px"});
+			if (header_bar.css("opacity") != "0") {
+                lang_button.css({"left":app.windowWidth - lang_button.width() - 15 + "px", "top":((header_bar.height() - lang_button.height()) / 2) + "px"});
 				$("#header_title").css({"width":app.windowWidth + "px"});
 			}
 			if ($("#videos").css("opacity") != "0") {

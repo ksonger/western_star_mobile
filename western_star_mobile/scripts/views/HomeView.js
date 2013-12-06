@@ -1,5 +1,5 @@
 window.HomeView = StateView.extend({
-	initialize:function (options) {
+	initialize:function () {
 		if (this.firstLoad) {
 			this.onFirstLoad();
 		}
@@ -30,7 +30,7 @@ window.HomeView = StateView.extend({
 		this.$el.html(this.template());
 		app.mainView.setStrings();
 		$.each(this.$el.find(".home_button"), function(index, btn) {
-			$(btn).click(function(evt) {
+			$(btn).click(function() {
 				if ($(this).find("div").attr("id") == "home_btn1") {
 					app.setState(app.mainView.wsView);
 					app.mainView.tabstripView.selectTab(1);

@@ -1,6 +1,6 @@
 window.CalculatorsView = StateView.extend({
 	lang_list:null,
-	initialize:function (options) {
+	initialize:function () {
 		if (this.firstLoad) {   
 			this.onFirstLoad();
 		}
@@ -10,16 +10,17 @@ window.CalculatorsView = StateView.extend({
 		TweenLite.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4});   
 	},
 	respond:function() {
+        var footer = $(".footer");
 		this.$el.find("#calculators").width(app.windowWidth);
 		this.$el.find("#calculators").height(app.windowHeight);
 		this.$el.find("#calculators_logo").css({"left":((this.$el.find("#logo_div").width() - this.$el.find("#calculators_logo").width()) / 2) + "px", "top":((this.$el.find("#top_div").height() - this.$el.find("#logo_div").height()) / 2) + "px"});
 		this.$el.find("#calculators_title").css({"top":((this.$el.find("#top_div").height() - this.$el.find("#calculators_title").height()) / 2) + "px"});
 		this.$el.find("#main_div").css({
 			"top":(this.$el.find("#top_div").height()) + $("#header_bar").height() + "px",
-			"height":app.windowHeight - this.$el.find("#top_div").height() - $(".footer").height() + "px"
+			"height":app.windowHeight - this.$el.find("#top_div").height() - footer.height() + "px"
 		});
-		this.$el.find("#bottom_frame").css({"top":app.windowHeight - this.$el.find("#bottom_image").height() - $(".footer").height() - this.$el.find("#main_div").offset().top + "px"});
-		this.$el.find("#field_values_payments").height(app.windowHeight - this.$el.find("#top_div").height() - $(".footer").height() - this.$el.find("#bottom_image").height() - 50);
+		this.$el.find("#bottom_frame").css({"top":app.windowHeight - this.$el.find("#bottom_image").height() - footer.height() - this.$el.find("#main_div").offset().top + "px"});
+		this.$el.find("#field_values_payments").height(app.windowHeight - this.$el.find("#top_div").height() - footer.height() - this.$el.find("#bottom_image").height() - 50);
 	},
 	render:function() {
 		this.template = _.template(tpl.get("calculators"));
@@ -27,7 +28,7 @@ window.CalculatorsView = StateView.extend({
 		TweenMax.to(this.$el.find("#power"), .01, {css:{autoAlpha:0}});
 		var page = this;
 		$.each(page.$el.find(".nav_item"), function(index, item) {
-			$(item).click(function(evt) {
+			$(item).click(function() {
 				if (!$(this).hasClass("active")) {
 					page.$el.find(".nav_item").removeClass("active");
 					page.$el.find("span").removeClass("active");
@@ -45,11 +46,11 @@ window.CalculatorsView = StateView.extend({
 			});
 		});
 
-		$(':input[id="sales_price"], :input[id="interest_rate"], :input[id="sales_tax"], :input[id="down_payment"], :input[id="financing_months"]').live('keyup', function(e) {
+		$(':input[id="sales_price"], :input[id="interest_rate"], :input[id="sales_tax"], :input[id="down_payment"], :input[id="financing_months"]').live('keyup', function() {
 			page.calculatePayment();
 		});
         
-        $(':input[id="monthly_payment_power"], :input[id="financing_months_power"], :input[id="interest_rate_power"], :input[id="down_payment_power"], :input[id="sales_tax_power"]').live('keyup', function(e) {
+        $(':input[id="monthly_payment_power"], :input[id="financing_months_power"], :input[id="interest_rate_power"], :input[id="down_payment_power"], :input[id="sales_tax_power"]').live('keyup', function() {
 			page.calculateEstimatedMax();
 		});
 	},
@@ -59,10 +60,7 @@ window.CalculatorsView = StateView.extend({
 		var parts = n.toString().split(".");
 		return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
 	},
-	reformatMoneyEntry:function(n) {
-		n = n.replace(',', '');
-		n = numberWithCommas(n);
-	},
+
 	calculatePayment:function() {
 		var page = this;
 		if ((page.$el.find('#sales_price').val() == '') ||
@@ -124,10 +122,9 @@ window.CalculatorsView = StateView.extend({
  
 			var totalAmount = monthlyPayment / (interestRate / (1 - (Math.pow(1 / (1 + interestRate), loanLength))));
   
-			var downPayment = page.$el.find('#down_payment_power').val() * 1.0;
+			var downPayment = page.$el.find('#down_payment_power').val();
 			var subTotal = totalAmount + downPayment;
-			var salesTax = 0;
-			salesTax = page.$el.find('#sales_tax_power').val() * 1.0;
+			var salesTax = page.$el.find('#sales_tax_power').val();
 
 			if (salesTax > 0) {
 				subTotal = subTotal / (1 + salesTax / 100);
@@ -144,19 +141,22 @@ window.CalculatorsView = StateView.extend({
 		}
 	},
 	navSelect:function(val) {
-        var t1 = val;
+
         var t2;
-        if(t1 == "#payments")    {
+        if(val == "#payments")    {
             t2 = "#power";
             
         }    else{
             t2 = "#payments";
         }
+
+        var images = ['./images/calculators/calculators_bottom_image.png', './images/calculators/calculators_bottom_image2.png'];
+
         if(t2 == "#power")    {
-            this.$el.find("#bottom_frame").html("<img id='bottom_image' src='./images/calculators/calculators_bottom_image.png' />");
+            this.$el.find("#bottom_frame").html("<img id='bottom_image' src='" + images[0] + "' />");
         }
         if(t2 == "#payments")    {
-            this.$el.find("#bottom_frame").html("<img id='bottom_image' src='./images/calculators/calculators_bottom_image2.png' />");
+            this.$el.find("#bottom_frame").html("<img id='bottom_image' src='" + images[1] + "' />");
         }
         TweenMax.to(this.$el.find(t2), .3, {css:{autoAlpha:0}});
         TweenMax.to(this.$el.find(t1), .4, {css:{autoAlpha:1}, delay:.4});

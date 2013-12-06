@@ -1,3 +1,7 @@
+/* global
+cjsLoad:false
+*/
+
 Backbone.View.prototype.close = function () {
 	console.log('Closing view ' + app);
 	if (app.beforeClose) {
@@ -22,6 +26,8 @@ var AppRouter = Backbone.Router.extend({
 	localAssetsCollection:null,
 	localThumbnailsCollection:null,
 	imagesCollection:null,
+    currentCollection:0,
+    collections:[],
 	ioModel:null,
 	mainView:null,
 	int:null,
@@ -38,6 +44,7 @@ var AppRouter = Backbone.Router.extend({
 	rInt:null,
 	imageManifest:[],
 	assets_server:"http://kensonger.com/",
+    dynamicAssets:false,
 	errors:0,
 	routes:{
 		"":"index"
@@ -71,18 +78,16 @@ var AppRouter = Backbone.Router.extend({
 			}
 		}
 	},
-	begin:function (callback) {
+	begin:function () {
 		this.online = window.navigator.onLine;
-		//this.online = false;
+
 		var windowWidth;
-		var windowHeight;
+
 		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
 			windowWidth = window.innerWidth;
-			windowHeight = window.innerHeight;
 		}
 		else {
 			windowWidth = $(window).width();
-			windowHeight = $(window).height();
 		}
 
 		if (windowWidth <= 1024) {
@@ -103,7 +108,7 @@ var AppRouter = Backbone.Router.extend({
 			}
 		};
 		app.loader.onProgress = function(e) {
-			var perc = app.loader.progress * 100;
+			//var perc = app.loader.progress * 100;
 		};
 		app.loader.onComplete = function() {
 			if (app.errors == 0) {
@@ -132,98 +137,72 @@ var AppRouter = Backbone.Router.extend({
 		}
 	},
 
-	initDatabase:function(callback) {
-		this.stringsCollection = new StringsCollection();
-		this.usersCollection = new UsersCollection();
-		this.menuCollection = new MenuCollection();
-		this.assetsCollection = new AssetsCollection();
-		this.thumbnailsCollection = new ThumbnailCollection();
-		this.localAssetsCollection = new LocalAssetsCollection();
-		this.localThumbnailsCollection = new LocalThumbnailsCollection();
-		this.imagesCollection = new ImagesCollection();
-		this.interiorsCatCollection = new InteriorsCatCollection();
-		this.interiorsSubCatCollection = new InteriorsSubCatCollection();
-		this.interiorsImagesCollection = new InteriorsImagesCollection();
-		this.interiorsNavCollection = new InteriorsNavCollection();
+    fetchCollections:function(index)    {
+        app.collections[index].fetch({
+            success:function()  {
+                if(app.collections[index] === app.menuCollection)   {
+                    var menu_json = app.menuCollection.models[0].attributes.GetMenuResult;
+                    menu_json = menu_json.replace(/\'/g, '"');
+                    app.menuCollection.models[0] = JSON.parse(menu_json);
+                }
+                if(app.collections[index] === app.assetsCollection)   {
+                    var asset_json = app.assetsCollection.models[0].attributes.GetDataResult;
+                    asset_json = asset_json.replace(/\'/g, '"');
+                    app.assetsCollection.models[0] = JSON.parse(asset_json);
+                }
+                if(app.currentCollection < (app.collections.length-1))  {
+                    app.currentCollection++;
+                    app.fetchCollections(app.currentCollection);
+                }   else    {
+                    /*
+                    all collections are loaded,
+                    write to local store
+                    */
+                    app.ioModel = new IOModel();
+                    app.ioModel.createLocalStore();
+                }
+            },
+            fail:function() {
+                console.log('Failed to load data: ', app.collections[index]);
+            }
+        })
+    },
+
+	initDatabase:function() {
+
+        app.stringsCollection = new StringsCollection();
+        app.usersCollection = new UsersCollection();
+        app.menuCollection = new MenuCollection();
+        app.assetsCollection = new AssetsCollection();
+        app.thumbnailsCollection = new ThumbnailCollection();
+        app.localAssetsCollection = new LocalAssetsCollection();
+        app.localThumbnailsCollection = new LocalThumbnailsCollection();
+        app.imagesCollection = new ImagesCollection();
+        app.interiorsCatCollection = new InteriorsCatCollection();
+        app.interiorsSubCatCollection = new InteriorsSubCatCollection();
+        app.interiorsImagesCollection = new InteriorsImagesCollection();
+        app.interiorsNavCollection = new InteriorsNavCollection();
 
 		if (this.online) {
-            /*
-            TODO: Sort out the services side to prevent the need for this crazy chain of calls,
-            or add a helper method to pass each collection to and return success/fail.
-            Should just make one trip over the wire and respond with a single JSON object, though.
-             */
-			app.stringsCollection.fetch({
-				success:function () {
-					app.usersCollection.fetch({
-						success:function () {
-							app.menuCollection.fetch({
-								success:function () {
-                                    var menu_json = app.menuCollection.models[0].attributes.GetMenuResult;
-									menu_json = menu_json.replace(/\'/g, '"');
-									app.menuCollection.models[0] = JSON.parse(menu_json);
-									app.assetsCollection.fetch({
-										success:function (result) {
-											var asset_json = app.assetsCollection.models[0].attributes.GetDataResult;
-											asset_json = asset_json.replace(/\'/g, '"');
-											app.assetsCollection.models[0] = JSON.parse(asset_json);
-											app.thumbnailsCollection.fetch({
-												success:function () {
-													app.imagesCollection.fetch({
-														success:function () {
-															app.interiorsCatCollection.fetch({
-																success:function () {
-																	app.interiorsSubCatCollection.fetch({
-																		success:function () {
-																			app.interiorsImagesCollection.fetch({
-																				success:function () {
-																					app.interiorsNavCollection.fetch({
-																						success:function () {
-																							// write to local store
-																							app.ioModel = new IOModel();
-																							app.ioModel.createLocalStore();
-																						}, error:function(e) {
-																							console.log("interiors nav error: " + e);
-																						}
-																					});
-																				}, error:function(e) {
-																					console.log("interiors images error: " + e);
-																				}
-																			});
-																		}, error:function(e) {
-																			console.log("interiors subcat error: " + e);
-																		}
-																	});
-																}, error:function(e) {
-																	console.log("interiors cat error: " + e);
-																}
-															});
-														}, error:function(e) {
-															console.log("images error: " + e);
-														}
-													});
-												}, error:function(e) {
-													console.log("assets error: " + e);
-												}
-											});
 
-										}, error:function(e) {
-											console.log("thumbnails error: " + e);
-										}
-									});
-								}, error:function(e) {
-									console.log("menu error: " + e);
-								}
-							});
-						}, error:function(e) {
-							console.log("users error: " + e);
-						}
-					});
-				}, error:function(e) {
-					console.log("strings error: " + e);
-				}
-			});
+            app.collections = [
+                app.stringsCollection,
+                app.usersCollection,
+                app.menuCollection,
+                app.assetsCollection,
+                app.thumbnailsCollection,
+                app.imagesCollection,
+                app.interiorsCatCollection,
+                app.interiorsSubCatCollection,
+                app.interiorsImagesCollection,
+                app.interiorsNavCollection
+            ];
+
+            app.fetchCollections(app.currentCollection);
+
 		}
 		else {
+
 			app.ioModel = new IOModel();
 			app.ioModel.createLocalStore();
 		}
@@ -249,18 +228,16 @@ var AppRouter = Backbone.Router.extend({
 			window.HTMLAudioElement = function () {
 			};
 		}
-		/* Future functionality to load interface elements dynamically from the assets server
-		var imgArr = [];
-		$.each(this.imagesCollection.models, function(index, model) {
-		var iObj = {"id":model.get("id"),"src":model.get("src")}
-		imgArr.push(iObj);
-		});
-		this.cjsLoad(imgArr);
-		*/
+		if(app.dynamicAssets)   {
+            var imgArr = [];
+            $.each(this.imagesCollection.models, function(index, model) {
+                var iObj = {"id":model.get("id"),"src":model.get("src")};
+                imgArr.push(iObj);
+            });
+            this.cjsLoad(imgArr);
+        }
+
 		app.mainView = new MainView({model:app.stringsCollection});
 		app.mainView.render();
 	}
-});
-
-$(window).resize(function() {
 });

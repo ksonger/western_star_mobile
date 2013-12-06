@@ -1,14 +1,17 @@
 window.LoginView = StateView.extend({
 	checkingLogin: false,
-	initialize:function (options) {
+
+	initialize:function () {
 		if (this.firstLoad) {
 			this.onFirstLoad();
 		}
 	},
+
     onEnter:function() {
         app.mainView.setStrings();
 		TweenLite.to(this.$el, .7, {css:{autoAlpha:1}, delay:.4});   
 	},
+
 	respond:function() {
         
 		this.$el.find("#login_legal").css({
@@ -31,6 +34,7 @@ window.LoginView = StateView.extend({
 		});
         this.$el.find("#serious").css({"top":"50px", "left":app.windowWidth - this.$el.find("#serious").width() - 50 + "px"});
 	},
+
 	render:function() {
 		this.template = _.template(tpl.get("login"));
 		this.$el.html(this.template());
@@ -75,12 +79,12 @@ window.LoginView = StateView.extend({
 				}
 			});
 		});
-		this.$el.find("#login_button").click(function(e) {
+		this.$el.find("#login_button").click(function() {
 			page.checkingLogin = true;
 			page.checkLogin();
 		});
         
-		this.$el.find("#login_english, #login_french, #login_german, #login_spanish, #login_korean").click(function(e) {
+		this.$el.find("#login_english, #login_french, #login_german, #login_spanish, #login_korean").click(function() {
 			app.lang = $(this).attr("class");
 			app.mainView.setStrings();
 		});
@@ -94,7 +98,7 @@ window.LoginView = StateView.extend({
 		this.$el.children().on("swipe", function(e) {
 			page.onSwipe(e);
 		});
-		$.each(this.$el.find("img"), function(index) {
+		$.each(this.$el.find("img"), function() {
 			$(this).mousedown(function() {
 				return false;
 			});
@@ -109,8 +113,8 @@ window.LoginView = StateView.extend({
 		this.respond();
 		app.mainView.onWindowResize(); 
 	},
-	onSwipe:function(evt) {
-		console.log("swipe");
+	onSwipe:function() {
+		//console.log("swipe");
 	},
 	checkLogin:function() {
 		var usr = this.$el.find("#login_username");
